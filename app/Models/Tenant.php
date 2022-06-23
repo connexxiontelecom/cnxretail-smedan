@@ -34,6 +34,10 @@ class Tenant extends Model
         $tenant->start_date = now();
         $tenant->end_date = Carbon::now()->addDays(30);
         $tenant->active_sub_key = $active_key;
+        $tenant->business_category_id = $request->business_category ?? '';
+        $tenant->address = $request->office_address ?? '';
+        $tenant->rc_no = $request->rc_no ?? '';
+        $tenant->phone_no = $request->phone_no ?? '';
         $tenant->save();
         return $tenant;
     }
@@ -92,6 +96,13 @@ class Tenant extends Model
 
     public function getTenantPaymentGatewaySettings($tenant_id){
         return Tenant::where('id', $tenant_id)->first();
+    }
+
+    public function updateTenantAccountStatus(Request $request){
+        $tenant = Tenant::find($request->tenantId);
+        $tenant->account_status = $request->actionType;
+        $tenant->save();
+        return $tenant;
     }
 
 

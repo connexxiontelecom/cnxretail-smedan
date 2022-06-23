@@ -1,16 +1,20 @@
 @extends('layouts.admin-layout')
 @section('active-page')
-    Notifications
+    Trainings
 @endsection
 @section('title')
-    Notifications
+    Trainings
 @endsection
 @section('extra-styles')
     <link href="/assets/plugins/datatable/dataTables.bootstrap4.min.css" rel="stylesheet"/>
     <link href="/assets/plugins/datatable/responsivebootstrap4.min.css" rel="stylesheet" />
 @endsection
 @section('breadcrumb-action-btn')
-
+    <a href="{{route('show-new-training')}}" class="btn btn-primary btn-icon text-white mr-2">
+        <span>
+            <i class="ti-plus"></i>
+        </span> New Training
+    </a>
 @endsection
 
 @section('main-content')
@@ -18,7 +22,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h4>Notifications</h4>
+                    <h4>Trainings</h4>
                     @if(session()->has('success'))
                         <div class="alert alert-success mb-4">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -33,28 +37,24 @@
                             <tr>
                                 <th class="">#</th>
                                 <th class="wd-15p">Date</th>
-                                <th class="wd-15p">Subject</th>
-                                <th class="wd-15p">Message</th>
-                                <th class="wd-15p">Status</th>
+                                <th class="wd-15p">Title</th>
+                                <th class="wd-15p">Excerpt</th>
                                 <th class="wd-25p">Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             @php $serial = 1; @endphp
-                            @foreach($notifications as $notification)
-                                <tr>
-                                    <td>{{$serial++}}</td>
-                                    <td>{{date('d M, Y', strtotime($notification->created_at)) }}</td>
-                                    <td>{{$notification->subject ??  '' }}</td>
-                                    <td>{{ strlen($notification->body) > 54 ? substr($notification->body,0,51).'...' : $notification->body  }}</td>
-                                    <td>
-                                       {!! $notification->is_read == 0 ? "<span class='text-danger'>Unread</span>" : "<span class='text-success'>Read</span>" !!}
-                                    </td>
-                                    <td>
-                                        <a href="{{$notification->route_type == 0 ? route($notification->route_name) : route($notification->route_name, $notification->route_param)}}"  class="btn btn-sm btn-info">View</a>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @foreach($trainings as $training)
+                                    <tr>
+                                        <td>{{$serial++}}</td>
+                                        <td>{{ date('d M, Y', strtotime($training->created_at)) }}</td>
+                                        <td>{{$training->title ?? '' }}</td>
+                                        <td>{{strlen(strip_tags($training->description)) > 60 ? substr(strip_tags($training->description),0,57).'...' : strip_tags($training->description)}}</td>
+                                        <td>
+                                            <a href="{{route('show-training-details', $training->slug)}}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

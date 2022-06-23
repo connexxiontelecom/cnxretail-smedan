@@ -1,9 +1,9 @@
 @extends('layouts.admin-layout')
 @section('active-page')
-    Manage Tenants
+    Manage Businesses
 @endsection
 @section('title')
-    Manage Tenants
+    Manage Businesses
 @endsection
 @section('extra-styles')
 
@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-order">
-                        <h6 class="mb-2">Tenants</h6>
+                        <h6 class="mb-2">Businesses</h6>
                         <h2 class="text-right "><i class="mdi mdi-account-multiple icon-size float-left text-primary text-primary-shadow"></i><span>6</span></h2>
                         <p class="mb-0">All time</p>
                     </div>
@@ -31,7 +31,7 @@
             <div class="card ">
                 <div class="card-body">
                     <div class="card-widget">
-                        <h6 class="mb-2">Tenants</h6>
+                        <h6 class="mb-2">Businesses</h6>
                         <h2 class="text-right"><i class="mdi mdi-account-multiple icon-size float-left text-success text-success-shadow"></i><span>6</span></h2>
                         <p class="mb-0">Last Month</p>
                     </div>
@@ -42,7 +42,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-widget">
-                        <h6 class="mb-2">Tenants</h6>
+                        <h6 class="mb-2">Businesses</h6>
                         <h2 class="text-right"><i class="icon-size mdi mdi-account-multiple   float-left text-warning text-warning-shadow"></i><span>0</span></h2>
                         <p class="mb-0">This Month</p>
                     </div>
@@ -53,7 +53,7 @@
             <div class="card ">
                 <div class="card-body">
                     <div class="card-widget">
-                        <h6 class="mb-2">New Tenants</h6>
+                        <h6 class="mb-2">New Businesses</h6>
                         <h2 class="text-right"><i class="mdi mdi-account-multiple icon-size float-left text-danger text-danger-shadow"></i><span>1</span></h2>
                         <p class="mb-0">This Week</p>
                     </div>
@@ -71,10 +71,8 @@
                                 <thead>
                                 <tr>
                                     <th class="">#</th>
-                                    <th class="wd-15p">Company Name</th>
-                                    <th class="wd-15p">Plan</th>
-                                    <th class="wd-15p">Start Date</th>
-                                    <th class="wd-15p">End Date</th>
+                                    <th class="wd-15p"> Date</th>
+                                    <th class="wd-15p">Business Name</th>
                                     <th class="wd-20p">Email</th>
                                     <th class="wd-15p">Phone No.</th>
                                     <th class="wd-25p">Action</th>
@@ -85,10 +83,8 @@
                                 @foreach($tenants as $tenant)
                                     <tr>
                                         <th scope="row">{{$serial++}}</th>
+                                        <td class="text-success">{{date('d M, Y', strtotime($tenant->created_at))}}</td>
                                         <td>{{$tenant->company_name ?? '' }}</td>
-                                        <td>{{$tenant->getTenantPlan->price_name ?? '-'}}</td>
-                                        <td class="text-success">{{date('d M, Y', strtotime($tenant->start_date))}}</td>
-                                        <td class="text-danger">{{date('d M, Y', strtotime($tenant->end_date))}}</td>
                                         <td>{{$tenant->email ?? ''}}</td>
                                         <td>{{$tenant->phone_no ?? '-'}}</td>
                                         <td>

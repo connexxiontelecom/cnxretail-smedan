@@ -1,6 +1,6 @@
 @extends('layouts.admin-layout')
 @section('active-page')
-    Admin Dashboard
+    Monitoring/Evaluation Dashboard
 @endsection
 
 @section('breadcrumb-action-btn')
@@ -13,7 +13,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-order">
-                        <h6 class="mb-2">Tenants</h6>
+                        <h6 class="mb-2">SMEs</h6>
                         <h2 class="text-right "><i class="mdi mdi-account-multiple icon-size float-left text-primary text-primary-shadow"></i><span>{{number_format($tenants->count())}}</span></h2>
                         <p class="mb-0">All time</p>
                     </div>
@@ -24,9 +24,9 @@
             <div class="card ">
                 <div class="card-body">
                     <div class="card-widget">
-                        <h6 class="mb-2">Tenants</h6>
+                        <h6 class="mb-2">Trainings</h6>
                         <h2 class="text-right"><i class="mdi mdi-account-multiple icon-size float-left text-success text-success-shadow"></i><span>{{number_format($tenants->where('account_status',1)->count())}}</span></h2>
-                        <p class="mb-0">Active Subscription</p>
+                        <p class="mb-0">All time</p>
                     </div>
                 </div>
             </div>
@@ -35,9 +35,9 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-widget">
-                        <h6 class="mb-2">Tenants</h6>
+                        <h6 class="mb-2">Opportunities</h6>
                         <h2 class="text-right"><i class="icon-size mdi mdi-account-multiple   float-left text-warning text-warning-shadow"></i><span>{{number_format($tenants->where('account_status',0)->count())}}</span></h2>
-                        <p class="mb-0">Inactive Subscription</p>
+                        <p class="mb-0">All time</p>
                     </div>
                 </div>
             </div>
@@ -46,9 +46,9 @@
             <div class="card ">
                 <div class="card-body">
                     <div class="card-widget">
-                        <h6 class="mb-2">New Tenants</h6>
+                        <h6 class="mb-2">Assessment</h6>
                         <h2 class="text-right"><i class="mdi mdi-account-multiple icon-size float-left text-danger text-danger-shadow"></i><span>{{number_format($thismonth->count())}}</span></h2>
-                        <p class="mb-0">This Month</p>
+                        <p class="mb-0">All time</p>
                     </div>
                 </div>
             </div>
@@ -66,9 +66,7 @@
                         <tr>
                             <th>#</th>
                             <th>Company Name</th>
-                            <th>Plan</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
+                            <th> Date</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -78,9 +76,7 @@
                         <tr>
                             <th scope="row">{{$serial++}}</th>
                             <td>{{$tenant->company_name ?? '' }}</td>
-                            <td>{{$tenant->getTenantPlan->price_name ?? '-'}}</td>
-                            <td class="text-success">{{date('d M, Y', strtotime($tenant->start_date))}}</td>
-                            <td class="text-danger">{{date('d M, Y', strtotime($tenant->end_date))}}</td>
+                            <td class="text-success">{{date('d M, Y', strtotime($tenant->created_at))}}</td>
                             <td>
                                 <a href="{{route('view-tenant', $tenant->slug)}}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>
                             </td>

@@ -10,7 +10,7 @@
     <meta name="author" content="Spruko Technologies Private Limited">
     <meta name="keywords" content="">
     <link rel="shortcut icon" type="image/x-icon" href="http://akmaltechnology.com/template/yoha/assets/images/brand/favicon.ico" />
-    <title>{{config('app.name')}} –  Admin Login</title>
+    <title>{{config('app.name')}} –  Monitoring/Evaluation </title>
     <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/assets/css/style.css" rel="stylesheet"/>
     <link href="/assets/css/skin-modes.css" rel="stylesheet"/>
@@ -62,7 +62,7 @@
                     <form class="login100-form validate-form" action="{{route('admin.login')}}" method="post">
                         @csrf
                         <span class="login100-form-title">
-                            Admin Login
+                            Monitoring/Evaluation
                         </span>
                         <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
                             <input class="input100" type="text" name="email" value="{{old('email')}}" placeholder="Email">

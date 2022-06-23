@@ -18,10 +18,25 @@
             </a>
         </li>
         <li class="slide">
-            <a class="side-menu__item" href="{{route('admin-notifications')}}">
-                <i class="ti-bell mr-2"></i>
-                <span class="side-menu__label">Notifications</span>
+            <a class="side-menu__item" data-toggle="slide" href="#">
+                <i class="ti-briefcase mr-2"></i>
+                <span class="side-menu__label">Businesses</span><i class="angle fa fa-angle-right"></i>
             </a>
+            <ul class="slide-menu">
+                <li><a href="{{route('add-new-tenant')}}" class="slide-item"> Onboard Business</a></li>
+                <li><a href="{{route('manage-tenants')}}" class="slide-item"> Manage Business</a></li>
+                <li><a href="{{route('subscriptions')}}" class="slide-item">Subscriptions</a></li>
+            </ul>
+        </li>
+        <li class="slide">
+            <a class="side-menu__item" data-toggle="slide" href="#">
+                <i class="ti-hand-open mr-2"></i>
+                <span class="side-menu__label">Resources</span><i class="angle fa fa-angle-right"></i>
+            </a>
+            <ul class="slide-menu">
+                <li><a href="{{route('show-trainings')}}" class="slide-item"> Trainings</a></li>
+                <li><a href="{{route('show-grants')}}" class="slide-item"> Grants/Interventions</a></li>
+            </ul>
         </li>
         <li class="slide">
             <a class="side-menu__item" data-toggle="slide" href="#">
@@ -29,28 +44,20 @@
                 <span class="side-menu__label">Settings</span><i class="angle fa fa-angle-right"></i>
             </a>
             <ul class="slide-menu">
-                <li><a href="{{route('manage-pricing')}}" class="slide-item"> Pricing</a></li>
-                <li><a href="{{route('daily-motivation')}}" class="slide-item">Daily Motivation</a></li>
-            </ul>
-        </li>
-        <li class="slide">
-            <a class="side-menu__item" data-toggle="slide" href="#">
-                <i class="ti-briefcase mr-2"></i>
-                <span class="side-menu__label">Tenants</span><i class="angle fa fa-angle-right"></i>
-            </a>
-            <ul class="slide-menu">
-                <li><a href="{{route('manage-tenants')}}" class="slide-item"> All Tenants</a></li>
-                <li><a href="{{route('subscriptions')}}" class="slide-item">Subscriptions</a></li>
-            </ul>
-        </li>
-        <li class="slide">
-            <a class="side-menu__item" data-toggle="slide" href="#">
-                <i class="ti-hand-point-up mr-2"></i>
-                <span class="side-menu__label">Super-admin</span><i class="angle fa fa-angle-right"></i>
-            </a>
-            <ul class="slide-menu">
+                <li><a href="{{route('business-categories')}}" class="slide-item"> Categories</a></li>
                 <li><a href="{{route('manage-admin-users')}}" class="slide-item"> All Users</a></li>
                 <li><a href="{{route('add-new-admin-user')}}" class="slide-item">Add New User</a></li>
+                <li><a href="{{route('add-new-admin-user')}}" class="slide-item">Logout</a></li>
+            </ul>
+        </li>
+
+        <li class="slide">
+            <a class="side-menu__item" data-toggle="slide" href="#">
+                <i class="ti-desktop mr-2"></i>
+                <span class="side-menu__label">Monitoring</span><i class="angle fa fa-angle-right"></i>
+            </a>
+            <ul class="slide-menu">
+                <li><a href="{{route('manage-admin-users')}}" class="slide-item"> Performance</a></li>
             </ul>
         </li>
     </ul>

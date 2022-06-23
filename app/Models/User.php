@@ -67,13 +67,17 @@ class User extends Authenticatable
      * Use-case methods
      */
     public function setNewUser(Request $request, $tenant){
+        $password = substr(sha1(time()), 32,40);
         $user = new User();
-        $user->first_name = $request->first_name ;
-        $user->password = bcrypt($request->password);
+        $user->first_name = $request->full_name ?? '' ;
+        $user->password = bcrypt($password); //bcrypt($request->password);
         $user->email = $request->email;
         $user->start_date = $tenant->start_date;
         $user->end_date = $tenant->end_date;
         $user->tenant_id = $tenant->id;
+        $user->nin = $request->nin ?? '';
+        $user->address = $request->address ?? '';
+        $user->mobile_no = $request->phone_no ?? '';
         $user->active_sub_key = $tenant->active_sub_key;
         $user->slug = Str::slug($request->first_name).'-'.substr(sha1(time()),32,40);
         $user->save();

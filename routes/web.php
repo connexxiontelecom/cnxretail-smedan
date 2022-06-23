@@ -191,6 +191,9 @@ Route::prefix('/tunnel')->group(function(){
     Route::post('/add-new-user',[App\Http\Controllers\AdminController::class, 'storeAdminUser']);
     Route::get('/dashboard',[App\Http\Controllers\AdminController::class, 'adminDashboard'])->name('admin.dashboard');
     Route::get('/manage-tenants',[App\Http\Controllers\AdminController::class, 'manageTenants'])->name('manage-tenants');
+    Route::get('/add-new-tenant',[App\Http\Controllers\AdminController::class, 'showAddNewTenantForm'])->name('add-new-tenant');
+    Route::post('/add-new-tenant',[App\Http\Controllers\AdminController::class, 'addNewTenant']);
+
     Route::get('/view-tenant/{slug}',[App\Http\Controllers\AdminController::class, 'viewTenant'])->name('view-tenant');
     Route::get('/subscription',[App\Http\Controllers\AdminController::class, 'getTenantSubscriptions'])->name('subscriptions');
     Route::get('/manage-pricing',[App\Http\Controllers\AdminController::class, 'managePricing'])->name('manage-pricing');
@@ -200,6 +203,29 @@ Route::prefix('/tunnel')->group(function(){
     Route::get('/daily-motivation',[App\Http\Controllers\AdminController::class, 'manageDailyMotivations'])->name('daily-motivation');
     Route::post('/add-daily-motivation',[App\Http\Controllers\AdminController::class, 'addDailyMotivation'])->name('add-daily-motivation');
     Route::post('/update-daily-motivation',[App\Http\Controllers\AdminController::class, 'updateDailyMotivation'])->name('update-daily-motivation');
+    Route::post('/update-account-status',[App\Http\Controllers\AdminController::class, 'updateAccountStatus'])->name('update-account-status');
+
+    Route::get('/trainings',[App\Http\Controllers\AdminController::class, 'showSMETrainings'])->name('show-trainings');
+    Route::get('/new-trainings',[App\Http\Controllers\AdminController::class, 'showNewTrainingForm'])->name('show-new-training');
+    Route::post('/new-trainings',[App\Http\Controllers\AdminController::class, 'publishTraining']);
+    Route::get('/new-trainings',[App\Http\Controllers\AdminController::class, 'showNewTrainingForm'])->name('show-new-training');
+    Route::get('/trainings/{slug}',[App\Http\Controllers\AdminController::class, 'showTrainingDetails'])->name('show-training-details');
+    Route::get('/download-training-material/{attachment}',[App\Http\Controllers\AdminController::class, 'downloadTrainingMaterial'])->name('download-training-material');
+
+     Route::get('/grants',[App\Http\Controllers\AdminController::class, 'showSMEGrants'])->name('show-grants');
+    Route::get('/new-grants',[App\Http\Controllers\AdminController::class, 'showNewGrantForm'])->name('show-new-grant');
+    Route::post('/new-grants',[App\Http\Controllers\AdminController::class, 'publishGrant']);
+    Route::get('/new-grants',[App\Http\Controllers\AdminController::class, 'showNewGrantForm'])->name('show-new-grant');
+    Route::get('/grants/{slug}',[App\Http\Controllers\AdminController::class, 'showGrantDetails'])->name('show-grant-details');
+    Route::get('/download-grant-material/{attachment}',[App\Http\Controllers\AdminController::class, 'downloadGrantMaterial'])->name('download-grant-material');
+
+
+    Route::get('/business-categories',[App\Http\Controllers\AdminController::class, 'showBusinessCategories'])->name('business-categories');
+    Route::post('/business-categories',[App\Http\Controllers\AdminController::class, 'addNewBusinessCategory']);
+    Route::post('/update-business-categories',[App\Http\Controllers\AdminController::class, 'updateBusinessCategory'])->name('update-business-categories');
+
+
+
 });
 
 Auth::routes();

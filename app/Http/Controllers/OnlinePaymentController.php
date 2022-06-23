@@ -123,7 +123,7 @@ class OnlinePaymentController extends Controller
             $settings = $this->tenant->getTenantPaymentGatewaySettings($invoice->tenant_id);
             //if(!empty($settings->secret_key) && !empty($settings->public_key)){
             if(!empty($settings->secret_key) && !empty($settings->public_key)){
-                $paystack = new Paystack($settings->secret_key);
+                //$paystack = new Paystack($settings->secret_key);
                 //$paystack = new Paystack(config('app.paystack_secret_key'));
                 #Public key
                 //$this->setEnv('PAYSTACK_PUBLIC_KEY', $company_payment_int->ps_public_key);

@@ -1,9 +1,9 @@
 @extends('layouts.admin-layout')
 @section('active-page')
-    Tenant Details
+    Business Details
 @endsection
 @section('title')
-    Tenant Details
+    Business Details
 @endsection
 @section('extra-styles')
 
@@ -12,11 +12,26 @@
 @endsection
 
 @section('breadcrumb-action-btn')
-    <a href="{{route('manage-tenants')}}" class="btn btn-primary btn-icon text-white mr-2">
-            <span>
-                <i class="ti-user"></i>
-            </span> Manage Tenants
-    </a>
+   <div class="btn-group">
+       <a href="{{route('manage-tenants')}}" class="btn btn-primary btn-icon text-white mr-2">
+        <span>
+            <i class="ti-briefcase"></i>
+        </span> Manage Businesses
+       </a>
+       @if($tenant->account_status == 1)
+       <a href="javascript:void(0);" data-toggle="modal" data-target="#suspendAccount" class="btn btn-danger btn-icon text-white mr-2">
+        <span>
+            <i class="ti-close"></i>
+        </span> Suspend Account
+       </a>
+       @else
+       <a href="javascript:void(0);" data-toggle="modal" data-target="#activateAccount" class="btn btn-success btn-icon text-white mr-2">
+        <span>
+            <i class="ti-check"></i>
+        </span> Activate Account
+       </a>
+       @endif
+   </div>
 @endsection
 
 @section('main-content')
@@ -27,7 +42,7 @@
                     <div class="wideget-user">
                         <div class="card">
                             <div class="card-header bg-primary br-tr-3 br-tl-3">
-                                <h3 class="card-title text-white">Tenant Info</h3>
+                                <h3 class="card-title text-white">Business Info</h3>
                                 <div class="card-options ">
                                     <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up text-white"></i></a>
                                 </div>
@@ -54,16 +69,12 @@
                                     <p>{{$tenant->description ?? '-' }}</p>
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Start Date:</label>
-                                    <p class="text-success">{{ date('d M, Y', strtotime($tenant->start_date))  }}</p>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">End Date:</label>
-                                    <p class="text-danger">{{ date('d M, Y', strtotime($tenant->end_date))  }}</p>
+                                    <label for="">Member Since:</label>
+                                    <p class="text-muted">{{ date('d M, Y', strtotime($tenant->created_at))  }}</p>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Account Status:</label>
-                                    <p class="text-danger">{!! $tenant->account_status == 1 ? "<span class='text-success'>Active</span>" : "<span class='text-danger'>Inactive</span>" !!}</p>
+                                    <p class="text-danger">{!! $tenant->account_status == 1 ? "<span class='text-success'>Active</span>" : "<span class='text-danger'>Suspended</span>" !!}</p>
                                 </div>
                             </div>
                             <div class="card-footer">
@@ -77,6 +88,14 @@
             </div>
         </div>
         <div class="col-lg-8">
+            @if(session()->has('success'))
+                <div class="alert alert-success mb-4">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <strong>Great!</strong>
+                    <hr class="message-inner-separator">
+                    <p>{!! session()->get('success') !!}</p>
+                </div>
+            @endif
             <div class="card">
                 <div class="wideget-user-tab">
                     <div class="tab-menu-heading">
@@ -88,6 +107,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="tab-content">
                 <div class="tab-pane active show" id="tab-51">
                     <div class="card">
@@ -130,6 +150,56 @@
             </div>
         </div>
     </div>
+
+    <div class="modal" id="suspendAccount" tabindex="-1" aria-labelledby="exampleModalLabel"  aria-modal="true" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title text-white">Suspend Account</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="text-white">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to <span class="text-danger">suspend</span> this account?</p>
+                    <form action="{{route('update-account-status')}}" method="post">
+                        @csrf
+                        <input type="hidden" name="tenantId" value="{{$tenant->id}}">
+                        <input type="hidden" name="actionType" value="0">
+                        <div class="btn-group d-flex justify-content-end">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No, cancel</button>
+                            <button type="submit" class="btn btn-primary">Yes, please</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="activateAccount" tabindex="-1" aria-labelledby="exampleModalLabel"  aria-modal="true" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <h5 class="modal-title text-white">Activate Account</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="text-white">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to <span class="text-success">activate</span> this account?</p>
+                    <form action="{{route('update-account-status')}}" method="post">
+                        @csrf
+                        <input type="hidden" name="tenantId" value="{{$tenant->id}}">
+                        <input type="hidden" name="actionType" value="1">
+                        <div class="btn-group d-flex justify-content-end">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No, cancel</button>
+                            <button type="submit" class="btn btn-primary">Yes, please</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('extra-scripts')
