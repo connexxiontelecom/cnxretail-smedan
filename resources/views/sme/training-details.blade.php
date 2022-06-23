@@ -1,4 +1,4 @@
-@extends('layouts.admin-layout')
+@extends('layouts.master-layout')
 @section('active-page')
     Training Details
 @endsection
@@ -13,10 +13,10 @@
 
 @section('breadcrumb-action-btn')
     <div class="btn-group">
-        <a href="{{route('show-trainings')}}" class="btn btn-primary btn-icon text-white mr-2">
+        <a href="{{url()->previous()}}" class="btn btn-secondary btn-icon text-white mr-2">
         <span>
-            <i class="ti-briefcase"></i>
-        </span> Manage Trainings
+            <i class="ti-back-left"></i>
+        </span> Go Back
         </a>
     </div>
 @endsection
@@ -95,7 +95,7 @@
                                                             <div>
                                                                 <a class="like" href="javascript:;">
                                                     <span class="btn btn-sm btn-danger-light">
-                                                        <i class="fe fe-calendar mr-3"></i>{{date('d M, Y', strtotime($reply->created_at))}}
+                                                        <i class="fe fe-calendar mr-3"></i>{{date('d M, Y h:ia', strtotime($reply->created_at))}}
                                                     </span>
                                                                 </a>
                                                             </div>
@@ -103,12 +103,12 @@
                                                     </div>
                                                 @endforeach
                                                 <div class="card-body">
-                                                    <form action="{{route('reply-comment-training')}}" method="post">
+                                                    <form action="{{route('business-reply-comment-training')}}" method="post">
                                                         @csrf
                                                         <div class="form-group">
                                                             <input type="hidden" name="innerTrainingId" value="{{$training->id}}">
                                                             <input type="hidden" name="innerCommentId" value="{{$comment->id}}">
-                                                            <input type="hidden" name="userLevel" value="1">
+                                                            <input type="hidden" name="userLevel" value="2">
                                                             <textarea placeholder="Type reply here..." name="innerConversation" style="resize: none;"
                                                                       class="form-control">{{old('innerConversation')}}</textarea>
                                                         </div>
@@ -133,15 +133,15 @@
                             <div class="card-title">Leave a Comment</div>
                         </div>
                         <div class="card-body">
-                            <form class="form-horizontal  m-t-20" method="post" action="{{route('comment-training')}}" autocomplete="off">
+                            <form class="form-horizontal  m-t-20" method="post" action="{{route('business-comment-training')}}" autocomplete="off">
                                 @csrf
                                 <div class="form-group">
                                     <div class="col-xs-12">
-                                        <input class="form-control" type="text" readonly value="{{Auth::user()->full_name ?? '' }}" placeholder="Username" data-slug-id="username" data-category="user-data">
+                                        <input class="form-control" type="text" readonly value="{{Auth::user()->first_name ?? '' }} {{Auth::user()->surname ?? '' }}" placeholder="Username" data-slug-id="username" data-category="user-data">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="hidden" name="userLevel" value="1">
+                                    <input type="hidden" name="userLevel" value="2">
                                     <input type="hidden" name="commentTrainingId" value="{{$training->id}}">
                                 </div>
                                 <div class="form-group">

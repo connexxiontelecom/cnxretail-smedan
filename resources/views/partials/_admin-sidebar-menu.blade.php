@@ -57,7 +57,7 @@
                 <span class="side-menu__label">Monitoring</span><i class="angle fa fa-angle-right"></i>
             </a>
             <ul class="slide-menu">
-                <li><a href="{{route('manage-admin-users')}}" class="slide-item"> Performance</a></li>
+                <li><a href="{{route('monitoring-performance')}}" class="slide-item"> Performance</a></li>
             </ul>
         </li>
     </ul>

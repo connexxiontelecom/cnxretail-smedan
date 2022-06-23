@@ -8,16 +8,20 @@ use App\Models\BusinessCategory;
 use App\Models\DailyMotivation;
 use App\Models\Grant;
 use App\Models\GrantMaterial;
+use App\Models\MarginReport;
 use App\Models\Pricing;
 use App\Models\Subscription;
 use App\Models\Tenant;
 use App\Models\TenantNotification;
 use App\Models\Training;
+use App\Models\TrainingCategory;
+use App\Models\TrainingFeedback;
+use App\Models\TrainingFeedbackReply;
 use App\Models\TrainingMaterial;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Newsletter\NewsletterFacade as Newsletter;
-
+use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     public function __construct()
@@ -36,6 +40,9 @@ class AdminController extends Controller
         $this->grant = new Grant();
         $this->grantmaterial = new GrantMaterial();
         $this->businesscategory = new BusinessCategory();
+        $this->trainingfeedback = new TrainingFeedback();
+        $this->trainingfeedbackreply = new TrainingFeedbackReply();
+        $this->trainingcategory = new TrainingCategory();
     }
 
     public function notification(){
@@ -134,7 +141,8 @@ class AdminController extends Controller
     public function viewTenant($slug){
         $tenant = $this->tenant->getTenantBySlug($slug);
         if(!empty($tenant)){
-            return view('admin.view-tenant', ['tenant'=>$tenant]);
+            $owner = $this->user->getOwnerByTenantId($tenant->id);
+            return view('admin.view-tenant', ['tenant'=>$tenant,'owner'=>$owner]);
         }else{
             session()->flash("error", "No record found.");
             return back();
@@ -240,7 +248,7 @@ class AdminController extends Controller
     }
 
     public function showNewTrainingForm(){
-        return view('admin.add-new-training');
+        return view('admin.add-new-training', ['categories'=>$this->businesscategory->getBusinessCategories()]);
     }
 
     public function publishTraining(Request $request){
@@ -261,9 +269,13 @@ class AdminController extends Controller
             $this->tenantnofitication->setNewAdminNotification($title, $body, 'view-training',
                 $training->slug, 1, $tenant->id);
         }
+        foreach($request->business_category as $cat){
+            $this->trainingcategory->addTrainingCategory($training->id, $cat);
+        }
         if($request->hasFile('attachments')){
             $this->trainingmaterial->uploadTrainingMaterials($training->id, $request);
         }
+
         session()->flash("success", "Training published.");
         return redirect()->route('show-trainings');
     }
@@ -290,6 +302,34 @@ class AdminController extends Controller
 
     }
 
+    public function leaveCommentOnTraining(Request $request){
+        $this->validate($request,[
+            'comment'=>'required',
+            'userLevel'=>'required',
+            'commentTrainingId'=>'required'
+        ],[
+            'comment.required'=>'Leave comment in the box provided.'
+        ]);
+        $this->trainingfeedback->newFeedback($request);
+        session()->flash("success", "Your comment was recorded.");
+        return back();
+    }
+
+    public function leaveReplyOnComment(Request $request){
+
+        $this->validate($request,[
+            'innerConversation'=>'required',
+            //'userLevel'=>'required',
+            'innerTrainingId'=>'required',
+            'innerCommentId'=>'required'
+        ],[
+            'innerConversation.required'=>'Leave comment in the box provided.'
+        ]);
+        $this->trainingfeedbackreply->addTrainingFeedbackReply($request);
+        session()->flash("success", "Your reply was recorded.");
+        return back();
+    }
+
     public function showSMEGrants(){
         return view('admin.grants', ['grants'=>$this->grant->getAllGrants()]);
     }
@@ -301,10 +341,14 @@ class AdminController extends Controller
     public function publishGrant(Request $request){
         $this->validate($request,[
             'title'=>'required',
-            'description'=>'required'
+            'description'=>'required',
+            'application_deadline'=>'required',
+            'sponsor'=>'required'
         ],[
             'title.required'=>'Enter a title for this training',
-            'description.required'=>'Enter a brief description of the training'
+            'description.required'=>'Enter a brief description of the training',
+            'application_deadline.required'=>'Enter a brief description of the training',
+            'sponsor.required'=>'Enter sponsor name',
         ]);
         $grant = $this->grant->addNewGrant($request);
         //Notify businesses
@@ -376,5 +420,27 @@ class AdminController extends Controller
         session()->flash("success", "Your changes were saved.");
         return back();
     }
+
+    public function showMonitoringPerformance(){
+        return view('admin.monitoring.index');
+    }
+
+    public function ajaxPerformance(){
+        $report = MarginReport::select(
+            DB::raw("(sum(debit)) as debitAmount"),
+            DB::raw("(sum(credit)) as creditAmount"),
+            DB::raw("(DATE_FORMAT(created_at, '%m-%Y')) as month"),
+            DB::raw("(DATE_FORMAT(created_at, '%m-%Y')) as month_year")
+        )
+            //->orderBy('created_at')
+            ->groupBy(DB::raw("DATE_FORMAT(created_at, '%m-%Y')"))
+            ->get();
+        //$data = DB::table('margin_reports')->selectRaw('sum(debit) as debitAmount')->get();
+            //->groupBy('created_at');
+        return response()->json($report,200);
+    }
+
+
+
 
 }

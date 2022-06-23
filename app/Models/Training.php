@@ -19,6 +19,13 @@ class Training extends Model
     public function getTrainingMaterials(){
         return $this->hasMany(TrainingMaterial::class, 'training_id');
     }
+    public function getTrainingCategories(){
+        return $this->hasMany(TrainingCategory::class, 'training_id');
+    }
+
+    public function getTrainingComments(){
+        return $this->hasMany(TrainingFeedback::class, 'training_id');
+    }
 
     public function addNewTraining(Request $request){
         $training = new Training();

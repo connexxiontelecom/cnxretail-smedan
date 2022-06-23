@@ -1,9 +1,9 @@
-@extends('layouts.admin-layout')
+@extends('layouts.master-layout')
 @section('active-page')
-    Training Details
+    Grant Details
 @endsection
 @section('title')
-    Training Details
+    Grant Details
 @endsection
 @section('extra-styles')
 
@@ -13,10 +13,10 @@
 
 @section('breadcrumb-action-btn')
     <div class="btn-group">
-        <a href="{{route('show-trainings')}}" class="btn btn-primary btn-icon text-white mr-2">
+        <a href="{{url()->previous()}}" class="btn btn-secondary btn-icon text-white mr-2">
         <span>
-            <i class="ti-briefcase"></i>
-        </span> Manage Trainings
+            <i class="ti-back-left"></i>
+        </span> Go Back
         </a>
     </div>
 @endsection
@@ -37,7 +37,7 @@
                     <div class="tab-menu-heading">
                         <div class="tabs-menu1">
                             <ul class="nav">
-                                <li class=""><a href="#tab-51" class="active show" data-toggle="tab">Training Details</a></li>
+                                <li class=""><a href="#tab-51" class="active show" data-toggle="tab">Opportunities</a></li>
                             </ul>
                         </div>
                     </div>
@@ -48,116 +48,20 @@
                 <div class="tab-pane active show" id="tab-51">
                     <div class="card">
                         <div class="card-body">
+                            <div id="profile-log-switch">
+                                <h3 class="card-title">{{$grant->title ?? '' }}</h3>
+                                {!! $grant->description ?? '' !!}
+                            </div>
                             <div class="mg-t-15 profile-footer">
 
-                                <button class="btn btn-sm btn-default me-2 mb-1"><i class="fe fe-calendar mr-3"></i>{{date('d M, Y', strtotime($training->created_at))}}</button>
-                                <button class="btn btn-sm btn-default me-2 mb-1"><i class="fe fe-user mr-3"></i> {{$training->getTrainingAuthor->full_name ?? '' }}</button>
-                            </div>
-                            <div id="profile-log-switch">
-                                <h3 class="card-title">{{$training->title ?? '' }}</h3>
-                                {!! $training->description ?? '' !!}
-                                <div>
-                                    @foreach($training->getTrainingCategories as $bCat)
-                                        <span class="badge rounded-pill bg-success text-white mt-2">{{$bCat->getBusinessCategory->category_name ?? '' }}</span>
-
-                                    @endforeach
-                                </div>
+                                <button class="btn btn-sm btn-default me-2 mb-1"><strong>Posted:</strong> {{date('d M, Y', strtotime($grant->created_at))}}</button>
+                                <button class="btn btn-sm btn-default me-2 mb-1"><strong>Posted By:</strong> {{$grant->getGrantAuthor->full_name ?? '' }}</button>
+                                <button class="btn btn-sm btn-default me-2 mb-1"><strong>Application Deadline:</strong> {{ !is_null($grant->application_deadline) ? date('d M, Y', strtotime($grant->application_deadline)) : '-' }}</button>
                             </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">Conversations</div>
-                        </div>
-                        <div class="card-body pb-0">
-                            @if(count($training->getTrainingComments) > 0)
-                                @foreach($training->getTrainingComments as $comment)
-                                    <div class="media mb-5 overflow-visible d-block d-sm-flex">
-                                        <div class="media-body overflow-visible">
-                                            <div class="border mb-5 p-4 br-5">
-                                                <h5 class="mt-0">{{$comment->user_level == 1 ? $comment->getCommentedByAdmin->full_name : $comment->getCommentedByUser->first_name }}
-                                                    <sup>
-                                                        <label for="" class="badge rounded-pill bg-success-gradient text-white">{{$comment->user_level == 1 ? 'Admin' : 'Business' }}
-                                                        </label>
-                                                    </sup>
-                                                </h5>
-                                                {!! $comment->comment ?? '' !!}
-                                                @foreach($comment->getTrainingFeedbackReply as $reply)
-                                                    <div class="media mb-5 overflow-visible d-block d-sm-flex ml-5">
-                                                        <div class="media-body border p-4 overflow-visible br-5">
-                                                            <h5 class="mt-0">{{$reply->user_level == 1 ? $reply->getCommentedByAdmin->full_name : $reply->getCommentedByUser->first_name }}
-                                                                <sup>
-                                                                    <label for="" class="badge rounded-pill bg-success-gradient text-white">{{$reply->user_level == 1 ? 'Admin' : 'Business' }}
-                                                                    </label>
-                                                                </sup>
-                                                            </h5>
-                                                            {!! $reply->feedback_reply ?? '' !!}
-                                                            <div>
-                                                                <a class="like" href="javascript:;">
-                                                    <span class="btn btn-sm btn-danger-light">
-                                                        <i class="fe fe-calendar mr-3"></i>{{date('d M, Y', strtotime($reply->created_at))}}
-                                                    </span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                                <div class="card-body">
-                                                    <form action="{{route('reply-comment-training')}}" method="post">
-                                                        @csrf
-                                                        <div class="form-group">
-                                                            <input type="hidden" name="innerTrainingId" value="{{$training->id}}">
-                                                            <input type="hidden" name="innerCommentId" value="{{$comment->id}}">
-                                                            <input type="hidden" name="userLevel" value="1">
-                                                            <textarea placeholder="Type reply here..." name="innerConversation" style="resize: none;"
-                                                                      class="form-control">{{old('innerConversation')}}</textarea>
-                                                        </div>
-                                                        <div class="form-group d-flex justify-content-end">
-                                                            <button type="submit" class="btn btn-primary">Reply</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
 
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @else
-                                <h5 class="text-center p-4">Be the first to start a conversation!</h5>
-                            @endif
 
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">Leave a Comment</div>
-                        </div>
-                        <div class="card-body">
-                            <form class="form-horizontal  m-t-20" method="post" action="{{route('comment-training')}}" autocomplete="off">
-                                @csrf
-                                <div class="form-group">
-                                    <div class="col-xs-12">
-                                        <input class="form-control" type="text" readonly value="{{Auth::user()->full_name ?? '' }}" placeholder="Username" data-slug-id="username" data-category="user-data">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="hidden" name="userLevel" value="1">
-                                    <input type="hidden" name="commentTrainingId" value="{{$training->id}}">
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-xs-12">
-                                        <textarea class="form-control content" name="comment" placeholder="Leave a comment here..." data-slug-id="your-comment" data-category="user-data">{{old('comment')}}</textarea>
-                                        @error('comment')
-                                            <i class="text-danger">{{$message}}</i>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="">
-                                    <button type="submit" class="btn btn-primary btn-rounded  waves-effect waves-light">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -167,14 +71,14 @@
                     <div class="wideget-user">
                         <div class="card">
                             <div class="card-header bg-primary br-tr-3 br-tl-3">
-                                <h3 class="card-title text-white">Training Materials</h3>
+                                <h3 class="card-title text-white">Grant Materials</h3>
                                 <div class="card-options ">
                                     <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up text-white"></i></a>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    @foreach ($training->getTrainingMaterials  as $file)
+                                    @foreach ($grant->getGrantMaterials  as $file)
                                         @switch(pathinfo($file->attachment, PATHINFO_EXTENSION))
                                             @case('pptx')
                                             <div class="col-md-6">
@@ -477,12 +381,7 @@
                                         @endswitch
                                     @endforeach
                                 </div>
-                            </div>
-                            <div class="card-header bg-primary br-tr-3 br-tl-3 mt-3">
-                                <h3 class="card-title text-white">Project/Assessment</h3>
-                                <div class="card-options ">
-                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up text-white"></i></a>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -494,6 +393,5 @@
 @endsection
 
 @section('extra-scripts')
-    <script type="text/javascript" src="/assets/bower_components/tinymce/tinymce.min.js"></script>
-    <script type="text/javascript" src="/assets/bower_components/tinymce.js"></script>
+
 @endsection

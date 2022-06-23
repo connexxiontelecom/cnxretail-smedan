@@ -84,6 +84,47 @@
                             </div>
                         </div>
                     </div>
+                    <div class="wideget-user">
+                        <div class="card">
+                            <div class="card-header bg-primary br-tr-3 br-tl-3">
+                                <h3 class="card-title text-white">Owner Info</h3>
+                                <div class="card-options ">
+                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up text-white"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="">Full Name:</label>
+                                    <input type="text" readonly value="{{$owner->first_name ?? '' }}" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Email:</label>
+                                    <input type="text" readonly value="{{$owner->email ?? '' }}" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Phone No.:</label>
+                                    <input type="text" readonly value="{{$owner->mobile_no ?? '-' }}" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">NIN:</label>
+                                    <p>{{$owner->nin ?? '-' }}</p>
+                                </div>
+                                <div class="form-group">
+                                    <label for=""> Address:</label>
+                                    <input type="text" readonly value="{{$owner->address ?? '-' }}" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Member Since:</label>
+                                    <p class="text-muted">{{ date('d M, Y', strtotime($owner->created_at))  }}</p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Account Status:</label>
+                                    <p class="text-danger">{!! $owner->account_status == 1 ? "<span class='text-success'>Active</span>" : "<span class='text-danger'>Suspended</span>" !!}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -37,7 +37,7 @@
                     <div class="tab-menu-heading">
                         <div class="tabs-menu1">
                             <ul class="nav">
-                                <li class=""><a href="#tab-51" class="active show" data-toggle="tab">Grant Details</a></li>
+                                <li class=""><a href="#tab-51" class="active show" data-toggle="tab">Opportunities</a></li>
                             </ul>
                         </div>
                     </div>
@@ -54,8 +54,9 @@
                             </div>
                             <div class="mg-t-15 profile-footer">
 
-                                <button class="btn btn-sm btn-default me-2 mb-1"><i class="fe fe-calendar mr-3"></i>{{date('d M, Y', strtotime($grant->created_at))}}</button>
-                                <button class="btn btn-sm btn-default me-2 mb-1"><i class="fe fe-user mr-3"></i> {{$grant->getGrantAuthor->full_name ?? '' }}</button>
+                                <button class="btn btn-sm btn-default me-2 mb-1"><strong>Posted:</strong> {{date('d M, Y', strtotime($grant->created_at))}}</button>
+                                <button class="btn btn-sm btn-default me-2 mb-1"><strong>Posted By:</strong> {{$grant->getGrantAuthor->full_name ?? '' }}</button>
+                                <button class="btn btn-sm btn-default me-2 mb-1"><strong>Application Deadline:</strong> {{ !is_null($grant->application_deadline) ? date('d M, Y', strtotime($grant->application_deadline)) : '-' }}</button>
                             </div>
                         </div>
                     </div>

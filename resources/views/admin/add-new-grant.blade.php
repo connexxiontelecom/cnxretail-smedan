@@ -52,6 +52,22 @@
                                                 <i class="text-danger">{{$message}}</i>
                                                 @enderror
                                             </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="">Application Deadline <span class="text-danger">*</span></label>
+                                                    <input type="date"  name="application_deadline" class="form-control">
+                                                    @error('application_deadline')
+                                                    <i class="text-danger">{{$message}}</i>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="">Sponsor <span class="text-danger">*</span></label>
+                                                    <input type="text"  name="sponsor" class="form-control" placeholder="Sponsor Name">
+                                                    @error('sponsor')
+                                                    <i class="text-danger">{{$message}}</i>
+                                                    @enderror
+                                                </div>
+                                            </div>
                                             <div class="form-group">
                                                 <div class="form-group">
                                                     <label for="">Grant Materials <small>(Optional)</small></label>

@@ -150,6 +150,8 @@ class User extends Authenticatable
             }
         }
     }
-
+    public function getOwnerByTenantId($tenantId){
+        return User::where('tenant_id', $tenantId)->first();
+    }
 
 }

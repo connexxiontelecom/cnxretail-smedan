@@ -26,6 +26,8 @@ class Grant extends Model
         $grant->description = $request->description;
         $grant->posted_by = Auth::user()->id;
         $grant->slug = Str::slug($request->title).'-'.substr(sha1(time()),32,40);
+        $grant->application_deadline = $request->application_deadline;
+        $grant->sponsor = $request->sponsor;
         $grant->save();
         return $grant;
     }

@@ -52,6 +52,21 @@
                                                     <i class="text-danger">{{$message}}</i>
                                                 @enderror
                                             </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="">Business Category <span class="text-danger">*</span></label>
+                                                    <select name="business_category[]" id="business_category" class="form-control" multiple>
+                                                        <option disabled selected>--Select category--</option>
+                                                        <option value="0">All Businesses</option>
+                                                        @foreach($categories as $category)
+                                                            <option value="{{$category->id}}">{{$category->category_name ?? ''}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('business_category')
+                                                    <i class="text-danger">{{$message}}</i>
+                                                    @enderror
+                                                </div>
+                                            </div>
                                             <div class="form-group">
                                                 <div class="form-group">
                                                     <label for="">Training Materials <small>(Optional)</small></label>

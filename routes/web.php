@@ -178,6 +178,14 @@ Route::get('/process/payment',[App\Http\Controllers\OnlinePaymentController::cla
 Route::get('/online-payment/{slug}', [App\Http\Controllers\OnlinePaymentController::class, 'onlinePayment'])->name('online-payment');
 Route::post('/charge-invoice-online',[App\Http\Controllers\OnlinePaymentController::class, 'chargeInvoiceOnline'])->name('charge-invoice-online');
 
+Route::get('/view-training/{slug}',[App\Http\Controllers\HomeController::class, 'viewTraining'])->name('view-training');
+Route::get('/view-grant/{slug}',[App\Http\Controllers\HomeController::class, 'viewGrant'])->name('view-grant');
+Route::get('/list-grants',[App\Http\Controllers\HomeController::class, 'listGrants'])->name('list-grants');
+Route::get('/list-trainings',[App\Http\Controllers\HomeController::class, 'listTrainings'])->name('list-trainings');
+Route::post('/business-trainings/comment/new',[App\Http\Controllers\HomeController::class, 'leaveCommentOnTraining'])->name('business-comment-training');
+Route::post('/business-trainings-reply/comment/new',[App\Http\Controllers\HomeController::class, 'leaveReplyOnComment'])->name('business-reply-comment-training');
+
+
 Route::get('/renew-subscription/{tenant_slug}/{user_slug}',[App\Http\Controllers\Auth\LoginController::class, 'showRenewSubscriptionForm'])->name('renew-subscription');
 Route::post('/process-subscription-renewal',[App\Http\Controllers\Auth\LoginController::class, 'processRenewSubscription'])->name('process-subscription-renewal');
 
@@ -212,6 +220,10 @@ Route::prefix('/tunnel')->group(function(){
     Route::get('/trainings/{slug}',[App\Http\Controllers\AdminController::class, 'showTrainingDetails'])->name('show-training-details');
     Route::get('/download-training-material/{attachment}',[App\Http\Controllers\AdminController::class, 'downloadTrainingMaterial'])->name('download-training-material');
 
+    Route::post('/trainings/comment/new',[App\Http\Controllers\AdminController::class, 'leaveCommentOnTraining'])->name('comment-training');
+    Route::post('/trainings-reply/comment/new',[App\Http\Controllers\AdminController::class, 'leaveReplyOnComment'])->name('reply-comment-training');
+
+
      Route::get('/grants',[App\Http\Controllers\AdminController::class, 'showSMEGrants'])->name('show-grants');
     Route::get('/new-grants',[App\Http\Controllers\AdminController::class, 'showNewGrantForm'])->name('show-new-grant');
     Route::post('/new-grants',[App\Http\Controllers\AdminController::class, 'publishGrant']);
@@ -223,6 +235,9 @@ Route::prefix('/tunnel')->group(function(){
     Route::get('/business-categories',[App\Http\Controllers\AdminController::class, 'showBusinessCategories'])->name('business-categories');
     Route::post('/business-categories',[App\Http\Controllers\AdminController::class, 'addNewBusinessCategory']);
     Route::post('/update-business-categories',[App\Http\Controllers\AdminController::class, 'updateBusinessCategory'])->name('update-business-categories');
+
+    Route::get('/monitoring/performance',[App\Http\Controllers\AdminController::class, 'showMonitoringPerformance'])->name('monitoring-performance');
+    Route::get('/ajax-performance',[App\Http\Controllers\AdminController::class, 'ajaxPerformance'])->name('ajax-performance');
 
 
 

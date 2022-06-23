@@ -99,16 +99,6 @@
             </ul>
         </li>
         <li><h3>Bills & Payment</h3></li>
-        <!--<li class="slide">
-            <a class="side-menu__item" data-toggle="slide" href="#">
-                <i class="ti-briefcase mr-2"></i>
-                <span class="side-menu__label">Vendors</span><i class="angle fa fa-angle-right"></i>
-            </a>
-            <ul class="slide-menu">
-                <li><a href="route('add-new-vendor')}}" class="slide-item"> Add New Vendor</a></li>
-                <li><a href="route('all-vendors')}}" class="slide-item"> All Vendors</a></li>
-            </ul>
-        </li> -->
         <li class="slide">
             <a class="side-menu__item" data-toggle="slide" href="#">
                 <i class="ti-share mr-2"></i>
@@ -153,7 +143,7 @@
             <ul class="slide-menu">
                 <li><a href="{{route('sales-report')}}" class="slide-item"> Sales Report</a></li>
                 <li><a href="{{route('payment-report')}}" class="slide-item"> Payment Report</a></li>
-                <!--<li><a href="gallery.html" class="slide-item"> Customer Sales Report Statement</a></li>-->
+                <li><a href="#" class="slide-item"> Margin Report</a></li>
                 <li><a href="{{route('impress-report')}}" class="slide-item"> Impress Report</a></li>
             </ul>
         </li>
@@ -181,26 +171,16 @@
                 <li><a href="{{route('add-new-team-member')}}" class="slide-item">Add New Member</a></li>
             </ul>
         </li>
+        <li><h3>Monitoring/Evaluation</h3></li>
         <li class="slide">
             <a class="side-menu__item" data-toggle="slide" href="#">
                 <i class="ti-hand-open mr-2"></i>
-                <span class="side-menu__label">Super-admin</span><i class="angle fa fa-angle-right"></i>
+                <span class="side-menu__label">Monitoring</span><i class="angle fe fe-angle-right"></i>
             </a>
             <ul class="slide-menu">
-                <li><a href="{{route('manage-workforce')}}" class="slide-item"> All Users</a></li>
-                <li><a href="{{route('add-new-admin-user')}}" class="slide-item">Add New User</a></li>
-            </ul>
-        </li>
-        <li class="slide">
-            <a class="side-menu__item" data-toggle="slide" href="#">
-                <i class="ti-hand-open mr-2"></i>
-                <span class="side-menu__label">Tenants</span><i class="angle fa fa-angle-right"></i>
-            </a>
-            <ul class="slide-menu">
-                <li><a href="{{route('manage-workforce')}}" class="slide-item"> All Tenants</a></li>
-                <li><a href="{{route('add-new-team-member')}}" class="slide-item">Subscriptions</a></li>
-                <li><a href="{{route('add-new-team-member')}}" class="slide-item">Activity Log</a></li>
-                <li><a href="{{route('add-new-team-member')}}" class="slide-item">Activity Log</a></li>
+                <li><a href="{{route('list-trainings')}}" class="slide-item"> Trainings</a></li>
+                <li><a href="{{route('list-grants')}}" class="slide-item">Grants</a></li>
+                <li><a href="{{route('add-new-team-member')}}" class="slide-item">Grants</a></li>
             </ul>
         </li>
     </ul>
