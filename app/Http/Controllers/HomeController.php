@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Grant;
+use App\Models\Survey;
 use App\Models\Training;
 use App\Models\TrainingCategory;
 use App\Models\TrainingFeedback;
@@ -24,6 +25,7 @@ class HomeController extends Controller
         $this->trainingfeedback = new TrainingFeedback();
         $this->trainingfeedbackreply = new TrainingFeedbackReply();
         $this->trainingcategory = new TrainingCategory();
+        $this->survey = new Survey();
     }
 
     public function viewTraining($slug){
@@ -38,6 +40,19 @@ class HomeController extends Controller
 
     public function listGrants(){
         return view('sme.grants',['grants'=>$this->grant->getAllGrants()]);
+    }
+
+    public function listSurveys(){
+        return view('sme.surveys',['surveys'=>$this->survey->getAllActiveSurveys()]);
+    }
+    public function surveyDetails($slug){
+        $survey = $this->survey->getSurveyBySlug($slug);
+        if(!empty($survey)){
+            return view('sme.survey-details',['survey'=>$survey]);
+        }else{
+            session()->flash("error", "No record found.");
+            return back();
+        }
     }
     public function viewGrant($slug){
         $grant = $this->grant->getGrantBySlug($slug);

@@ -8,6 +8,7 @@
 <script src="/assets/iconfonts/eva.min.js"></script>
 <script src="/assets/plugins/input-mask/jquery.mask.min.js"></script>
 <script src="/assets/plugins/sidemenu/sidemenu.js"></script>
+<script src="/assets/plugins/p-scroll/perfect-scrollbar.min.js"></script>
 <script src="/assets/plugins/sidemenu/sidemenu-scroll.js"></script>
 <script src="/assets/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js"></script>
 <script src="/assets/plugins/sidebar/sidebar.js"></script>

@@ -1,19 +1,19 @@
 @extends('layouts.admin-layout')
 @section('active-page')
-    Trainings
+    Surveys
 @endsection
 @section('title')
-    Trainings
+    Surveys
 @endsection
 @section('extra-styles')
     <link href="/assets/plugins/datatable/dataTables.bootstrap4.min.css" rel="stylesheet"/>
     <link href="/assets/plugins/datatable/responsivebootstrap4.min.css" rel="stylesheet" />
 @endsection
 @section('breadcrumb-action-btn')
-    <a href="{{route('show-new-training')}}" class="btn btn-primary btn-icon text-white mr-2">
+    <a href="{{route('show-new-assessment')}}" class="btn btn-primary btn-icon text-white mr-2">
         <span>
             <i class="ti-plus"></i>
-        </span> New Training
+        </span> New Survey
     </a>
 @endsection
 
@@ -22,7 +22,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h4>Trainings</h4>
+                    <h4>Surveys</h4>
                     @if(session()->has('success'))
                         <div class="alert alert-success mb-4">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -39,28 +39,22 @@
                                 <th class="wd-15p">Date</th>
                                 <th class="wd-15p">Title</th>
                                 <th class="wd-15p">Excerpt</th>
-                                <th class="wd-15p">Category</th>
                                 <th class="wd-25p">Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             @php $serial = 1; @endphp
-                                @foreach($trainings as $training)
-                                    <tr>
-                                        <td>{{$serial++}}</td>
-                                        <td>{{ date('d M, Y', strtotime($training->created_at)) }}</td>
-                                        <td>{{$training->title ?? '' }}</td>
-                                        <td>{{strlen(strip_tags($training->description)) > 60 ? substr(strip_tags($training->description),0,57).'...' : strip_tags($training->description)}}</td>
-                                        <td>
-                                            @foreach($training->getTrainingCategories as $cat)
-                                                {{$cat->getBusinessCategory->category_name.',' ?? ''}}
-                                            @endforeach
-                                        </td>
-                                        <td>
-                                            <a href="{{route('show-training-details', $training->slug)}}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                            @foreach($surveys as $survey)
+                                <tr>
+                                    <td>{{$serial++}}</td>
+                                    <td>{{ date('d M, Y', strtotime($survey->created_at)) }}</td>
+                                    <td>{{$survey->title ?? ''}}</td>
+                                    <td>{{strlen(strip_tags($survey->question)) > 60 ? substr(strip_tags($survey->question),0,57).'...' : strip_tags($survey->question)}}</td>
+                                    <td>
+                                        <a href="{{route('view-assessment', $survey->slug)}}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

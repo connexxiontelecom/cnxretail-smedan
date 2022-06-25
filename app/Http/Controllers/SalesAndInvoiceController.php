@@ -9,6 +9,7 @@ use App\Models\InvoiceDetail;
 use App\Models\InvoiceMaster;
 use App\Models\Item;
 use App\Models\ItemGallery;
+use App\Models\MarginReport;
 use App\Models\ReceiptDetail;
 use App\Models\ReceiptMaster;
 use Illuminate\Http\Request;
@@ -28,6 +29,7 @@ class SalesAndInvoiceController extends Controller
         $this->receipt = new ReceiptMaster();
         $this->receiptitem = new ReceiptDetail();
         $this->bank = new Bank();
+        $this->marginreport = new MarginReport();
     }
 
     public function manageInvoices(){
@@ -226,7 +228,10 @@ class SalesAndInvoiceController extends Controller
     public function approveReceipt($slug){
         $receipt = $this->receipt->getReceiptBySlug($slug);
         if(!empty($receipt)){
-            $this->receipt->updateReceiptStatus($receipt->id, 'post');
+            $record = $this->receipt->updateReceiptStatus($receipt->id, 'post');
+            if($record->posted == 1){
+                $this->marginreport->registerReport(1,$receipt->amount, $receipt);
+            }
             session()->flash("success", " Receipt posted.");
             return back();
         }else{

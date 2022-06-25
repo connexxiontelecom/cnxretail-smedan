@@ -6,6 +6,7 @@ use App\Models\Bank;
 use App\Models\BillDetail;
 use App\Models\BillMaster;
 use App\Models\Contact;
+use App\Models\MarginReport;
 use App\Models\PaymentMaster;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class BillsAndPaymentController extends Controller
         $this->billdetail = new BillDetail();
         $this->bank = new Bank();
         $this->paymentmaster = new PaymentMaster();
+        $this->marginreport = new MarginReport();
     }
 
     public function manageBills(){
@@ -166,7 +168,10 @@ class BillsAndPaymentController extends Controller
     public function approvePayment($slug){
         $payment = $this->paymentmaster->getPaymentBySlug($slug);
         if(!empty($payment)){
-            $this->paymentmaster->updatePaymentStatus($payment->id, 'post');
+            $record = $this->paymentmaster->updatePaymentStatus($payment->id, 'post');
+            if($record->posted == 1){
+                $this->marginreport->registerReport(2,$payment->amount, $payment->vendor_id);
+            }
             session()->flash("success", " Payment posted.");
             return back();
         }else{

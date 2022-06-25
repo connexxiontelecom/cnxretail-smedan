@@ -74,6 +74,7 @@ Route::prefix('/sales-n-invoice')->group(function(){
     Route::get('/decline-receipt/{slug}',[App\Http\Controllers\SalesAndInvoiceController::class, 'declineReceipt'])->name('decline-receipt');
     Route::get('/approve-receipt/{slug}',[App\Http\Controllers\SalesAndInvoiceController::class, 'approveReceipt'])->name('approve-receipt');
     Route::get('/send-receipt/{slug}',[App\Http\Controllers\SalesAndInvoiceController::class, 'sendReceipt'])->name('send-receipt');
+
     Route::get('/sales-report', [App\Http\Controllers\SalesAndInvoiceController::class, 'salesReport'])->name('sales-report');
     Route::get('/filter-sales-report', [App\Http\Controllers\SalesAndInvoiceController::class, 'filterSalesReport'])->name('filter-sales-report');
 
@@ -181,6 +182,8 @@ Route::post('/charge-invoice-online',[App\Http\Controllers\OnlinePaymentControll
 Route::get('/view-training/{slug}',[App\Http\Controllers\HomeController::class, 'viewTraining'])->name('view-training');
 Route::get('/view-grant/{slug}',[App\Http\Controllers\HomeController::class, 'viewGrant'])->name('view-grant');
 Route::get('/list-grants',[App\Http\Controllers\HomeController::class, 'listGrants'])->name('list-grants');
+Route::get('/list-surveys',[App\Http\Controllers\HomeController::class, 'listSurveys'])->name('list-surveys');
+Route::get('/survey-details/{slug}',[App\Http\Controllers\HomeController::class, 'surveyDetails'])->name('survey-details');
 Route::get('/list-trainings',[App\Http\Controllers\HomeController::class, 'listTrainings'])->name('list-trainings');
 Route::post('/business-trainings/comment/new',[App\Http\Controllers\HomeController::class, 'leaveCommentOnTraining'])->name('business-comment-training');
 Route::post('/business-trainings-reply/comment/new',[App\Http\Controllers\HomeController::class, 'leaveReplyOnComment'])->name('business-reply-comment-training');
@@ -236,9 +239,18 @@ Route::prefix('/tunnel')->group(function(){
     Route::post('/business-categories',[App\Http\Controllers\AdminController::class, 'addNewBusinessCategory']);
     Route::post('/update-business-categories',[App\Http\Controllers\AdminController::class, 'updateBusinessCategory'])->name('update-business-categories');
 
-    Route::get('/monitoring/performance',[App\Http\Controllers\AdminController::class, 'showMonitoringPerformance'])->name('monitoring-performance');
-    Route::get('/ajax-performance',[App\Http\Controllers\AdminController::class, 'ajaxPerformance'])->name('ajax-performance');
+    Route::get('/monitoring/performance/{slug}',[App\Http\Controllers\AdminController::class, 'showMonitoringPerformance'])->name('performance-per-client');
+    Route::get('/monitoring/businesses',[App\Http\Controllers\AdminController::class, 'showBusinesses'])->name('show-businesses');
+    Route::get('/monitoring/list-',[App\Http\Controllers\AdminController::class, 'showMonitoringPerformance'])->name('monitoring-performance');
+    Route::get('/ajax-performance/{tenantId}',[App\Http\Controllers\AdminController::class, 'ajaxPerformance'])->name('ajax-performance');
+    Route::get('/revenue-per-client',[App\Http\Controllers\AdminController::class, 'revenuePerClient'])->name('revenue-per-client');
+    Route::get('/filter-revenue-per-client', [App\Http\Controllers\AdminController::class, 'filterRevenuePerClient'])->name('filter-revenue-per-client');
 
+
+    Route::get('/assessment', [App\Http\Controllers\AdminController::class, 'showAssessment'])->name('show-assessment');
+    Route::get('/new-assessment', [App\Http\Controllers\AdminController::class, 'showNewAssessmentForm'])->name('show-new-assessment');
+    Route::post('/new-assessment', [App\Http\Controllers\AdminController::class, 'addNewSurvey']);
+    Route::get('/view-assessment/{slug}', [App\Http\Controllers\AdminController::class, 'viewAssessment'])->name('view-assessment');
 
 
 });
@@ -246,3 +258,4 @@ Route::prefix('/tunnel')->group(function(){
 Auth::routes();
 Route::get('logout', [App\Http\Controllers\Auth\LoginController::class,'logout']);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/shared/survey/{slug}', [App\Http\Controllers\OnlinePaymentController::class, 'sharedSurvey'])->name('shared-survey');

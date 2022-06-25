@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ReceiptMaster extends Model
 {
@@ -163,6 +164,7 @@ class ReceiptMaster extends Model
             $receipt->date_trashed = now();
             $receipt->save();
         }
+        return $receipt;
 
     }
 
@@ -173,6 +175,31 @@ class ReceiptMaster extends Model
 
         }
 
+    }
+
+    public function getAllReceipts(){
+        return ReceiptMaster::select( DB::raw("(sum(amount)) as amount"),'contact_id',
+            DB::raw("(count(contact_id)) as counter"),'contact_id', 'created_at')
+            ->groupBy('contact_id')
+            ->get();
+    }
+
+    public function getTenantReceipts($tenantId){
+        return ReceiptMaster::select( DB::raw("(sum(amount)) as amount"),'contact_id',
+            DB::raw("(count(contact_id)) as counter"),'contact_id', 'created_at')
+            ->where('contact_id', $tenantId)
+            ->groupBy('contact_id')
+            ->get();
+    }
+
+    public function getAllReceiptsByDateRange(Request $request){
+        return ReceiptMaster::select( DB::raw("(sum(amount)) as amount"),'contact_id', 'created_at')
+            ->whereBetween('issue_date', [$request->from, $request->to])
+            ->groupBy('contact_id')
+            ->get();
+
+        /*where('tenant_id', Auth::user()->tenant_id)
+            ->whereBetween('issue_date', [$request->from, $request->to])->get();*/
     }
 
 }

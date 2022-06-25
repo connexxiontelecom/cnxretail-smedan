@@ -88,7 +88,7 @@ class PaymentMaster extends Model
             $payment->date_trash = now();
             $payment->save();
         }
-
+        return $payment;
     }
 
 

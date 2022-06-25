@@ -180,7 +180,7 @@
             <ul class="slide-menu">
                 <li><a href="{{route('list-trainings')}}" class="slide-item"> Trainings</a></li>
                 <li><a href="{{route('list-grants')}}" class="slide-item">Grants</a></li>
-                <li><a href="{{route('add-new-team-member')}}" class="slide-item">Grants</a></li>
+                <li><a href="{{route('list-surveys')}}" class="slide-item">Surveys</a></li>
             </ul>
         </li>
     </ul>

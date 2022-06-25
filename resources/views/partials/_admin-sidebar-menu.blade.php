@@ -36,18 +36,7 @@
             <ul class="slide-menu">
                 <li><a href="{{route('show-trainings')}}" class="slide-item"> Trainings</a></li>
                 <li><a href="{{route('show-grants')}}" class="slide-item"> Grants/Interventions</a></li>
-            </ul>
-        </li>
-        <li class="slide">
-            <a class="side-menu__item" data-toggle="slide" href="#">
-                <i class="mdi mdi-settings mr-2"></i>
-                <span class="side-menu__label">Settings</span><i class="angle fa fa-angle-right"></i>
-            </a>
-            <ul class="slide-menu">
-                <li><a href="{{route('business-categories')}}" class="slide-item"> Categories</a></li>
-                <li><a href="{{route('manage-admin-users')}}" class="slide-item"> All Users</a></li>
-                <li><a href="{{route('add-new-admin-user')}}" class="slide-item">Add New User</a></li>
-                <li><a href="{{route('add-new-admin-user')}}" class="slide-item">Logout</a></li>
+                <li><a href="{{route('show-assessment')}}" class="slide-item"> Survey</a></li>
             </ul>
         </li>
 
@@ -57,7 +46,20 @@
                 <span class="side-menu__label">Monitoring</span><i class="angle fa fa-angle-right"></i>
             </a>
             <ul class="slide-menu">
-                <li><a href="{{route('monitoring-performance')}}" class="slide-item"> Performance</a></li>
+                <li><a href="{{route('show-businesses')}}" class="slide-item"> Performance</a></li>
+            </ul>
+        </li>
+        <li class="slide">
+            <a class="side-menu__item" data-toggle="slide" href="#">
+                <i class="mdi mdi-settings mr-2"></i>
+                <span class="side-menu__label">Settings</span><i class="angle fa fa-angle-right"></i>
+            </a>
+            <ul class="slide-menu">
+                <li><a href="{{route('business-categories')}}" class="slide-item"> Categories</a></li>
+                <li><a href="{{route('business-categories')}}" class="slide-item"> Survey</a></li>
+                <li><a href="{{route('manage-admin-users')}}" class="slide-item"> All Users</a></li>
+                <li><a href="{{route('add-new-admin-user')}}" class="slide-item">Add New User</a></li>
+                <li><a href="{{route('add-new-admin-user')}}" class="slide-item">Logout</a></li>
             </ul>
         </li>
     </ul>

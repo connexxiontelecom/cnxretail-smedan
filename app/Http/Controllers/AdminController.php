@@ -8,9 +8,15 @@ use App\Models\BusinessCategory;
 use App\Models\DailyMotivation;
 use App\Models\Grant;
 use App\Models\GrantMaterial;
+use App\Models\InvoiceDetail;
+use App\Models\InvoiceMaster;
 use App\Models\MarginReport;
 use App\Models\Pricing;
+use App\Models\ReceiptDetail;
+use App\Models\ReceiptMaster;
 use App\Models\Subscription;
+use App\Models\Survey;
+use App\Models\SurveyQuestion;
 use App\Models\Tenant;
 use App\Models\TenantNotification;
 use App\Models\Training;
@@ -43,6 +49,13 @@ class AdminController extends Controller
         $this->trainingfeedback = new TrainingFeedback();
         $this->trainingfeedbackreply = new TrainingFeedbackReply();
         $this->trainingcategory = new TrainingCategory();
+
+        $this->invoice = new InvoiceMaster();
+        $this->invoiceitem = new InvoiceDetail();
+        $this->receipt = new ReceiptMaster();
+        $this->receiptitem = new ReceiptDetail();
+        $this->survey = new Survey();
+        $this->surveyquestion = new SurveyQuestion();
     }
 
     public function notification(){
@@ -421,25 +434,119 @@ class AdminController extends Controller
         return back();
     }
 
-    public function showMonitoringPerformance(){
-        return view('admin.monitoring.index');
+    public function showBusinesses(){
+        return view('admin.monitoring.businesses',['tenants'=>$this->tenant->getAllRegisteredTenants()]);
+    }
+    public function showMonitoringPerformance($slug){
+        $business = $this->tenant->getTenantBySlug($slug);
+        //return dd($business->id);
+        if(!empty($business)){
+            return view('admin.monitoring.index',[
+                'receipts'=>$this->receipt->getTenantReceipts($business->id),
+                'from'=>now(),
+                'to'=>now(),
+                'tenantId'=>$business->id
+            ]);
+        }else{
+            session()->flash("error", "No record found.");
+            return back();
+        }
+
     }
 
-    public function ajaxPerformance(){
+    public function ajaxPerformance($tenantId){
         $report = MarginReport::select(
+            DB::raw("month"),
+            DB::raw("month_name"),
             DB::raw("(sum(debit)) as debitAmount"),
             DB::raw("(sum(credit)) as creditAmount"),
-            DB::raw("(DATE_FORMAT(created_at, '%m-%Y')) as month"),
-            DB::raw("(DATE_FORMAT(created_at, '%m-%Y')) as month_year")
-        )
-            //->orderBy('created_at')
-            ->groupBy(DB::raw("DATE_FORMAT(created_at, '%m-%Y')"))
+            //DB::raw("(DATE_FORMAT(created_at, '%m-%Y')) as month"),
+            //DB::raw("(DATE_FORMAT(created_at, '%m-%Y')) as month_year")
+        )->where('contact_id', $tenantId)
+            ->orderBy('month', 'ASC')
+            ->groupBy('month','month_name')
             ->get();
-        //$data = DB::table('margin_reports')->selectRaw('sum(debit) as debitAmount')->get();
-            //->groupBy('created_at');
         return response()->json($report,200);
     }
 
+    public function revenuePerClient(){
+        return view('admin.monitoring.revenue-per-client',[
+            'receipts'=>$this->receipt->getAllReceipts(),
+            'from'=>now(),
+            'to'=>now()
+        ]);
+    }
+
+    public function filterRevenuePerClient(Request $request){
+        $this->validate($request,[
+            'from'=>'required|date',
+            'to'=>'required|date'
+        ],[
+            'from.required'=>'Select start date',
+            'from.date'=>'Choose a valid date',
+            'to.required'=>'Select end date',
+            'to.date'=>'Choose a valid date'
+        ]);
+        return view('admin.monitoring.revenue-per-client',[
+            'receipts'=>$this->receipt->getAllReceiptsByDateRange($request),
+            'from'=>$request->from,
+            'to'=>$request->to
+        ]);
+    }
+
+
+
+
+
+    public function showNewAssessmentForm(){
+        return view('admin.add-new-assessment',['trainings'=>$this->training->getAllTrainings()]);
+    }
+    public function showAssessment(){
+        return view('admin.assessment', ['surveys'=>$this->survey->getAllSurvey()]);
+    }
+    public function addNewSurvey(Request $request){
+        $this->validate($request,[
+            'title'=>'required',
+            'description'=>'required',
+            'status'=>'required'
+        ],[
+            'title.required'=>'Enter survey title',
+            'description.required'=>'Enter a brief description of this survey',
+            'status.required'=>'Select survey status'
+
+        ]);
+        $survey = $this->survey->setNewSurvey($request);
+        foreach($request->questions as $question){
+            $this->surveyquestion->publishSurveyQuestion($survey->id, $question);
+        }
+        session()->flash("success", "New survey registered");
+        return back();
+    }
+
+    public function updateSurvey(Request $request){
+        $this->validate($request,[
+            'title'=>'required',
+            'question'=>'required',
+            'surveyId'=>'required'
+        ],[
+            'title.required'=>'Enter survey title',
+            'question.required'=>'Type survey question in the field provided'
+
+        ]);
+        $this->survey->updateSurvey($request);
+        session()->flash("success", "Your changes were saved.");
+        return back();
+    }
+
+    public function viewAssessment($slug){
+        $assessment = $this->survey->getSurveyBySlug($slug);
+        if(!empty($assessment)){
+            return view('admin.assessment-details', ['survey'=>$assessment]);
+        }else{
+            session()->flash("error", "No record found.");
+            return back();
+        }
+    }
 
 
 

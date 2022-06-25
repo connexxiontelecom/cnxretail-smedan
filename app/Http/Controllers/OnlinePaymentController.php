@@ -8,6 +8,7 @@ use App\Models\InvoiceMaster;
 use App\Models\Pricing;
 use App\Models\ReceiptMaster;
 use App\Models\Subscription;
+use App\Models\Survey;
 use App\Models\Tenant;
 use App\Models\User;
 use Carbon\Carbon;
@@ -29,6 +30,7 @@ class OnlinePaymentController extends Controller
         $this->invoice = new InvoiceMaster();
         $this->receipt = new ReceiptMaster();
         $this->bank = new Bank();
+        $this->survey = new Survey();
     }
 
     public function initializePaystack(){
@@ -217,6 +219,16 @@ class OnlinePaymentController extends Controller
             }
         }else{
             abort(404, 'Resource not found.');
+        }
+
+    }
+
+    public function sharedSurvey($slug){
+        $survey = $this->survey->getSurveyBySlug($slug);
+        if(!empty($survey)){
+            return view('shared-survey', ['survey'=>$survey]);
+        }else{
+            abort(404);
         }
 
     }
