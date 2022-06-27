@@ -56,7 +56,6 @@
             </a>
             <ul class="slide-menu">
                 <li><a href="{{route('business-categories')}}" class="slide-item"> Categories</a></li>
-                <li><a href="{{route('business-categories')}}" class="slide-item"> Survey</a></li>
                 <li><a href="{{route('manage-admin-users')}}" class="slide-item"> All Users</a></li>
                 <li><a href="{{route('add-new-admin-user')}}" class="slide-item">Add New User</a></li>
                 <li><a href="{{route('add-new-admin-user')}}" class="slide-item">Logout</a></li>
