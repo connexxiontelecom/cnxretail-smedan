@@ -187,6 +187,7 @@ Route::get('/survey-details/{slug}',[App\Http\Controllers\HomeController::class,
 Route::get('/list-trainings',[App\Http\Controllers\HomeController::class, 'listTrainings'])->name('list-trainings');
 Route::post('/business-trainings/comment/new',[App\Http\Controllers\HomeController::class, 'leaveCommentOnTraining'])->name('business-comment-training');
 Route::post('/business-trainings-reply/comment/new',[App\Http\Controllers\HomeController::class, 'leaveReplyOnComment'])->name('business-reply-comment-training');
+Route::post('/share/survey',[App\Http\Controllers\HomeController::class, 'shareSurvey'])->name('share-survey');
 
 
 Route::get('/renew-subscription/{tenant_slug}/{user_slug}',[App\Http\Controllers\Auth\LoginController::class, 'showRenewSubscriptionForm'])->name('renew-subscription');
@@ -241,9 +242,11 @@ Route::prefix('/tunnel')->group(function(){
 
     Route::get('/monitoring/performance/{slug}',[App\Http\Controllers\AdminController::class, 'showMonitoringPerformance'])->name('performance-per-client');
     Route::get('/monitoring/businesses',[App\Http\Controllers\AdminController::class, 'showBusinesses'])->name('show-businesses');
-    Route::get('/monitoring/list-',[App\Http\Controllers\AdminController::class, 'showMonitoringPerformance'])->name('monitoring-performance');
+    Route::get('/monitoring/list',[App\Http\Controllers\AdminController::class, 'showMonitoringPerformance'])->name('monitoring-performance');
     Route::get('/ajax-performance/{tenantId}',[App\Http\Controllers\AdminController::class, 'ajaxPerformance'])->name('ajax-performance');
-    Route::get('/revenue-per-client',[App\Http\Controllers\AdminController::class, 'revenuePerClient'])->name('revenue-per-client');
+    Route::get('/revenue-per-client/{slug}',[App\Http\Controllers\AdminController::class, 'revenuePerClient'])->name('revenue-per-client');
+    Route::get('/business-customer-satisfaction/{tenant}',[App\Http\Controllers\AdminController::class, 'customerSatisfaction'])->name('business-customer-satisfaction');
+    Route::get('/customer-satisfaction/{survey}/{tenant}',[App\Http\Controllers\AdminController::class, 'customerSatisfactionDetails'])->name('customer-satisfaction-details');
     Route::get('/filter-revenue-per-client', [App\Http\Controllers\AdminController::class, 'filterRevenuePerClient'])->name('filter-revenue-per-client');
 
 
@@ -259,3 +262,5 @@ Auth::routes();
 Route::get('logout', [App\Http\Controllers\Auth\LoginController::class,'logout']);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/shared/survey/{slug}', [App\Http\Controllers\OnlinePaymentController::class, 'sharedSurvey'])->name('shared-survey');
+Route::post('/process-shared/survey', [App\Http\Controllers\OnlinePaymentController::class, 'processSharedSurvey'])->name('process-shared-survey');
+Route::get('/survey/thank-you', [App\Http\Controllers\OnlinePaymentController::class, 'surveyThankYou'])->name('survey-thank-you');

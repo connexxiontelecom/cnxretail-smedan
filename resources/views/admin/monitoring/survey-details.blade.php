@@ -1,4 +1,4 @@
-@extends('layouts.master-layout')
+@extends('layouts.admin-layout')
 @section('active-page')
     Survey Details
 @endsection
@@ -21,7 +21,7 @@
 
 @section('main-content')
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             @if(session()->has('success'))
                 <div class="alert alert-success mb-4">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -30,7 +30,7 @@
                     <p>{!! session()->get('success') !!}</p>
                 </div>
             @endif
-                @if(session()->has('error'))
+            @if(session()->has('error'))
                 <div class="alert alert-danger mb-4">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <strong>Whoops!</strong>
@@ -38,9 +38,9 @@
                     <p>{!! session()->get('error') !!}</p>
                 </div>
             @endif
-                @if($errors->any())
-                    {{ implode('', $errors->all('<div>:message</div>')) }}
-                @endif
+            @if($errors->any())
+                {{ implode('', $errors->all('<div>:message</div>')) }}
+            @endif
             <div class="card">
                 <div class="wideget-user-tab">
                     <div class="tab-menu-heading">
@@ -135,47 +135,6 @@
                                 @endforeach
                             </ul>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="wideget-user">
-                        <div class="card">
-                            <div class="card-header bg-primary br-tr-3 br-tl-3">
-                                <h3 class="card-title text-white">Share Survey</h3>
-                                <div class="card-options ">
-                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"></a>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <p>Share this survey with your clients</p>
-                                <form action="{{route('share-survey')}}" method="post">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label for="">Clients</label>
-                                        <select name="clients[]" id="clients" class="form-control" multiple>
-                                            <option disabled selected>--Select client--</option>
-                                            @foreach($contacts as $contact)
-                                                <option value="{{$contact->id}}">{{$contact->company_name ?? '' }}</option>
-                                            @endforeach
-                                        </select>
-                                        <input type="hidden" name="surveyId" value="{{$survey->id}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="allContacts" value="1"  data-slug-id="checkboxes-option-1-checkbox" data-has-form="false" data-category="user-data">
-                                            <span class="custom-control-label">Send to All Contacts</span>
-                                        </label>
-                                    </div>
-                                    <div class="form-group d-flex justify-content-center">
-                                        <button class="btn btn-primary"> <i class="ti-share mr-2"></i>Share</button>
-                                    </div>
-                                </form>
-                            </div>
                         </div>
                     </div>
                 </div>

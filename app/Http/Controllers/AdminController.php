@@ -17,6 +17,7 @@ use App\Models\ReceiptMaster;
 use App\Models\Subscription;
 use App\Models\Survey;
 use App\Models\SurveyQuestion;
+use App\Models\SurveyResponse;
 use App\Models\Tenant;
 use App\Models\TenantNotification;
 use App\Models\Training;
@@ -26,6 +27,7 @@ use App\Models\TrainingFeedbackReply;
 use App\Models\TrainingMaterial;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Newsletter\NewsletterFacade as Newsletter;
 use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
@@ -56,6 +58,7 @@ class AdminController extends Controller
         $this->receiptitem = new ReceiptDetail();
         $this->survey = new Survey();
         $this->surveyquestion = new SurveyQuestion();
+        $this->surveyresponse = new SurveyResponse();
     }
 
     public function notification(){
@@ -445,7 +448,9 @@ class AdminController extends Controller
                 'receipts'=>$this->receipt->getTenantReceipts($business->id),
                 'from'=>now(),
                 'to'=>now(),
-                'tenantId'=>$business->id
+                'tenantId'=>$business->id,
+                'surveyResponse'=>$this->surveyresponse->getSurveyResponseByTenantId($business->id),
+                'business'=>$business
             ]);
         }else{
             session()->flash("error", "No record found.");
@@ -469,12 +474,20 @@ class AdminController extends Controller
         return response()->json($report,200);
     }
 
-    public function revenuePerClient(){
-        return view('admin.monitoring.revenue-per-client',[
-            'receipts'=>$this->receipt->getAllReceipts(),
-            'from'=>now(),
-            'to'=>now()
-        ]);
+    public function revenuePerClient($slug){
+        $tenant = $this->tenant->getTenantBySlug($slug);
+        if(!empty($tenant)){
+            return view('admin.monitoring.revenue-per-client',[
+                'receipts'=>$this->receipt->getTenantReceipts($tenant->id),
+                'from'=>now(),
+                'to'=>now(),
+                'tenant'=>$tenant
+            ]);
+        }else{
+            session()->flash("error", "No record found.");
+            return back();
+        }
+
     }
 
     public function filterRevenuePerClient(Request $request){
@@ -495,7 +508,34 @@ class AdminController extends Controller
     }
 
 
+    public function customerSatisfaction($slug){
+        $tenant = $this->tenant->getTenantBySlug($slug);
+        if(!empty($tenant)){
+        return view('admin.monitoring.customer-satisfaction',
+            [
+                'surveys'=>$this->survey->getAllSurvey(),
+                'tenant'=>$tenant
+            ]
+        );
+        }else{
+            session()->flash("error", "No record found.");
+            return back();
+        }
+    }
 
+    public function customerSatisfactionDetails($surveySlug, $tenantSlug){
+        $tenant = $this->tenant->getTenantBySlug($tenantSlug);
+        if(!empty($tenant)){
+            $survey = $this->survey->getSurveyBySlug($surveySlug);
+            return view('admin.monitoring.survey-details',
+                [
+                    'survey'=>$survey,
+                ]);
+        }else{
+            session()->flash("error", "No record found.");
+            return back();
+        }
+    }
 
 
     public function showNewAssessmentForm(){

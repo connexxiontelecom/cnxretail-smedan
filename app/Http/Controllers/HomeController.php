@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use App\Models\Grant;
 use App\Models\Survey;
+use App\Models\SurveyResponse;
 use App\Models\Training;
 use App\Models\TrainingCategory;
 use App\Models\TrainingFeedback;
 use App\Models\TrainingFeedbackReply;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Mail\SendSurveyMail;
 
 class HomeController extends Controller
 {
@@ -26,6 +30,8 @@ class HomeController extends Controller
         $this->trainingfeedbackreply = new TrainingFeedbackReply();
         $this->trainingcategory = new TrainingCategory();
         $this->survey = new Survey();
+        $this->surveyresponse = new SurveyResponse();
+        $this->contact = new Contact();
     }
 
     public function viewTraining($slug){
@@ -48,7 +54,11 @@ class HomeController extends Controller
     public function surveyDetails($slug){
         $survey = $this->survey->getSurveyBySlug($slug);
         if(!empty($survey)){
-            return view('sme.survey-details',['survey'=>$survey]);
+            return view('sme.survey-details',
+                [
+                    'survey'=>$survey,
+                    'contacts'=>$this->contact->getTenantContacts(Auth::user()->tenant_id)
+                ]);
         }else{
             session()->flash("error", "No record found.");
             return back();
@@ -101,8 +111,28 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function shareSurvey(Request $request)
     {
-        return view('home');
+        if(isset($request->allContacts) && $request->allContacts != 1){
+            $this->validate($request,[
+                'clients'=>'required|array',
+                'clients.*'=>'required',
+                'surveyId'=>'required'
+            ]);
+        }
+        $survey = $this->survey->getSurveyById($request->surveyId);
+        foreach($request->clients as $clientId){
+            #Send mail
+            $client = $this->contact->getContactById($clientId);
+            try{
+                \Mail::to($client->company_email)->send(new SendSurveyMail($client, $survey) );
+
+            }catch (\Exception $ex){
+                session()->flash("error", "<strong>Whoops!</strong> We had issues sending out this survey. Try again later".$ex);
+                return back();
+            }
+        }
+        session()->flash("success", "<strong>Great!</strong> Survey shared with your contacts.");
+        return back();
     }
 }

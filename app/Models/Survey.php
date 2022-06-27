@@ -44,6 +44,10 @@ class Survey extends Model
     public function getAllSurvey(){
         return Survey::orderBy('id', 'DESC')->get();
     }
+
+   /* public function getAllSurvey(){
+        return Survey::orderBy('id', 'DESC')->get();
+    }*/
     public function getAllActiveSurveys(){
         return Survey::where('status',1)->orderBy('id', 'DESC')->get();
     }

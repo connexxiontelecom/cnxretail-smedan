@@ -21,6 +21,10 @@ class Tenant extends Model
         return $this->hasMany(Subscription::class, 'tenant_id')->orderBy('id', 'DESC');
     }
 
+    public function getBusinessCategory(){
+        return $this->belongsTo(BusinessCategory::class, 'business_category_id');
+    }
+
     /*
      * Use-case methods
      */

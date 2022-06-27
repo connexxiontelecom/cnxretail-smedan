@@ -9,6 +9,7 @@ use App\Models\Pricing;
 use App\Models\ReceiptMaster;
 use App\Models\Subscription;
 use App\Models\Survey;
+use App\Models\SurveyResponse;
 use App\Models\Tenant;
 use App\Models\User;
 use Carbon\Carbon;
@@ -31,6 +32,7 @@ class OnlinePaymentController extends Controller
         $this->receipt = new ReceiptMaster();
         $this->bank = new Bank();
         $this->survey = new Survey();
+        $this->surveyresponse = new SurveyResponse();
     }
 
     public function initializePaystack(){
@@ -231,5 +233,26 @@ class OnlinePaymentController extends Controller
             abort(404);
         }
 
+    }
+
+    public function processSharedSurvey(Request $request){
+        $this->validate($request,[
+            'tenantId'=>'required',
+            'surveyId'=>'required',
+            'rating'=>'required|array',
+            'rating.*'=>'required',
+            'questions'=>'required|array',
+            'questions.*'=>'required'
+        ]);
+
+        for($i = 0; $i<count($request->questions); $i++){
+            $this->surveyresponse->publishSurveyResponse($request->surveyId,
+                $request->questions[$i], $request->tenantId, $request->rating[$i]);
+        }
+        return redirect()->route('survey-thank-you');
+    }
+
+    public function surveyThankYou(){
+        return view('survey-thank-you-page');
     }
 }

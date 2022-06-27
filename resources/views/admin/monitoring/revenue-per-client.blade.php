@@ -38,7 +38,52 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header bg-primary br-tr-3 br-tl-3">
+                            <h3 class="card-title text-white">Business Info</h3>
+                            <div class="card-options ">
+                                <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up text-white"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="">Company Name:</label>
+                                <input type="text" readonly value="{{$tenant->company_name ?? '' }}" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Email:</label>
+                                <input type="text" readonly value="{{$tenant->email ?? '' }}" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Phone No.:</label>
+                                <input type="text" readonly value="{{$tenant->phone_no ?? '-' }}" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Company Address:</label>
+                                <input type="text" readonly value="{{$tenant->address ?? '-' }}" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Description:</label>
+                                <p>{{$tenant->description ?? '-' }}</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Member Since:</label>
+                                <p class="text-muted">{{ date('d M, Y', strtotime($tenant->created_at))  }}</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Account Status:</label>
+                                <p class="text-danger">{!! $tenant->account_status == 1 ? "<span class='text-success'>Active</span>" : "<span class='text-danger'>Suspended</span>" !!}</p>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            @if(!empty($tenant->website))
+                                <a href="http://{{$tenant->website}}" target="_blank">Visit website</a>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
                     <div class="col-md-12 col-sm-12">
                         <h4>Filter</h4>
                         <form action="{{route('filter-revenue-per-client')}}" class="form-inline" method="get">
@@ -70,7 +115,8 @@
                                 <th>#</th>
                                 <th>Date</th>
                                 <th>Client</th>
-                                <th>Revenue</th>
+                                <th>Status</th>
+                                <th>Amount</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -80,6 +126,7 @@
                                     <td>{{$n++}}</td>
                                     <td>{{date('d M, Y', strtotime($receipt->created_at))}}</td>
                                     <td>{{$receipt->getContact->company_name ?? ''}}</td>
+                                    <td>{{$receipt->counter > 1 ? 'Repeat' : 'New'}}</td>
                                     <td class="text-right">{{ number_format($receipt->amount,2) }}</td>
                                 </tr>
                             @endforeach

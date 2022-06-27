@@ -50,16 +50,44 @@
                             <div class="card-title">Survey Questions</div>
                         </div>
                         <div class="card-body pb-3">
-                            <form action="">
+                            @if($errors->any())
+                                {{ implode('', $errors->all('<div>:message</div>')) }}
+                            @endif
+                            <form action="{{route('process-shared-survey')}}" method="post">
                                 @csrf
                                 <ol>
                                     @foreach($survey->getSurveyQuestions as $question)
                                         <li class="acc_section">
                                             <tr>
                                                 <td>{{$question->question ?? ''}}</td>
+                                                @error('questions')
+                                                <i class="text-danger">{{$message}}</i>
+                                                @enderror
                                                 <td>
-                                                    <input type="number" max="5" name="rating[]" class="form-control col-md-2" placeholder="Rating">
-                                                    <input type="hidden" max="5" name="questionId[]" class="form-control col-md-2" value="{{$question->id}}">
+                                                    <div class="rating-stars block" id="rating-{{$question->id}}">
+                                                        <input type="number" readonly="readonly" class="rating-value" name="rating[]" id="rating-stars-value-{{$question->id}}" >
+                                                        <div class="rating-stars-container">
+                                                            <div class="rating-star">
+                                                                <i class="fe fe-star"></i>
+                                                            </div>
+                                                            <div class="rating-star">
+                                                                <i class="fe fe-star"></i>
+                                                            </div>
+                                                            <div class="rating-star">
+                                                                <i class="fe fe-star"></i>
+                                                            </div>
+                                                            <div class="rating-star">
+                                                                <i class="fe fe-star"></i>
+                                                            </div>
+                                                            <div class="rating-star">
+                                                                <i class="fe fe-star"></i>
+                                                            </div>
+                                                        </div>
+                                                        @error('rating')
+                                                        <i class="text-danger">{{$message}}</i>
+                                                        @enderror
+                                                    </div>
+                                                    <input type="hidden" max="5" name="questions[]" class="form-control col-md-2" value="{{$question->id}}">
                                                 </td>
                                             </tr>
                                         </li>
@@ -67,6 +95,7 @@
                                 </ol>
                                 <hr>
                                 <input type="hidden" name="surveyId" value="{{$survey->id}}">
+                                <input type="hidden" name="tenantId" value="1">
                                 <div class="form-group d-flex justify-content-center">
                                     <button class="btn btn-primary">Submit</button>
                                 </div>
@@ -84,4 +113,5 @@
 @section('extra-scripts')
     <script src="/assets/plugins/accordion/accordion.min.js"></script>
     <script src="/assets/plugins/accordion/accordion.js"></script>
+    <script src="/assets/plugins/rating/jquery.rating-stars.js"></script>
 @endsection
