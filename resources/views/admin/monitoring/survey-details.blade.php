@@ -11,6 +11,11 @@
 
 @section('breadcrumb-action-btn')
     <div class="btn-group">
+        <a href="{{route('performance-per-client', $tenant->slug)}}" class="btn btn-info btn-icon text-white mr-2">
+        <span>
+            <i class="ti-back-left"></i>
+        </span> Back to Performance Dashboard
+        </a>
         <a href="{{url()->previous()}}" class="btn btn-secondary btn-icon text-white mr-2">
         <span>
             <i class="ti-back-left"></i>
