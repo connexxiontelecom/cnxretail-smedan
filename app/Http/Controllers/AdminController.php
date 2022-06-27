@@ -530,6 +530,7 @@ class AdminController extends Controller
             return view('admin.monitoring.survey-details',
                 [
                     'survey'=>$survey,
+                    'tenant'=>$tenant
                 ]);
         }else{
             session()->flash("error", "No record found.");
