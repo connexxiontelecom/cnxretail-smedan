@@ -48,26 +48,65 @@
                         <input type="text" readonly value="{{$tenant->phone_no ?? '-' }}" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="">Company Address:</label>
-                        <input type="text" readonly value="{{$tenant->address ?? '-' }}" class="form-control">
+                        <label for="">Survey Response(s):</label>
+                        <p class="badge badge-danger">{{ count($survey->getSurveyResponses) ?? '' }}</p>
                     </div>
                     <div class="form-group">
-                        <label for="">Description:</label>
-                        <p>{{$tenant->description ?? '-' }}</p>
+                        <label for="">Rating Summary:</label>
+                        <div class="">
+                            <div class="row">
+                                <div class="rating-stars block col-md-5" id="rating-1" data-stars="2" style="cursor: pointer;">
+                                    <i class="fe fe-star" style="color:#f1c40f"></i>
+                                    <i class="fe fe-star" style="color: rgb(255, 207, 16);"></i>
+                                    <i class="fe fe-star" style="color: rgb(255, 207, 16);"></i>
+                                    <i class="fe fe-star" style="color: rgb(255, 207, 16);"></i>
+                                    <i class="fe fe-star" style="color: rgb(255, 207, 16);"></i>
+                                </div>
+                                <div class="col-md-2">
+                                    {{count($surveyResponse) > 0 ? number_format($surveyResponse->where('rating',5)->count()/count($surveyResponse) * 100 ) : 0}}%
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="rating-stars block col-md-5" id="rating-1" data-stars="2" style="cursor: pointer;">
+                                    <i class="fe fe-star" style="color:#f1c40f"></i>
+                                    <i class="fe fe-star" style="color: rgb(255, 207, 16); "></i>
+                                    <i class="fe fe-star" style="color: rgb(255, 207, 16);"></i>
+                                    <i class="fe fe-star" style="color: rgb(255, 207, 16);"></i>
+                                </div>
+                                <div class="col-md-2">
+                                    {{count($surveyResponse) > 0 ? ceil($surveyResponse->where('rating',4)->count()/count($surveyResponse) * 100 ) : 0}}%
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="rating-stars block col-md-5" id="rating-1" data-stars="2" style="cursor: pointer;">
+                                    <i class="fe fe-star" style="color:#f1c40f"></i>
+                                    <i class="fe fe-star" style="color: rgb(255, 207, 16);"></i>
+                                    <i class="fe fe-star" style="color: rgb(255, 207, 16);"></i>
+                                </div>
+                                <div class="col-md-2">
+                                    {{count($surveyResponse) > 0 ? ceil($surveyResponse->where('rating',3)->count()/count($surveyResponse) * 100 ) : 0}}%
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="rating-stars block col-md-5" id="rating-1" data-stars="2" style="cursor: pointer;">
+                                    <i class="fe fe-star" style="color:#f1c40f"></i>
+                                    <i class="fe fe-star" style="color: rgb(255, 207, 16);"></i>
+                                </div>
+                                <div class="col-md-2">
+                                    {{count($surveyResponse) > 0 ? ceil($surveyResponse->where('rating',2)->count()/count($surveyResponse) * 100 ) : 0}}%
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="rating-stars block col-md-5" id="rating-1" data-stars="2" style="cursor: pointer;">
+                                    <i class="fe fe-star" style="color:#f1c40f"></i>
+                                </div>
+                                <div class="col-md-2">
+                                    {{count($surveyResponse) > 0 ? ceil($surveyResponse->where('rating',1)->count()/count($surveyResponse) * 100 ) : 0}}%
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="">Member Since:</label>
-                        <p class="text-muted">{{ date('d M, Y', strtotime($tenant->created_at))  }}</p>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Account Status:</label>
-                        <p class="text-danger">{!! $tenant->account_status == 1 ? "<span class='text-success'>Active</span>" : "<span class='text-danger'>Suspended</span>" !!}</p>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    @if(!empty($tenant->website))
-                        <a href="http://{{$tenant->website}}" target="_blank">Visit website</a>
-                    @endif
+
                 </div>
             </div>
         </div>

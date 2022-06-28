@@ -514,7 +514,7 @@ class AdminController extends Controller
         return view('admin.monitoring.customer-satisfaction',
             [
                 'surveys'=>$this->survey->getAllSurvey(),
-                'tenant'=>$tenant
+                'tenant'=>$tenant,
             ]
         );
         }else{
@@ -530,7 +530,8 @@ class AdminController extends Controller
             return view('admin.monitoring.survey-details',
                 [
                     'survey'=>$survey,
-                    'tenant'=>$tenant
+                    'tenant'=>$tenant,
+                    'surveyResponse'=>$this->surveyresponse->getSurveyResponseByTenantId($tenant->id),
                 ]);
         }else{
             session()->flash("error", "No record found.");

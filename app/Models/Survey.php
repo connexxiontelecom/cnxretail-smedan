@@ -15,6 +15,9 @@ class Survey extends Model
     public function getSurveyQuestions(){
         return $this->hasMany(SurveyQuestion::class, 'survey_id');
     }
+    public function getSurveyResponses(){
+        return $this->hasMany(SurveyResponse::class, 'survey_id');
+    }
 
     public function setNewSurvey(Request $request){
         $sur = new Survey();

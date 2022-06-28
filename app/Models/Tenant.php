@@ -109,6 +109,10 @@ class Tenant extends Model
         return $tenant;
     }
 
+   /* public function getTenantTurnover(){
+        return
+    }*/
+
 
 
 

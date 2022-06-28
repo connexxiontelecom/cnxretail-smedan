@@ -165,7 +165,7 @@
                                                 <i class="fe fe-star" style="color: rgb(255, 207, 16);"></i>
                                             </div>
                                             <div class="col-md-2">
-                                                {{count($surveyResponse) > 0 ? ceil($surveyResponse->where('rating',5)->count()/count($surveyResponse) * 100 ) : 0}}%
+                                                {{count($surveyResponse) > 0 ? number_format($surveyResponse->where('rating',5)->count()/count($surveyResponse) * 100 ) : 0}}%
                                             </div>
                                         </div>
                                         <div class="row">
