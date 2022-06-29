@@ -109,9 +109,9 @@ class Tenant extends Model
         return $tenant;
     }
 
-   /* public function getTenantTurnover(){
-        return
-    }*/
+    public function getTenantTurnover($tenantId){
+        return ReceiptMaster::whereYear('payment_date', date('Y'))->where('tenant_id', $tenantId)->get();
+    }
 
 
 

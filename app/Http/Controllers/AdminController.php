@@ -493,7 +493,8 @@ class AdminController extends Controller
     public function filterRevenuePerClient(Request $request){
         $this->validate($request,[
             'from'=>'required|date',
-            'to'=>'required|date'
+            'to'=>'required|date',
+            'tenant'=>'required'
         ],[
             'from.required'=>'Select start date',
             'from.date'=>'Choose a valid date',
@@ -503,7 +504,8 @@ class AdminController extends Controller
         return view('admin.monitoring.revenue-per-client',[
             'receipts'=>$this->receipt->getAllReceiptsByDateRange($request),
             'from'=>$request->from,
-            'to'=>$request->to
+            'to'=>$request->to,
+            'tenant'=>$this->tenant->getTenantById($request->tenant)
         ]);
     }
 
