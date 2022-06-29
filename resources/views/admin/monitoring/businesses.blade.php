@@ -41,7 +41,9 @@
                                         <td>{{$tenant->company_name ?? '' }}</td>
                                         <td>{{$tenant->email ?? ''}}</td>
                                         <td>{{$tenant->phone_no ?? '-'}}</td>
-                                        <td>tu</td>
+                                        <td class="text-right">
+                                            {{number_format($tenant->getTenantTurnover($tenant->id)->sum('amount'),2)}}
+                                        </td>
                                         <td>
                                             <a href="{{route('performance-per-client', $tenant->slug)}}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>
                                         </td>

@@ -195,6 +195,7 @@ class ReceiptMaster extends Model
     public function getAllReceiptsByDateRange(Request $request){
         return ReceiptMaster::select( DB::raw("(sum(amount)) as amount"),'contact_id', 'created_at')
             ->whereBetween('issue_date', [$request->from, $request->to])
+            ->where('tenant_id', $request->tenant_id)
             ->groupBy('contact_id')
             ->get();
 

@@ -135,12 +135,12 @@
                                                 </thead>
                                                 <tbody>
                                                 @php $n = 1; @endphp
-                                                @foreach ($receipts as $receipt)
+                                                @foreach ($receipts->take(5) as $receipt)
                                                     <tr>
                                                         <td>{{$n++}}</td>
                                                         <td>{{date('d M, Y', strtotime($receipt->created_at))}}</td>
                                                         <td>{{$receipt->getContact->company_name ?? ''}}</td>
-                                                        <td>{{$receipt->counter > 1 ? 'Repeat' : 'New'}}</td>
+                                                        <td>{!! $receipt->counter > 1 ? "<label class='badge badge-success'>Repeat</label>" : "<label class='badge badge-danger'>New</label>" !!}</td>
                                                         <td class="text-right">{{ number_format($receipt->amount,2) }}</td>
                                                     </tr>
                                                 @endforeach
@@ -222,27 +222,57 @@
     <script src="/assets/assets/js/chart.min.js"></script>
     <script src="/assets/plugins/rating/jquery.rating-stars.js"></script>
     <script>
-
+        const result = [0,0,0,0,0,0,0,0,0,0,0,0];
+        const profitMargin = [0,0,0,0,0,0,0,0,0,0,0,0];
+        const months = ['Jan','Feb','Mar','Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         $(document).ready(function(){
-            const result = [];
-            const profitMargin = [];
-            const months = ['Jan','Feb','Mar','Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             const url = "{{route('ajax-performance', $tenantId)}}";
-            let i = 1;
+            let i = 0;
+            let n = 1;
             axios.get(url)
                 .then(res=> {
-                    for(i = 1; i<=12; i++){
-                    res.data.map(entry => {
-                        if(i === parseInt(entry.month)){
-                            result.push(entry.creditAmount);
-                            profitMargin.push(entry.creditAmount - entry.debitAmount);
-                        }else{
-                            result.push(0);
-                            profitMargin.push(0);
+                    res.data.map((entry) => {
+                        switch (entry.month) {
+                            case 1:
+                                plotGraph(1, entry.creditAmount, entry.debitAmount);
+                               break;
+                            case 2:
+                                plotGraph(2, entry.creditAmount, entry.debitAmount);
+                                break;
+                            case 3:
+                                plotGraph(3, entry.creditAmount, entry.debitAmount);
+                                break;
+                            case 4:
+                                plotGraph(4, entry.creditAmount, entry.debitAmount);
+                                break;
+                            case 5:
+                                plotGraph(5, entry.creditAmount, entry.debitAmount);
+                                break;
+                            case 6:
+                                plotGraph(6, entry.creditAmount, entry.debitAmount);
+                                break;
+                            case 7:
+                                plotGraph(7, entry.creditAmount, entry.debitAmount);
+                                break;
+                            case 8:
+                                plotGraph(8, entry.creditAmount, entry.debitAmount);
+                                break;
+                            case 9:
+                                plotGraph(9, entry.creditAmount, entry.debitAmount);
+                                break;
+                            case 10:
+                                plotGraph(10, entry.creditAmount, entry.debitAmount);
+                                break;
+                            case 11:
+                                plotGraph(11, entry.creditAmount, entry.debitAmount);
+                                break;
+                            case 12:
+                                plotGraph(12, entry.creditAmount, entry.debitAmount);
+                                break;
                         }
 
+
                     });
-                }
                     const ctx = document.getElementById('myChart').getContext('2d');
                     const myChart = new Chart(ctx, {
                         type: 'bar',
@@ -252,17 +282,17 @@
                                 label: 'Revenue',
                                 data: result,
                                 backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)',
-                                    'rgba(255, 206, 86, 0.2)',
-                                    'rgba(75, 192, 192, 0.2)',
-                                    'rgba(153, 102, 255, 0.2)',
-                                    'rgba(255, 159, 64, 0.2)',
-                                    'rgba(255, 89, 32, 0.2)',
-                                    'rgba(255, 77, 189, 0.2)',
-                                    'rgba(167, 230, 56, 0.2)',
-                                    'rgba(49, 12, 186, 0.2)',
-                                    'rgba(207, 167, 204, 0.2)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgba(255, 89, 32, 1)',
+                                    'rgba(255, 77, 189, 1)',
+                                    'rgba(167, 230, 56, 1)',
+                                    'rgba(49, 12, 186, 1)',
+                                    'rgba(79, 270, 204, 1)',
                                 ],
                                 borderColor: [
                                     'rgba(255, 99, 132, 1)',
@@ -275,7 +305,7 @@
                                     'rgba(255, 201, 81, 1)',
                                     'rgba(45, 180, 69, 1)',
                                     'rgba(120, 34, 86, 1)',
-                                    'rgba(78, 21, 173, 1)',
+                                    'rgba(79, 270, 204, 1)',
                                 ],
                                 borderWidth: 1
                             }]
@@ -297,17 +327,17 @@
                                 label: 'Profit Margin',
                                 data: profitMargin,
                                 backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)',
-                                    'rgba(255, 206, 190, 0.2)',
-                                    'rgba(75, 192, 192, 0.2)',
-                                    'rgba(153, 102, 255, 0.2)',
-                                    'rgba(255, 159, 64, 0.2)',
-                                    'rgba(255, 89, 32, 0.2)',
-                                    'rgba(255, 77, 189, 0.2)',
-                                    'rgba(167, 230, 56, 0.2)',
-                                    'rgba(49, 12, 289, 0.2)',
-                                    'rgba(207, 167, 204, 0.2)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 190, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgba(255, 89, 32, 1)',
+                                    'rgba(255, 77, 189, 1)',
+                                    'rgba(167, 230, 56, 1)',
+                                    'rgba(49, 12, 289, 1)',
+                                    'rgba(207, 167, 204, 1)',
                                 ],
                                 borderColor: [
                                     'rgba(255, 99, 132, 1)',
@@ -355,7 +385,11 @@
                   //  console.log(err);
                 })
 
-console.log(months)
         });
+
+        function plotGraph(index, credit, debit){
+            result[index-1] = credit;
+            profitMargin[index-1] = credit - debit;
+        }
     </script>
 @endsection

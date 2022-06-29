@@ -10,6 +10,11 @@
     <link href="/assets/plugins/datatable/responsivebootstrap4.min.css" rel="stylesheet" />
 @endsection
 @section('breadcrumb-action-btn')
+    <a href="{{route('performance-per-client', $tenant->slug)}}" class="btn btn-info btn-icon text-white mr-2">
+        <span>
+            <i class="ti-back-left"></i>
+        </span> Back to Performance Dashboard
+    </a>
     <a href="{{url()->previous()}}" class="btn btn-secondary btn-icon text-white mr-2">
         <span>
             <i class="ti-back-left"></i>
@@ -95,6 +100,7 @@
                             <div class="ml-2 form-group">
                                 <label for="">To</label>
                                 <input type="date" class="form-control ml-2" placeholder="To" name="to">
+                                <input type="hidden" class="form-control ml-2" placeholder="To" name="tenant" value="{{$tenant->id}}">
                             </div>
                             <div class="form-group">
                                 <button class="btn-primary btn " type="submit">Submit</button>
