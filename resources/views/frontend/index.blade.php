@@ -36,28 +36,40 @@
                 <div class="col-lg-7 col-md-9">
                     <div class="sec-heading">
                         <h2>How It <span class="theme-cl-2">Works?</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <p>CNX Retail helps you take your business online so you can find new customers, sell more and expand your reach. It works in 4 easy steps…</p>
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-4 col-sm-4">
+                <div class="col-md-3 col-sm-3">
                     <div class="working-process"><span class="process-img"><img src="/assets/assets/img/step-1.png" class="img-responsive" alt=""><span class="process-num">01</span></span>
                         <h4>Create An Account</h4>
-                        <p>Post a job to tell us about your project. We'll quickly match you with the right freelancers find place best.</p>
+                        <p>To take your business online, you will need to create an account you will use to manage and grow your store. Click on Get Started to begin creating an account for your online store.</p>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-4">
-                    <div class="working-process"><span class="process-img"><img src="/assets/assets/img/step-2.png" class="img-responsive" alt=""><span class="process-num">02</span></span>
-                        <h4>Search Jobs</h4>
-                        <p>Post a job to tell us about your project. We'll quickly match you with the right freelancers find place best.</p>
+                <div class="col-md-3 col-sm-3">
+                    <div class="working-process"><span class="process-img">
+                            <img src="/assets/assets/img/step-2.png" class="img-responsive" alt="">
+                            <span class="process-num">02</span></span>
+                        <h4>Login & Describe Your Business</h4>
+                        <p>Once done, login to the CNX Retail account you just created to access and populate your account. Here you will fill in information needed to help your customers understand what your business is about.</p>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-4">
-                    <div class="working-process"><span class="process-img"><img src="/assets/assets/img/step-3.png" class="img-responsive" alt=""><span class="process-num">03</span></span>
-                        <h4>Save &amp; Apply</h4>
-                        <p>Post a job to tell us about your project. We'll quickly match you with the right freelancers find place best.</p>
+                <div class="col-md-3 col-sm-3">
+                    <div class="working-process"><span class="process-img">
+                            <img src="/assets/assets/img/step-3.png" class="img-responsive" alt="">
+                            <span class="process-num">03</span></span>
+                        <h4>Upload Your Inventory</h4>
+                        <p>This is where you upload details about each product and service you offer in store. Here you can upload details such as pictures and videos, prices, quantities, delivery time, size etc, around your products and services. </p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <div class="working-process"><span class="process-img">
+                            <img src="/assets/assets/img/step-1.png" class="img-responsive" alt="">
+                            <span class="process-num">04</span></span>
+                        <h4>Sell & Manage Your Business</h4>
+                        <p>Once your inventory goes live, you are ready to sell and manage your business.</p>
                     </div>
                 </div>
             </div>
@@ -70,7 +82,7 @@
                 <div class="col-lg-7 col-md-9">
                     <div class="sec-heading">
                         <h2>Featured <span class="theme-cl-2">Products</span></h2>
-                        <p>These products are randomly selected from our various vendors on the platform.</p>
+                        <p>Here are some of the most viewed products from some vendors on CNX Retail.</p>
                     </div>
                 </div>
             </div>
@@ -98,6 +110,8 @@
             </div>
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12">
+                    <p class="text-center">We’ll automatically list your product here once it starts gaining views
+                    </p>
                     <div class="mt-3 text-center">
                         <a href="{{route('marketplace')}}" class="_browse_more-2 light">Visit Marketplace</a>
                     </div>
@@ -106,161 +120,144 @@
 
         </div>
     </section>
-    <section class="light-w">
-        <div class="container">
 
-            <div class="row justify-content-center">
-                <div class="col-lg-7 col-md-9">
-                    <div class="sec-heading">
-                        <h2>Featured <span class="theme-cl-2">Services</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12 col-md-12">
-                    <div class="owl-carousel owl-theme middle-arrow-hover" id="theme-slide">
-
-                        <div class="themes-slides">
-                            <div class="_jb_list73">
-                                <div class="_jb_list73_header">
-                                    <div class="jobs-like bookmark">
-                                        <label class="toggler toggler-danger">
-                                            <input type="checkbox">
-                                            <i class="fa fa-bookmark"></i>
-                                        </label>
-                                    </div>
-                                    <div class="_jb_list72_flex">
-                                        <div class="_jb_list72_first">
-                                            <div class="_jb_list72_yhumb small-thumb">
-                                                <img src="assets/img/c-1.png" class="img-fluid" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="_jb_list72_last">
-                                            <h4 class="_jb_title"><a href="employer-detail.html">Google Inc</a></h4>
-                                            <div class="_times_jb">USA, Sans Fransico</div>
-                                        </div>
-                                    </div>
-                                    <div class="_jb_list72_foot">
-                                        <div class="_times_jb text-right">24/8/2021</div>
-                                    </div>
-                                </div>
-                                <div class="_jb_list73_middle">
-                                    <div class="_jb_list73_middle_flex">
-                                        <h4 class="_jb_title"><a href="job-detail.html">Sr. Software Developer</a></h4>
-                                        <div class="_times_jb">$80k - $100k/year</div>
-                                    </div>
-                                    <div class="_middle_last">
-                                        <div class="_jb_types fulltime_lite">Full Time</div>
-                                    </div>
-                                </div>
-                                <div class="_jb_list73_footer">
-                                    <ul class="applieded_list">
-                                        <li><a href="javascript:void(0);" class="ng-scope"><img src="assets/img/team-1.jpg" class="img-responsive img-circle" alt=""></a></li>
-                                        <li><a href="javascript:void(0);" class="ng-scope"><img src="assets/img/team-2.jpg" class="img-responsive img-circle" alt=""></a></li>
-                                        <li><a href="javascript:void(0);" class="ng-scope"><img src="assets/img/team-3.jpg" class="img-responsive img-circle" alt=""></a></li>
-                                        <li><a href="javascript:void(0);" class="ng-scope"><img src="assets/img/team-4.jpg" class="img-responsive img-circle" alt=""></a></li>
-                                        <li><a href="javascript:void(0);" class="ng-scope"><span class="no_thumb">AM</span></a></li>
-                                        <li><a href="javascript:void(0);" class="nore_applied"><span>17+</span>People Applied</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
     <section class="gray-light">
         <div class="container">
 
             <div class="row justify-content-center">
                 <div class="col-lg-7 col-md-9">
                     <div class="sec-heading">
-                        <h2>What People <span class="theme-cl-2">Saying</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <h2>Manage everything in  <span class="theme-cl-2">one place</span></h2>
+                        <p>Here’s all you will need to easily manage your online business in one place</p>
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-lg-12 col-md-12">
-                    <div class="owl-carousel owl-theme middle-arrow-hover" id="reviews-slide">
+                <div class="row">
 
-                        <!-- Single Review -->
-                        <div class="item testimonial-center">
-                            <div class="smart-tes-author">
-                                <div class="st-author-box">
-                                    <div class="st-author-thumb">
-                                        <img src="assets/img/team-1.jpg" class="img-fluid" alt="" />
-                                    </div>
-                                    <div class="st-author-info">
-                                        <h4 class="st-author-title">Adam Williams</h4>
-                                        <span class="st-author-subtitle theme-cl">CEO Of Microwoft</span>
-                                    </div>
-                                </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="yel098_7uw">
+                            <div class="ye_lk23">
+                                <i class="ti-package"></i>
                             </div>
-                            <div class="smart-tes-content">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+                            <div class="yel_7bcx">
+                                <h4>Organic Market Place Listing</h4>
+                                <p>Think of this like a sample advert and listing of your business at the entrance of the market… Only that this signboard shows people what your beautiful product looks like. If they click that product, it leads them directly to your store.</p>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Single Review -->
-                        <div class="item testimonial-center">
-                            <div class="smart-tes-author">
-                                <div class="st-author-box">
-                                    <div class="st-author-thumb">
-                                        <img src="assets/img/team-2.jpg" class="img-fluid" alt="" />
-                                    </div>
-                                    <div class="st-author-info">
-                                        <h4 class="st-author-title">Lilly Wikdoner</h4>
-                                        <span class="st-author-subtitle theme-cl">Content Writer</span>
-                                    </div>
-                                </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="yel098_7uw">
+                            <div class="ye_lk23">
+                                <i class="ti-mouse-alt"></i>
                             </div>
-                            <div class="smart-tes-content">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+                            <div class="yel_7bcx">
+                                <h4>CRM with Mailchimp Integration</h4>
+                                <p>With Our easy-to-use customer relationship management system, you can send emails to your customers about your new arrivals and wish them everything wonderful on their birthdays.</p>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Single Review -->
-                        <div class="item testimonial-center">
-                            <div class="smart-tes-author">
-                                <div class="st-author-box">
-                                    <div class="st-author-thumb">
-                                        <img src="assets/img/team-3.jpg" class="img-fluid" alt="" />
-                                    </div>
-                                    <div class="st-author-info">
-                                        <h4 class="st-author-title">Shaurya Williams</h4>
-                                        <span class="st-author-subtitle theme-cl">Manager Of Doodle</span>
-                                    </div>
-                                </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="yel098_7uw">
+                            <div class="ye_lk23">
+                                <i class="ti-layers"></i>
                             </div>
-                            <div class="smart-tes-content">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+                            <div class="yel_7bcx">
+                                <h4>Receipts & Reminders</h4>
+                                <p>Access fully automated receipts generator and reminders so you can deliver faster, keep your clients happy and get everything about your business sorted and tended</p>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Single Review -->
-                        <div class="item testimonial-center">
-                            <div class="smart-tes-author">
-                                <div class="st-author-box">
-                                    <div class="st-author-thumb">
-                                        <img src="assets/img/team-4.jpg" class="img-fluid" alt="" />
-                                    </div>
-                                    <div class="st-author-info">
-                                        <h4 class="st-author-title">Shrithi Setthi</h4>
-                                        <span class="st-author-subtitle theme-cl">CEO Of Applio</span>
-                                    </div>
-                                </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="yel098_7uw">
+                            <div class="ye_lk23">
+                                <i class="ti-mobile"></i>
                             </div>
-                            <div class="smart-tes-content">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+                            <div class="yel_7bcx">
+                                <h4>Bookkeeping & Reports</h4>
+                                <p>With CNX Retail, we save you the stress of keeping records as all your business transactions are recorded and logged so you can show investors your record and get investments to expand your business</p>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row">
 
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="yel098_7uw">
+                            <div class="ye_lk23">
+                                <i class="ti-package"></i>
+                            </div>
+                            <div class="yel_7bcx">
+                                <h4>Smart Contact Management</h4>
+                                <p>Can you imagine a situation where you can access your customer’s information in one place? Now you don’t have to imagine anymore… It’s yours already</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="yel098_7uw">
+                            <div class="ye_lk23">
+                                <i class="ti-mouse-alt"></i>
+                            </div>
+                            <div class="yel_7bcx">
+                                <h4>Invoices and Bills</h4>
+                                <p>Now you can automatically generate invoices and bills like big businesses and look all corporate and official while at it.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="yel098_7uw">
+                            <div class="ye_lk23">
+                                <i class="ti-layers"></i>
+                            </div>
+                            <div class="yel_7bcx">
+                                <h4>Receipts & Reminders</h4>
+                                <p>Access fully automated receipts generator and reminders so you can deliver faster, keep your clients happy and get everything about your business sorted and tended</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="yel098_7uw">
+                            <div class="ye_lk23">
+                                <i class="ti-mobile"></i>
+                            </div>
+                            <div class="yel_7bcx">
+                                <h4>Monitoring Evaluation</h4>
+                                <p>You can monitor your business growth processes, quickly spot what you need to do to scale your business in one go</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="yel098_7uw">
+                            <div class="ye_lk23">
+                                <i class="ti-package"></i>
+                            </div>
+                            <div class="yel_7bcx">
+                                <h4>Full Payments Solution & Gateway</h4>
+                                <p>Now you can automate your payment and have customers place orders and make payments while you sleep.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="yel098_7uw">
+                            <div class="ye_lk23">
+                                <i class="ti-mouse-alt"></i>
+                            </div>
+                            <div class="yel_7bcx">
+                                <h4>Cloud Storage/File Management</h4>
+                                <p>No more record loss or missing files when you sign up to use CNX Retail. Plus you can now login to your online store from anywhere in the world to evaluate your business growth on the go</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -273,9 +270,8 @@
 
                 <div class="col-lg-6 col-md-6">
                     <div class="_setup_process">
-                        <h2>Download App Free App For <span class="theme-cl-2">Android And IPhone</span></h2>
-                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                        <h2>Download CNX Retail For <span class="theme-cl-2">Android And iPhone</span></h2>
+                        <p>Take your business online and gain access to 150 million new Nigerian customers surfing the web for businesses like yours.</p>
                     </div>
                     <div class="btn-box clearfix mt-5">
                         <a href="index.html" class="download-btn play-store">
@@ -297,105 +293,6 @@
                 </div>
 
             </div>
-        </div>
-    </section>
-    <section class="min-sec">
-        <div class="container">
-
-            <div class="row justify-content-center">
-                <div class="col-lg-7 col-md-9">
-                    <div class="sec-heading">
-                        <h2>Latest Updates & News</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-
-                <!-- Single blog Grid -->
-                <div class="col-lg-4 col-md-4 col-sm-12">
-                    <div class="blog-wrap-grid">
-
-                        <div class="blog-thumb">
-                            <a href="blog-detail.html"><img src="assets/img/b-1.jpg" class="img-fluid" alt=""></a>
-                        </div>
-
-                        <div class="blog-info">
-                            <span class="post-date">By Shilpa Sheri</span>
-                        </div>
-
-                        <div class="blog-body">
-                            <h4 class="bl-title"><a href="blog-detail.html">Why people choose listio for own properties</a></h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. </p>
-                        </div>
-
-                        <div class="blog-cates">
-                            <ul>
-                                <li><a href="#" class="blog-cates-list style-4">Health</a></li>
-                                <li><a href="#" class="blog-cates-list style-3">Business</a></li>
-                            </ul>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Single blog Grid -->
-                <div class="col-lg-4 col-md-4 col-sm-12">
-                    <div class="blog-wrap-grid">
-
-                        <div class="blog-thumb">
-                            <a href="blog-detail.html"><img src="assets/img/b-2.jpg" class="img-fluid" alt=""></a>
-                        </div>
-
-                        <div class="blog-info">
-                            <span class="post-date">By Shaurya</span>
-                        </div>
-
-                        <div class="blog-body">
-                            <h4 class="bl-title"><a href="blog-detail.html">List of benifits and impressive listeo services</a></h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. </p>
-                        </div>
-
-                        <div class="blog-cates">
-                            <ul>
-                                <li><a href="#" class="blog-cates-list style-1">Banking</a></li>
-                                <li><a href="#" class="blog-cates-list style-5">Stylish</a></li>
-                            </ul>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Single blog Grid -->
-                <div class="col-lg-4 col-md-4 col-sm-12">
-                    <div class="blog-wrap-grid">
-
-                        <div class="blog-thumb">
-                            <a href="blog-detail.html"><img src="assets/img/b-3.jpg" class="img-fluid" alt=""></a>
-                        </div>
-
-                        <div class="blog-info">
-                            <span class="post-date">By Admin K.</span>
-                        </div>
-
-                        <div class="blog-body">
-                            <h4 class="bl-title"><a href="blog-detail.html">What people says about listio properties</a></h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. </p>
-                        </div>
-
-                        <div class="blog-cates">
-                            <ul>
-                                <li><a href="#" class="blog-cates-list style-1">Fashion</a></li>
-                                <li><a href="#" class="blog-cates-list style-2">Wedding</a></li>
-                            </ul>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-
         </div>
     </section>
 @endsection
