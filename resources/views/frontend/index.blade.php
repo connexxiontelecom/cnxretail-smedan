@@ -52,7 +52,7 @@
                     <div class="working-process"><span class="process-img">
                             <img src="/assets/assets/img/step-2.png" class="img-responsive" alt="">
                             <span class="process-num">02</span></span>
-                        <h4>Login & Describe Your Business</h4>
+                        <h4>Describe Your Business</h4>
                         <p>Once done, login to the CNX Retail account you just created to access and populate your account. Here you will fill in information needed to help your customers understand what your business is about.</p>
                     </div>
                 </div>
@@ -68,8 +68,8 @@
                     <div class="working-process"><span class="process-img">
                             <img src="/assets/assets/img/step-1.png" class="img-responsive" alt="">
                             <span class="process-num">04</span></span>
-                        <h4>Sell & Manage Your Business</h4>
-                        <p>Once your inventory goes live, you are ready to sell and manage your business.</p>
+                        <h4>Manage Your Business</h4>
+                        <p>Once your inventory goes live, you are ready to sell and manage your business. </p>
                     </div>
                 </div>
             </div>
