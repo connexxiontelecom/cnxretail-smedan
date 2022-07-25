@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
 
@@ -34,6 +35,15 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+    public function getJWTCustomClaims(): array
+    {
+        return [];
+    }
 
     /**
      * The attributes that should be cast to native types.
@@ -67,10 +77,10 @@ class User extends Authenticatable
      * Use-case methods
      */
     public function setNewUser(Request $request, $tenant){
-        $password = substr(sha1(time()), 32,40);
+        //$password = substr(sha1(time()), 32,40);
         $user = new User();
         $user->first_name = $request->full_name ?? '' ;
-        $user->password = bcrypt($password); //bcrypt($request->password);
+        $user->password = bcrypt($request->password); //bcrypt($password);
         $user->email = $request->email;
         $user->start_date = $tenant->start_date;
         $user->end_date = $tenant->end_date;
@@ -153,5 +163,7 @@ class User extends Authenticatable
     public function getOwnerByTenantId($tenantId){
         return User::where('tenant_id', $tenantId)->first();
     }
+
+
 
 }
