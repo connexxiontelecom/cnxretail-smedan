@@ -19,3 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/all-reminders',  [App\Http\Controllers\API\ReminderController::class, 'allReminders']);
+
+Route::post('/register', [App\Http\Controllers\API\RegisterController::class, 'createAccount']);
+Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'authenticate']);
+
+Route::group(['middleware' => ['jwt.verify'], 'prefix'=>'auth' ], function() {
+
+});
