@@ -9,7 +9,9 @@
                         <p>2A Iller Crescent Off Katsina-Ala Crescent Maitama,<br>Abuja, Nigeria</p>
                         <ul class="footer-bottom-social">
                             <li><a target="_blank" href="https://www.facebook.com/profile.php?id=100073775880791"><i class="ti-facebook"></i></a></li>
+                            <li><a target="_blank" href="https://twitter.com/GroupConnexxion"><i class="ti-twitter"></i></a></li>
                             <li><a target="_blank" href="https://instagram.com/cnxretail_official?igshid=YmMyMTA2M2Y="><i class="ti-instagram"></i></a></li>
+                            <li><a target="_blank" href="javascript:void(0);"><i class="ti-linkedin"></i></a></li>
                         </ul>
                     </div>
                 </div>

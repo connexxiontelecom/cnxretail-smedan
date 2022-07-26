@@ -134,6 +134,7 @@ class ReceiptMaster extends Model
     public function getAllTenantReceiptsThisYear(){
         return ReceiptMaster::where('tenant_id', Auth::user()->tenant_id)
             ->whereYear('created_at', date('Y'))
+            ->where('posted',1)
             ->orderBy('id', 'DESC')->get();
     }
     public function getAllTenantReceiptsThisMonth(){

@@ -73,6 +73,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(TenantNotification::class, 'tenant_id');
     }
 
+
     /*
      * Use-case methods
      */
@@ -85,10 +86,10 @@ class User extends Authenticatable implements JWTSubject
         $user->start_date = $tenant->start_date;
         $user->end_date = $tenant->end_date;
         $user->tenant_id = $tenant->id;
+        $user->active_sub_key = $tenant->active_sub_key;
         $user->nin = $request->nin ?? '';
         $user->address = $request->address ?? '';
         $user->mobile_no = $request->phone_no ?? '';
-        $user->active_sub_key = $tenant->active_sub_key;
         $user->slug = Str::slug($request->first_name).'-'.substr(sha1(time()),32,40);
         $user->save();
     }
@@ -102,7 +103,7 @@ class User extends Authenticatable implements JWTSubject
         $user->email = $request->email ?? '' ;
         $user->start_date = Auth::user()->start_date;
         $user->end_date = Auth::user()->end_date;
-        $user->tenant_id = Auth::user()->id;
+        $user->tenant_id = Auth::user()->tenant_id;
         $user->active_sub_key = Auth::user()->active_sub_key;
         $user->slug = Str::slug($request->first_name).'-'.substr(sha1(time()),32,40);
         $user->address = $request->address ?? '';
