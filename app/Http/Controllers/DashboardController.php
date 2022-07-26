@@ -39,9 +39,9 @@ class DashboardController extends Controller
 
         return view('dashboard',[
             'receipts'=>$this->receiptmaster->getAllTenantReceiptsThisYear(),
-            'invoices'=>$this->invoicemaster->getTenantInvoices(),
-            'bills'=>$this->billmaster->getTenantBills(),
-            'payments'=>$this->paymentmaster->getAllTenantPayments(),
+            'invoices'=>$this->invoicemaster->getTenantInvoicesThisYear(),
+            'bills'=>$this->billmaster->getTenantBillsThisYear(),
+            'payments'=>$this->paymentmaster->getAllTenantPaymentsThisYear(),
             'contacts'=>$this->contact->getTenantContacts(Auth::user()->tenant_id),
             'motivation'=>$this->dailymotivation->getDailyRandomMotivation($period),
             'thisMonth'=>$this->receiptmaster->getAllTenantReceiptsThisMonth(),
