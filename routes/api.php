@@ -24,5 +24,5 @@ Route::post('/register', [App\Http\Controllers\API\RegisterController::class, 'c
 Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'authenticate']);
 
 Route::group(['middleware' => ['jwt.verify'], 'prefix'=>'auth' ], function() {
-
+    Route::post('/dashboard', [App\Http\Controllers\API\DashboardController::class, 'summary']);
 });

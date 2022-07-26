@@ -36,6 +36,8 @@ class AuthController extends Controller
             //throw new \Exception("Some error message");
             //Create token
             //$token =  auth('api')->attempt($credentials);//attempt($credentials);
+            $myTTL = 10080; //minutes
+            JWTAuth::factory()->setTTL($myTTL);
             $token =  JWTAuth::attempt($credentials);
             if (!$token) {
                 return response()->json([
@@ -61,6 +63,8 @@ class AuthController extends Controller
             'message' => "Login successful",
             'data'=> ["token"=>$token, 'user'=> Auth::user()]
         ]);
+
+
     }
 
     public function logout(Request $request)
