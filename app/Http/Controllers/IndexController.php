@@ -48,12 +48,13 @@ class IndexController extends Controller
 
     public function vendorStore($slug){
         $vendor = $this->tenant->getTenantBySlug($slug);
+
         if(!empty($vendor)){
             $items = $this->item->getAllTenantItems($vendor->id);
             return view('frontend.vendor-store',[
-                'vendor'=>$vendor,
+                'tenant'=>$vendor,
                 'items'=>$items,
-            'categories'=>$this->category->getAllGeneralCategories(),
+                'categories'=>$this->category->getAllGeneralCategories(),
                 'vendors'=>$this->tenant->getAllActiveRegisteredTenants()
                 ]);
         }else{

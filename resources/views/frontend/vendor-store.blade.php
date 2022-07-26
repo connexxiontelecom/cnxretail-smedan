@@ -1,10 +1,10 @@
 @extends('layouts.marketplace-layout')
 
 @section('title')
-    Vendor Store
+{{$vendor->company_name ?? '' }}'s Store
 @endsection
 @section('current-page')
-    Vendor Store
+{{$vendor->company_name ?? '' }}'s Store
 @endsection
 
 @include('partials.marketplace._header')
@@ -120,7 +120,7 @@
 
                     <nav class="toolbox sticky-toolbox sticky-content fix-top">
                         <div class="toolbox-left">
-                            <h3>{{$vendor->company_name ?? '' }}'s Products</h3>
+                            <h3>{{$tenant->company_name ?? '' }}'s Products</h3>
                         </div>
 
                     </nav>
@@ -162,9 +162,6 @@
 </div>
 <!-- End of Page Wrapper -->
 
-<!-- Start of Scroll Top -->
-<a id="scroll-top" class="scroll-top" href="#top" title="Top" role="button"> <i class="w-icon-angle-up"></i> <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70"> <circle id="progress-indicator" fill="transparent" stroke="#000000" stroke-miterlimit="10" cx="35" cy="35" r="34" style="stroke-dasharray: 16.4198, 400;"></circle> </svg> </a>
-<!-- End of Scroll Top -->
 
 
 @include('partials.marketplace._footer-script')

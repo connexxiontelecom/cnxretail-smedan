@@ -183,10 +183,19 @@ Route::get('/view-training/{slug}',[App\Http\Controllers\HomeController::class, 
 Route::get('/view-grant/{slug}',[App\Http\Controllers\HomeController::class, 'viewGrant'])->name('view-grant');
 Route::get('/list-grants',[App\Http\Controllers\HomeController::class, 'listGrants'])->name('list-grants');
 Route::get('/list-surveys',[App\Http\Controllers\HomeController::class, 'listSurveys'])->name('list-surveys');
+
+Route::get('/list-consultations',[App\Http\Controllers\HomeController::class, 'listConsultations'])->name('list-consultations');
+Route::get('/consultations/new',[App\Http\Controllers\HomeController::class, 'showNewConsultationForm'])->name('show-consultation-form');
+Route::post('/consultations/new',[App\Http\Controllers\HomeController::class, 'registerConsultationRequest']);
+Route::get('/consultations/{slug}',[App\Http\Controllers\HomeController::class, 'viewConsultation'])->name('view-consultation');
+
 Route::get('/survey-details/{slug}',[App\Http\Controllers\HomeController::class, 'surveyDetails'])->name('survey-details');
 Route::get('/list-trainings',[App\Http\Controllers\HomeController::class, 'listTrainings'])->name('list-trainings');
 Route::post('/business-trainings/comment/new',[App\Http\Controllers\HomeController::class, 'leaveCommentOnTraining'])->name('business-comment-training');
 Route::post('/business-trainings-reply/comment/new',[App\Http\Controllers\HomeController::class, 'leaveReplyOnComment'])->name('business-reply-comment-training');
+
+Route::post('/consultation-comment/new',[App\Http\Controllers\HomeController::class, 'leaveCommentOnConsultationRequest'])->name('consultation-comment');
+Route::post('/consultation-comment-reply',[App\Http\Controllers\HomeController::class, 'leaveReplyOnConsultationRequest'])->name('consultation-comment-reply');
 Route::post('/share/survey',[App\Http\Controllers\HomeController::class, 'shareSurvey'])->name('share-survey');
 
 
@@ -255,6 +264,8 @@ Route::prefix('/tunnel')->group(function(){
     Route::post('/new-assessment', [App\Http\Controllers\AdminController::class, 'addNewSurvey']);
     Route::get('/view-assessment/{slug}', [App\Http\Controllers\AdminController::class, 'viewAssessment'])->name('view-assessment');
 
+    Route::get('/manage-consultation-requests', [App\Http\Controllers\AdminController::class, 'manageConsultationRequests'])->name('manage-consultation-requests');
+    Route::get('/manage-consultation-requests/{slug}', [App\Http\Controllers\AdminController::class, 'consultationDetails'])->name('consultation-details');
 
 });
 

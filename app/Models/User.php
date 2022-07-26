@@ -63,22 +63,23 @@ class User extends Authenticatable
         return $this->hasMany(TenantNotification::class, 'tenant_id');
     }
 
+
     /*
      * Use-case methods
      */
     public function setNewUser(Request $request, $tenant){
-        $password = substr(sha1(time()), 32,40);
+        //$password = substr(sha1(time()), 32,40);
         $user = new User();
         $user->first_name = $request->full_name ?? '' ;
-        $user->password = bcrypt($password); //bcrypt($request->password);
+        $user->password = bcrypt($request->password); //bcrypt($password);
         $user->email = $request->email;
         $user->start_date = $tenant->start_date;
         $user->end_date = $tenant->end_date;
         $user->tenant_id = $tenant->id;
+        $user->active_sub_key = $tenant->active_sub_key;
         $user->nin = $request->nin ?? '';
         $user->address = $request->address ?? '';
         $user->mobile_no = $request->phone_no ?? '';
-        $user->active_sub_key = $tenant->active_sub_key;
         $user->slug = Str::slug($request->first_name).'-'.substr(sha1(time()),32,40);
         $user->save();
     }
@@ -92,7 +93,7 @@ class User extends Authenticatable
         $user->email = $request->email ?? '' ;
         $user->start_date = Auth::user()->start_date;
         $user->end_date = Auth::user()->end_date;
-        $user->tenant_id = Auth::user()->id;
+        $user->tenant_id = Auth::user()->tenant_id;
         $user->active_sub_key = Auth::user()->active_sub_key;
         $user->slug = Str::slug($request->first_name).'-'.substr(sha1(time()),32,40);
         $user->address = $request->address ?? '';

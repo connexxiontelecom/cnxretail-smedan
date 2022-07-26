@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Consultation;
+use App\Models\ConsultationAttachment;
+use App\Models\ConsultationComment;
+use App\Models\ConsultationCommentReply;
+use App\Models\ConsultationInterest;
 use App\Models\Contact;
 use App\Models\Grant;
+use App\Models\Interest;
 use App\Models\Survey;
 use App\Models\SurveyResponse;
 use App\Models\Training;
@@ -32,6 +38,12 @@ class HomeController extends Controller
         $this->survey = new Survey();
         $this->surveyresponse = new SurveyResponse();
         $this->contact = new Contact();
+        $this->consultation = new Consultation();
+        $this->consultationinterest = new ConsultationInterest();
+        $this->consultationattachment = new ConsultationAttachment();
+        $this->interest = new Interest();
+        $this->consultationcomment = new ConsultationComment();
+        $this->consultationcommentreply = new ConsultationCommentReply();
     }
 
     public function viewTraining($slug){
@@ -133,6 +145,84 @@ class HomeController extends Controller
             }
         }
         session()->flash("success", "<strong>Great!</strong> Survey shared with your contacts.");
+        return back();
+    }
+
+    public function listConsultations(){
+        return view('sme.consultations',[
+            'consultations'=>$this->consultation->getConsultationsByTenantId(Auth::user()->tenant_id)
+        ]);
+    }
+
+    public function showNewConsultationForm(){
+        return view('sme.new-consultation', ['interests'=>$this->interest->getInterests()]);
+    }
+
+    public function registerConsultationRequest(Request $request){
+        //return dd($request->all());
+        $this->validate($request,[
+            'subject'=>'required',
+            'interests'=>'required|array',
+            'interest.*'=>'required',
+            'body'=>'required'
+        ],[
+            'subject.required'=>"Enter a subject for this consultation request",
+            'body.required'=>"Enter details for this request",
+            'interests.required'=>"Select at least one interest"
+        ]);
+        $consult = $this->consultation->addConsultation($request);
+        $this->consultationattachment->uploadAttachments($consult->id, $request);
+        $this->consultationinterest->addConsultationInterest($consult->id, $request);
+        session()->flash("success", "Your request was successfully submitted. Expect response to it soon.");
+        return back();
+    }
+
+    public function viewConsultation($slug){
+        $consultation = $this->consultation->getConsultationBySlug($slug);
+        if(!empty($consultation)){
+            return view('sme.consultation-details',['consultation'=>$consultation]);
+        }else{
+            session()->flash("error", "No record found");
+            return back();
+        }
+    }
+
+    public function leaveCommentOnConsultationRequest(Request $request){
+        //return dd($request->all());
+        $this->validate($request,[
+            'comment'=>'required',
+            'userLevel'=>'required',
+            'consultationId'=>'required'
+        ],[
+            'comment.required'=>'Leave comment in the box provided.'
+        ]);
+        $comment = $this->consultationcomment->newComment($request);
+        $consultation = $this->consultation->getConsultationRequestById($request->consultationId);
+        if($consultation->status == 0){
+            $this->consultation->updateConsultationStatus($request->consultationId, 1);
+        }
+
+        if($request->hasFile('attachments')){
+            $this->consultationattachment->uploadAttachments($request->consultationId, $request);
+        }
+        session()->flash("success", "Your comment is taken into account.");
+        return back();
+    }
+
+    public function leaveReplyOnConsultationRequest(Request $request){
+        $this->validate($request,[
+            'reply'=>'required',
+            'userLevel'=>'required',
+            'consultationId'=>'required',
+            'commentId'=>'required'
+        ],[
+            'reply.required'=>'Leave reply in the box provided.'
+        ]);
+        $this->consultationcommentreply->addConsultationCommentReply($request);
+        if($request->hasFile('attachments')){
+            $this->consultationattachment->uploadAttachments($request->consultationId, $request);
+        }
+        session()->flash("success", "Your reply is taken into account.");
         return back();
     }
 }

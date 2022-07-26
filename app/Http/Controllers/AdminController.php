@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AdminNotification;
 use App\Models\AdminUser;
 use App\Models\BusinessCategory;
+use App\Models\Consultation;
 use App\Models\DailyMotivation;
 use App\Models\Grant;
 use App\Models\GrantMaterial;
@@ -59,6 +60,8 @@ class AdminController extends Controller
         $this->survey = new Survey();
         $this->surveyquestion = new SurveyQuestion();
         $this->surveyresponse = new SurveyResponse();
+
+        $this->consultation = new Consultation();
     }
 
     public function notification(){
@@ -592,6 +595,22 @@ class AdminController extends Controller
         }
     }
 
+
+    public function manageConsultationRequests(){
+        return view('admin.monitoring.consultations',
+            ['consultations'=>$this->consultation->getAllConsultations()]
+        );
+    }
+
+    public function consultationDetails($slug){
+        $consultation = $this->consultation->getConsultationBySlug($slug);
+        if(!empty($consultation)){
+            return view('admin.monitoring.consultation-details',['consultation'=>$consultation]);
+        }else{
+            session()->flash("error", "No record found");
+            return back();
+        }
+    }
 
 
 }

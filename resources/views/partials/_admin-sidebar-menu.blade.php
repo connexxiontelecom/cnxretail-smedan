@@ -37,6 +37,7 @@
                 <li><a href="{{route('show-trainings')}}" class="slide-item"> Trainings</a></li>
                 <li><a href="{{route('show-grants')}}" class="slide-item"> Grants/Interventions</a></li>
                 <li><a href="{{route('show-assessment')}}" class="slide-item"> Survey</a></li>
+
             </ul>
         </li>
 
@@ -47,6 +48,7 @@
             </a>
             <ul class="slide-menu">
                 <li><a href="{{route('show-businesses')}}" class="slide-item"> Performance</a></li>
+                <li><a href="{{route('manage-consultation-requests')}}" class="slide-item"> Consultations</a></li>
             </ul>
         </li>
         <li class="slide">
