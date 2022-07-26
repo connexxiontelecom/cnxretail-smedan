@@ -113,7 +113,7 @@
                             </div>
                         </div>
                     </div>
-                    <span class="fs-12 text-muted"> <strong>1.05%</strong><i class="mdi mdi-arrow-up"></i> <span class="text-muted fs-12 ml-0 mt-1">than last week</span></span>
+                    <span class="fs-12 text-muted">  <span class="text-muted fs-12 ml-0 mt-1">This Year</span></span>
                 </div>
             </div>
         </div>
