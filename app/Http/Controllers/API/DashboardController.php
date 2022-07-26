@@ -41,6 +41,13 @@ class DashboardController extends Controller
             $unpaidInvoices = 0;
             $unpaidBills = 0;
             $expenses = 0;
+            $thisMonthTotal = 0;
+
+
+            foreach ($thisMonth as $month)
+            {
+                $thisMonthTotal += $month->amount;
+            }
 
             foreach ($receipts as $receipt)
             {
@@ -49,30 +56,43 @@ class DashboardController extends Controller
 
             foreach ($invoices as $invoice)
             {
-                $unpaidInvoices += (($invoice->total) - ($invoice->paid_amount));
+                if($invoice->posted == 1)
+                {
+                    $unpaidInvoices += (($invoice->total) - ($invoice->paid_amount));
+                }
             }
 
+            $totalBills  = 0;
             foreach ($bills as $bill)
             {
-                $unpaidBills += (($bill->total) - ($bill->paid_amount));
+                if($bill->posted == 1)
+                {
+                    $unpaidBills += (($bill->bill_amount) - ($bill->paid_amount));
+                    //$totalBills += $bill->total;
+                }
             }
 
             foreach ($payments as $payment)
             {
-                $expenses += ($payment->amount);
+                if($payment->posted ==  1)
+                {
+                    $expenses += ($payment->amount);
+                }
             }
             return response()->json([
                 'success' => true,
                 'code' => 200,
                 'message' => "Success",
                 'data' => [
-                    "receipts" => $receipts,
+                    /*"receipts" => $receipts,
                     "invoices" => $invoices,
                     "bills" => $bills,
                     "payments" => $payments,
-                    "contacts" => $contacts,
                     "thisMonth" => $thisMonth,
-                    "reminders" => $reminders,
+                    "contacts" => $contacts,
+                    "reminders" => $reminders,*/
+
+                    "thisMonthTotal"=>$thisMonthTotal,
                     "income" => $income,
                     "unpaidInvoices" => $unpaidInvoices,
                     "unpaidBills" => $unpaidBills,
