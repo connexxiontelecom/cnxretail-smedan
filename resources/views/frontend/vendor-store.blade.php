@@ -95,24 +95,22 @@
                             <img src="/assets/marketplace/assets/images/vendor/dokan/1.jpg" alt="Vendor" width="930" height="446" style="background-color: #414960;">
                         </figure>
                         <div class="store-content">
-                            <figure class="seller-brand">
-                                <img src="/assets/marketplace/assets/images/vendor/brand/1.jpg" alt="Brand" width="80" height="80">
-                            </figure>
-                            <h4 class="store-title">{{$vendor->company_name ?? '' }}</h4>
+
+                            <h4 class="store-title">{{$tenant->company_name ?? '' }}</h4>
                             <ul class="seller-info-list list-style-none mb-6">
                                 <li class="store-address">
                                     <i class="w-icon-map-marker"></i>
-                                    {{$vendor->address ?? '-' }}
+                                    {{$tenant->address ?? '-' }}
                                 </li>
                                 <li class="store-phone">
                                     <a href="tel:1234567890">
                                         <i class="w-icon-phone"></i>
-                                        {{$vendor->phone_no ?? '-' }}
+                                        {{$tenant->phone_no ?? '-' }}
                                     </a>
                                 </li>
                                 <li class="store-rating">
-                                    <i class="w-icon-star-full"></i>
-                                    {{$vendor->email ?? '-' }}
+                                    <i class="w-icon-envelop"></i>
+                                    {{$tenant->email ?? '-' }}
                                 </li>
                             </ul>
                         </div>
