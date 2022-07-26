@@ -92,7 +92,7 @@
                 <div class="main-content">
                     <div class="store store-banner mb-4">
                         <figure class="store-media">
-                            <img src="/assets/marketplace/assets/images/vendor/dokan/1.jpg" alt="Vendor" width="930" height="446" style="background-color: #414960;">
+                            <img src="/assets/marketplace/assets/images/vendor/retail.png" alt="Vendor" width="930" height="446" style="background-color: #414960;">
                         </figure>
                         <div class="store-content">
 
