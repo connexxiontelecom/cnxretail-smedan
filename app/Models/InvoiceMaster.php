@@ -83,6 +83,10 @@ class InvoiceMaster extends Model
     public function getTenantInvoices(){
         return InvoiceMaster::where('tenant_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
     }
+
+    public function getTenantInvoicesThisYear(){
+        return InvoiceMaster::where('tenant_id', Auth::user()->id)->whereYear('created_at', date('Y'))->orderBy('id', 'DESC')->get();
+    }
     public function getTenantInvoicesByStatus($status){
         return InvoiceMaster::where('tenant_id', Auth::user()->id)->where('status',$status)->orderBy('id', 'DESC')->get();
     }

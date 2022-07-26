@@ -78,6 +78,10 @@ class BillMaster extends Model
         return BillMaster::where('tenant_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
     }
 
+    public function getTenantBillsThisYear(){
+        return BillMaster::where('tenant_id', Auth::user()->id)->whereYear('created_at', date('Y'))->orderBy('id', 'DESC')->get();
+    }
+
     public function getTenantBillsByDateRange(Request $request){
         return BillMaster::where('trash',0)->where('tenant_id', Auth::user()->tenant_id)
             ->whereBetween('issue_date', [$request->from, $request->to])->get();

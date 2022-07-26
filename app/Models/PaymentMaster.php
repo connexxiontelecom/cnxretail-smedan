@@ -66,6 +66,10 @@ class PaymentMaster extends Model
         return PaymentMaster::where('tenant_id', Auth::user()->tenant_id)->orderBy('id', 'DESC')->get();
     }
 
+    public function getAllTenantPaymentsThisYear(){
+        return PaymentMaster::where('tenant_id', Auth::user()->tenant_id)->whereYear('payment_date', date('Y'))->orderBy('id', 'DESC')->get();
+    }
+
     public function getAllTenantPaymentsByDateRange(Request $request){
         return PaymentMaster::where('tenant_id', Auth::user()->tenant_id)
             ->whereBetween('payment_date', [$request->from, $request->to])->get();
