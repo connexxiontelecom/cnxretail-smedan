@@ -35,7 +35,7 @@ class InvoiceController extends Controller
     public function getInvoices(Request $request)
     {
         try {
-            $id = $request->id??0;
+            $id = $request->id ?? 0;
             $invoices = $this->invoice->getTenantInvoices(true, (int)$id);
             $totalSumInvoices = $this->invoice->getTotalSumPostedInvoices();
             $totalPaidAmount = $this->invoice->getTotalPaidSumPostedInvoices();
@@ -62,29 +62,29 @@ class InvoiceController extends Controller
         }
     }
 
+    public function createInvoice(Request $request)
+    {
 
-    public function createInvoice(Request $request){
-
-        $validator = Validator::make($request->all(),[
-            'contact_type'=>'required',
-            'issue_date'=>'required|date',
-            'due_date'=>'required|date',
-            'items.*'=>'required'
-        ],[
-            'contact_type.required'=>'Select contact type',
-            'issue_date.required'=>'Choose issue date',
-            'issue_date.date'=>'Enter a valid date format',
-            'due_date.required'=>'Choose due date',
-            'due_date.date'=>'Enter a valid date format'
+        $validator = Validator::make($request->all(), [
+            'contact_type' => 'required',
+            'issue_date' => 'required|date',
+            'due_date' => 'required|date',
+            'items.*' => 'required'
+        ], [
+            'contact_type.required' => 'Select contact type',
+            'issue_date.required' => 'Choose issue date',
+            'issue_date.date' => 'Enter a valid date format',
+            'due_date.required' => 'Choose due date',
+            'due_date.date' => 'Enter a valid date format'
         ]);
 
         //Send failed response if request is not valid
         if ($validator->fails()) {
             return response()->json([
-                'success'=> false,
-                'code'=> 400,
+                'success' => false,
+                'code' => 400,
                 'message' => $validator->errors()->first(),
-                'data'=>""
+                'data' => ""
             ]);
         }
         try {
@@ -104,8 +104,7 @@ class InvoiceController extends Controller
                     "invoice" => $invoice,
                 ],
             ]);
-        }
-        catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'code' => 500,
@@ -116,7 +115,8 @@ class InvoiceController extends Controller
 
     }
 
-    public function declineInvoice(Request $request){
+    public function declineInvoice(Request $request)
+    {
 
         //validate request
         $validator = Validator::make($request->all(), [
@@ -126,33 +126,33 @@ class InvoiceController extends Controller
         //Send failed response if request is not valid
         if ($validator->fails()) {
             return response()->json([
-                'success'=> false,
-                'code'=> 400,
+                'success' => false,
+                'code' => 400,
                 'message' => $validator->errors()->first(),
-                'data'=>""
+                'data' => ""
             ]);
         }
-        try{
+        try {
             $invoice = $this->invoice->getInvoiceById($request->id);
-            if(!empty($invoice)){
+            if (!empty($invoice)) {
                 $_invoice = $this->invoice->updateInvoiceStatus($invoice->id, 'decline');
                 return response()->json([
-                    'success'=> true,
-                    'code'=> 200,
+                    'success' => true,
+                    'code' => 200,
                     'message' => "Declined Successfully",
-                    'data'=>[
-                        "invoice"=>$_invoice
+                    'data' => [
+                        "invoice" => $_invoice
                     ]
                 ]);
-            }else{
+            } else {
                 return response()->json([
-                    'success'=> false,
-                    'code'=> 400,
+                    'success' => false,
+                    'code' => 400,
                     'message' => "Invoice not found",
-                    'data'=>""
+                    'data' => ""
                 ]);
             }
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'code' => 500,
@@ -163,7 +163,8 @@ class InvoiceController extends Controller
 
     }
 
-    public function approveInvoice(Request $request){
+    public function approveInvoice(Request $request)
+    {
         //validate request
         $validator = Validator::make($request->all(), [
             'id' => 'required'
@@ -172,33 +173,33 @@ class InvoiceController extends Controller
         //Send failed response if request is not valid
         if ($validator->fails()) {
             return response()->json([
-                'success'=> false,
-                'code'=> 400,
+                'success' => false,
+                'code' => 400,
                 'message' => $validator->errors()->first(),
-                'data'=>""
+                'data' => ""
             ]);
         }
-        try{
+        try {
             $invoice = $this->invoice->getInvoiceById($request->id);
-            if(!empty($invoice)){
-                $_invoice =  $this->invoice->updateInvoiceStatus($invoice->id, 'post');
+            if (!empty($invoice)) {
+                $_invoice = $this->invoice->updateInvoiceStatus($invoice->id, 'post');
                 return response()->json([
-                    'success'=> true,
-                    'code'=> 200,
+                    'success' => true,
+                    'code' => 200,
                     'message' => "Approved Successfully",
-                    'data'=>[
-                        "invoice"=>$_invoice
+                    'data' => [
+                        "invoice" => $_invoice
                     ]
                 ]);
-            }else{
+            } else {
                 return response()->json([
-                    'success'=> false,
-                    'code'=> 400,
+                    'success' => false,
+                    'code' => 400,
                     'message' => "Invoice not found",
-                    'data'=>""
+                    'data' => ""
                 ]);
             }
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'code' => 500,
@@ -209,8 +210,8 @@ class InvoiceController extends Controller
 
     }
 
-
-    public function sendInvoice(Request $request){
+    public function sendInvoice(Request $request)
+    {
 
         //validate request
         $validator = Validator::make($request->all(), [
@@ -220,43 +221,43 @@ class InvoiceController extends Controller
         //Send failed response if request is not valid
         if ($validator->fails()) {
             return response()->json([
-                'success'=> false,
-                'code'=> 400,
+                'success' => false,
+                'code' => 400,
                 'message' => $validator->errors()->first(),
-                'data'=>""
+                'data' => ""
             ]);
         }
         $invoice = $this->invoice->getInvoiceBySlug($request->id);
-        try{
-            if(!empty($invoice)){
+        try {
+            if (!empty($invoice)) {
                 #Contact
                 $contact = $this->contact->getContactById($invoice->contact_id);
-                if(!empty($contact)){
+                if (!empty($contact)) {
                     //return dd($contact);
                     $this->invoice->sendInvoiceAsEmailService($contact, $invoice);
                     return response()->json([
-                        'success'=> true,
-                        'code'=> 200,
+                        'success' => true,
+                        'code' => 200,
                         'message' => "Sent Successfully",
-                        'data'=>""
+                        'data' => ""
                     ]);
-                }else{
+                } else {
                     return response()->json([
-                        'success'=> false,
-                        'code'=> 400,
+                        'success' => false,
+                        'code' => 400,
                         'message' => "Could not send",
-                        'data'=>""
+                        'data' => ""
                     ]);
                 }
-            }else{
+            } else {
                 return response()->json([
-                    'success'=> false,
-                    'code'=> 400,
+                    'success' => false,
+                    'code' => 400,
                     'message' => "Invoice not found",
-                    'data'=>""
+                    'data' => ""
                 ]);
             }
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'code' => 500,
@@ -267,5 +268,88 @@ class InvoiceController extends Controller
 
     }
 
+
+    public function processPayment(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'amount' => 'required',
+            'payment_date' => 'required|date',
+            'reference_no' => 'required',
+            'bank' => 'required',
+            'invoice' => 'required',
+            'payment_method' => 'required'
+        ], [
+            'amount.required' => 'Enter amount paid.',
+            'payment_date.required' => 'Choose payment date',
+            'payment_date.date' => 'Choose a valid date format',
+            'reference_no.required' => 'Enter a reference number for this transaction',
+            'bank.required' => "choose a bank from the list provided",
+            'payment_method.required' => 'Select payment method'
+        ]);
+
+        //Send failed response if request is not valid
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'code' => 400,
+                'message' => $validator->errors()->first(),
+                'data' => ""
+            ]);
+        }
+
+        try {
+            $invoice = $this->invoice->getInvoiceById($request->invoice);
+            if (!empty($invoice)) {
+                $balance = $invoice->total - $invoice->paid_amount;
+                if ($request->amount > $balance) {
+                    return response()->json([
+                        'success' => false,
+                        'code' => 400,
+                        'message' => "Amount is more than the balance",
+                        'data' => ""
+                    ]);
+                } else {
+                    $this->invoice->updateInvoicePayment($invoice, $request->amount);
+                    $counter = $this->receipt->getLatestReceipt();
+                    $receipt = $this->receipt->createNewReceipt($counter, $invoice, $request);
+                    if (!empty($receipt)) {
+
+                        return response()->json([
+                            'success' => true,
+                            'code' => 200,
+                            'message' => "Your receipt request was generated successfully",
+                            'data' => ""
+                        ]);
+
+                    } else {
+
+                        return response()->json([
+                            'success' => true,
+                            'code' => 400,
+                            'message' => "Could not process the request",
+                            'data' => ""
+                        ]);
+
+                    }
+                }
+            } else {
+
+                return response()->json([
+                    'success' => true,
+                    'code' => 400,
+                    'message' => "Invoice does not exist. Try again.",
+                    'data' => ""
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'code' => 500,
+                'message' => "Oops something bad happened, Please try again! ",
+                'data' => ''
+            ]);
+        }
+
+    }
 
 }
