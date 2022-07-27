@@ -104,7 +104,7 @@ class SalesAndInvoiceController extends Controller
         $invoice = $this->invoice->getInvoiceBySlug($slug);
         if(!empty($invoice)){
             #Contact
-            $contact = $this->contact->getContactById($invoice->id);
+            $contact = $this->contact->getContactById($invoice->contact_id);
             if(!empty($contact)){
                 //return dd($contact);
                 $this->invoice->sendInvoiceAsEmailService($contact, $invoice);
