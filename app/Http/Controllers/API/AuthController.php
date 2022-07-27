@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
 
-    public function authenticate(Request $request): \Illuminate\Http\JsonResponse
+    public function authenticate(Request $request): JsonResponse
     {
         $credentials = $request->only('email', 'password');
 
@@ -24,10 +26,10 @@ class AuthController extends Controller
         //Send failed response if request is not valid
         if ($validator->fails()) {
             return response()->json([
-                'success'=> false,
-                'code'=> 400,
+                'success' => false,
+                'code' => 400,
                 'message' => $validator->errors()->first(),
-                'data'=>""
+                'data' => ""
             ]);
         }
 
@@ -38,30 +40,30 @@ class AuthController extends Controller
             //$token =  auth('api')->attempt($credentials);//attempt($credentials);
             $myTTL = 10080; //minutes
             JWTAuth::factory()->setTTL($myTTL);
-            $token =  JWTAuth::attempt($credentials);
+            $token = JWTAuth::attempt($credentials);
             if (!$token) {
                 return response()->json([
-                    'success'=> false,
-                    'code'=> 400,
+                    'success' => false,
+                    'code' => 400,
                     'message' => "Login credentials are invalid.",
-                    'data'=>''
+                    'data' => ''
                 ]);
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return response()->json([
-                'success'=> false,
-                'code'=> 500,
+                'success' => false,
+                'code' => 500,
                 'message' => "Could not create token",
-                'data'=>''
+                'data' => ''
             ]);
         }
 
         //Token created, return with success response and jwt token
         return response()->json([
-            'success'=> true,
-            'code'=> 200,
+            'success' => true,
+            'code' => 200,
             'message' => "Login successful",
-            'data'=> ["token"=>$token, 'user'=> Auth::user()]
+            'data' => ["token" => $token, 'user' => Auth::user()]
         ]);
 
 
@@ -77,10 +79,10 @@ class AuthController extends Controller
         //Send failed response if request is not valid
         if ($validator->fails()) {
             return response()->json([
-                'success'=> false,
-                'code'=> 400,
+                'success' => false,
+                'code' => 400,
                 'message' => $validator->errors()->first(),
-                'data'=>""
+                'data' => ""
             ]);
         }
         //Request is validated, do logout
@@ -89,17 +91,17 @@ class AuthController extends Controller
 
             return response()->json([
                 'success' => true,
-                'code'=> 200,
+                'code' => 200,
                 'message' => 'User has been logged out',
-                'data'=>""
+                'data' => ""
             ]);
         } catch (JWTException $exception) {
 
             return response()->json([
                 'success' => false,
-                'code'=> 500,
+                'code' => 500,
                 'message' => 'Sorry, user cannot be logged out',
-                'data'=>""
+                'data' => ""
             ]);
 
         }
