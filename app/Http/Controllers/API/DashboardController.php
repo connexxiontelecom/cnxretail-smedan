@@ -42,18 +42,17 @@ class DashboardController extends Controller
             $unpaidBills = 0;
             $expenses = 0;
             $thisMonthTotal = 0;
+            $recentOrders = array_slice($receipts->toArray(), 0, 10);
 
 
             foreach ($thisMonth as $month)
             {
                 $thisMonthTotal += $month->amount;
             }
-
             foreach ($receipts as $receipt)
             {
                 $income += $receipt->amount;
             }
-
             foreach ($invoices as $invoice)
             {
                 if($invoice->posted == 1)
@@ -61,7 +60,6 @@ class DashboardController extends Controller
                     $unpaidInvoices += (($invoice->total) - ($invoice->paid_amount));
                 }
             }
-
             $totalBills  = 0;
             foreach ($bills as $bill)
             {
@@ -71,7 +69,6 @@ class DashboardController extends Controller
                     //$totalBills += $bill->total;
                 }
             }
-
             foreach ($payments as $payment)
             {
                 if($payment->posted ==  1)
@@ -79,6 +76,12 @@ class DashboardController extends Controller
                     $expenses += ($payment->amount);
                 }
             }
+
+          /*  for($i=0; $i< 10;  $i++)
+            {
+                $recentOrders[] = $receipts[$i];
+            }*/
+
             return response()->json([
                 'success' => true,
                 'code' => 200,
@@ -91,13 +94,13 @@ class DashboardController extends Controller
                     "thisMonth" => $thisMonth,
                     "contacts" => $contacts,
                     "reminders" => $reminders,*/
-
                     "thisMonthTotal"=>$thisMonthTotal,
                     "income" => $income,
                     "unpaidInvoices" => $unpaidInvoices,
                     "unpaidBills" => $unpaidBills,
                     "expenses" => $expenses,
-                ]
+                    "recentOrders"=>$recentOrders
+                ],
             ]);
         } catch (\Exception $exception) {
             return response()->json([

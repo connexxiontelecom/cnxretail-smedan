@@ -74,8 +74,35 @@ class BillMaster extends Model
         return $sum;
     }
 
-    public function getTenantBills(){
-        return BillMaster::where('tenant_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
+    ///[$paginate] indicates whether it's a paginated request
+    /// to fetch Bills by batch
+    /// [$id] the offset to start from
+    public function getTenantBills(bool $paginate = false, int $id = 0){
+        if (!$paginate) {
+            return BillMaster::where('tenant_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
+        } else {
+            if ($id == 0) {
+                return BillMaster::where('tenant_id', Auth::user()->id)->orderBy('id', 'DESC')->take(10)->get();
+            } else {
+                return BillMaster::where('tenant_id', Auth::user()->id)->where('id', '<', $id)->orderBy('id', 'DESC')->take(10)->get();
+            }
+        }
+    }
+
+
+    ///only Posted Bills
+    public function getTotalSumPostedBills(){
+        return BillMaster::where('tenant_id', Auth::user()->id)->where('posted', 1)->sum('bill_amount');
+    }
+
+    ///Only Posted Bills
+    public function getTotalPaidSumPostedBills(){
+        return BillMaster::where('tenant_id', Auth::user()->id)->where('posted', 1)->sum('paid_amount');
+    }
+
+    ///Posted and Non-Posted Bills
+    public function getAllBillsTotalSum(){
+        return BillMaster::where('tenant_id', Auth::user()->id)->sum('bill_amount');
     }
 
     public function getTenantBillsThisYear(){

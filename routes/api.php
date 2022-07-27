@@ -25,4 +25,7 @@ Route::post('/login', [App\Http\Controllers\API\AuthController::class, 'authenti
 
 Route::group(['middleware' => ['jwt.verify'], 'prefix'=>'auth' ], function() {
     Route::post('/dashboard', [App\Http\Controllers\API\DashboardController::class, 'summary']);
+    Route::post('/invoices', [App\Http\Controllers\API\InvoiceController::class, 'getInvoices']);
+    Route::post('/invoices/create', [App\Http\Controllers\API\InvoiceController::class, 'createInvoice']);
+    Route::post('/bills', [App\Http\Controllers\API\BillController::class, 'getBills']);
 });
