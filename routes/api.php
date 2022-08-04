@@ -28,4 +28,6 @@ Route::group(['middleware' => ['jwt.verify'], 'prefix'=>'auth' ], function() {
     Route::post('/invoices', [App\Http\Controllers\API\InvoiceController::class, 'getInvoices']);
     Route::post('/invoices/create', [App\Http\Controllers\API\InvoiceController::class, 'createInvoice']);
     Route::post('/bills', [App\Http\Controllers\API\BillController::class, 'getBills']);
+    Route::get('/contacts', [App\Http\Controllers\API\ContactsController::class, 'allContacts']);
+    Route::get('/items', [App\Http\Controllers\API\ProductsController::class, 'getItems']);
 });

@@ -33,7 +33,6 @@ class AppSettingsController extends Controller
         session()->flash("success", "Your changes were saved successfully.");
         return back();
     }
-
     public function savePaymentIntegration(Request $request){
         $this->validate($request,[
            'public_key'=>'required',

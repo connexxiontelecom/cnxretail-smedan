@@ -36,7 +36,7 @@ class InvoiceController extends Controller
     {
         try {
             $id = $request->id ?? 0;
-            $invoices = $this->invoice->getTenantInvoices(true, (int)$id);
+            $results = $this->invoice->getTenantInvoices(true, (int)$id);
             $totalSumInvoices = $this->invoice->getTotalSumPostedInvoices();
             $totalPaidAmount = $this->invoice->getTotalPaidSumPostedInvoices();
             $totalAllInvoices = $this->invoice->getAllInvoicesTotalSum();
@@ -48,7 +48,8 @@ class InvoiceController extends Controller
                     "totalSumInvoices" => $totalSumInvoices,
                     "totalPaidAmount" => $totalPaidAmount,
                     "totalAllInvoices" => $totalAllInvoices,
-                    "invoices" => $invoices,
+                    "invoices" => $results["invoices"],
+                    "count" => $results["count"]
                 ],
             ]);
 
@@ -136,12 +137,18 @@ class InvoiceController extends Controller
             $invoice = $this->invoice->getInvoiceById($request->id);
             if (!empty($invoice)) {
                 $_invoice = $this->invoice->updateInvoiceStatus($invoice->id, 'decline');
+                $totalSumInvoices = $this->invoice->getTotalSumPostedInvoices();
+                $totalPaidAmount = $this->invoice->getTotalPaidSumPostedInvoices();
+                $totalAllInvoices = $this->invoice->getAllInvoicesTotalSum();
                 return response()->json([
                     'success' => true,
                     'code' => 200,
                     'message' => "Declined Successfully",
                     'data' => [
-                        "invoice" => $_invoice
+                        "invoice" => $_invoice,
+                        "totalSumInvoices" => $totalSumInvoices,
+                        "totalPaidAmount" => $totalPaidAmount,
+                        "totalAllInvoices" => $totalAllInvoices,
                     ]
                 ]);
             } else {
@@ -183,12 +190,18 @@ class InvoiceController extends Controller
             $invoice = $this->invoice->getInvoiceById($request->id);
             if (!empty($invoice)) {
                 $_invoice = $this->invoice->updateInvoiceStatus($invoice->id, 'post');
+                $totalSumInvoices = $this->invoice->getTotalSumPostedInvoices();
+                $totalPaidAmount = $this->invoice->getTotalPaidSumPostedInvoices();
+                $totalAllInvoices = $this->invoice->getAllInvoicesTotalSum();
                 return response()->json([
                     'success' => true,
                     'code' => 200,
                     'message' => "Approved Successfully",
                     'data' => [
-                        "invoice" => $_invoice
+                        "invoice" => $_invoice,
+                        "totalSumInvoices" => $totalSumInvoices,
+                        "totalPaidAmount" => $totalPaidAmount,
+                        "totalAllInvoices" => $totalAllInvoices,
                     ]
                 ]);
             } else {
@@ -209,65 +222,6 @@ class InvoiceController extends Controller
         }
 
     }
-
-    public function sendInvoice(Request $request)
-    {
-
-        //validate request
-        $validator = Validator::make($request->all(), [
-            'id' => 'required'
-        ]);
-
-        //Send failed response if request is not valid
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'code' => 400,
-                'message' => $validator->errors()->first(),
-                'data' => ""
-            ]);
-        }
-        $invoice = $this->invoice->getInvoiceBySlug($request->id);
-        try {
-            if (!empty($invoice)) {
-                #Contact
-                $contact = $this->contact->getContactById($invoice->contact_id);
-                if (!empty($contact)) {
-                    //return dd($contact);
-                    $this->invoice->sendInvoiceAsEmailService($contact, $invoice);
-                    return response()->json([
-                        'success' => true,
-                        'code' => 200,
-                        'message' => "Sent Successfully",
-                        'data' => ""
-                    ]);
-                } else {
-                    return response()->json([
-                        'success' => false,
-                        'code' => 400,
-                        'message' => "Could not send",
-                        'data' => ""
-                    ]);
-                }
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'code' => 400,
-                    'message' => "Invoice not found",
-                    'data' => ""
-                ]);
-            }
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'code' => 500,
-                'message' => "Oops something bad happened, Please try again! ",
-                'data' => ''
-            ]);
-        }
-
-    }
-
 
     public function processPayment(Request $request)
     {
@@ -313,12 +267,19 @@ class InvoiceController extends Controller
                     $counter = $this->receipt->getLatestReceipt();
                     $receipt = $this->receipt->createNewReceipt($counter, $invoice, $request);
                     if (!empty($receipt)) {
-
+                        $totalSumInvoices = $this->invoice->getTotalSumPostedInvoices();
+                        $totalPaidAmount = $this->invoice->getTotalPaidSumPostedInvoices();
+                        $totalAllInvoices = $this->invoice->getAllInvoicesTotalSum();
                         return response()->json([
                             'success' => true,
                             'code' => 200,
                             'message' => "Your receipt request was generated successfully",
-                            'data' => ""
+                            'data' => [
+                                "receipt"=> $receipt,
+                                "totalSumInvoices" => $totalSumInvoices,
+                                "totalPaidAmount" => $totalPaidAmount,
+                                "totalAllInvoices" => $totalAllInvoices,
+                            ]
                         ]);
 
                     } else {

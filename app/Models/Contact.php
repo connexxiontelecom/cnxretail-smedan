@@ -47,6 +47,7 @@ class Contact extends Model
         $contact->slug = substr(sha1(time()),23,40);
         $contact->description = $request->description ?? '';
         $contact->save();
+        return $contact;
     }
 
     public function updateContact(Request $request){

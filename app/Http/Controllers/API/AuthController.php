@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
+use App\Models\Pricing;
+use App\Models\Tenant;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,10 +17,16 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 class AuthController extends Controller
 {
 
+
+    public function __construct()
+    {
+        $this->user = new User();
+        $this->tenant = new Tenant();
+    }
+
     public function authenticate(Request $request): JsonResponse
     {
         $credentials = $request->only('email', 'password');
-
         //valid credential
         $validator = Validator::make($credentials, [
             'email' => 'required|email',
@@ -58,14 +68,34 @@ class AuthController extends Controller
             ]);
         }
 
-        //Token created, return with success response and jwt token
-        return response()->json([
-            'success' => true,
-            'code' => 200,
-            'message' => "Login successful",
-            'data' => ["token" => $token, 'user' => Auth::user()]
-        ]);
+        $users = $this->user->getAllTenantUsersByTenantId(Auth::user()->tenant_id);
+        if(strtotime(now())  > strtotime(Auth::user()->getTenant->end_date)){
+            foreach($users as $user){
+                $user->account_status = 0; //inactive
+                $user->save();
+            }
+            JWTAuth::invalidate($token);
 
+            return response()->json([
+                'success' => false,
+                'code' => 400,
+                'message' => "Renew Subscription",
+                'data' => ''
+            ]);
+
+        }else{
+            foreach($users as $user){
+                $user->account_status = 1; //active
+                $user->save();
+            }
+            //Token created, return with success response and jwt token
+            return response()->json([
+                'success' => true,
+                'code' => 200,
+                'message' => "Login successful",
+                'data' => ["token" => $token, 'user' => Auth::user()]
+            ]);
+        }
 
     }
 

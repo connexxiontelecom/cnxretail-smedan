@@ -96,9 +96,21 @@ class InvoiceMaster extends Model
             return InvoiceMaster::where('tenant_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
         } else {
             if ($id == 0) {
-                return InvoiceMaster::where('tenant_id', Auth::user()->id)->orderBy('id', 'DESC')->take(10)->get();
+                $results  =  InvoiceMaster::where('tenant_id', Auth::user()->id)->orderBy('id', 'DESC')->take(10)->get();
+                $count = InvoiceMaster::count();
+                foreach ($results as $result){
+                    $result->contact =  Contact::where('id', $result->contact_id)->first();
+                    $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+                }
+                return ["invoices"=>$results,  "count"=>$count];
             } else {
-                return InvoiceMaster::where('tenant_id', Auth::user()->id)->where('id', '<', $id)->orderBy('id', 'DESC')->take(10)->get();
+                $results =  InvoiceMaster::where('tenant_id', Auth::user()->id)->where('id', '<', $id)->orderBy('id', 'DESC')->take(10)->get();
+                $count = InvoiceMaster::count();
+                foreach ($results as $result){
+                    $result->contact =  Contact::where('id', $result->contact_id)->first();
+                    $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+                }
+                return ["invoices"=>$results,  "count"=>$count];
             }
         }
     }

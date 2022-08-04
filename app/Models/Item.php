@@ -47,6 +47,7 @@ public function setNewItem(Request $request){
     $item->save();
     #Upload Gallery
     $this->uploadGallery($request, $item);
+    return $item;
 }
 
     public function updateProduct(Request $request){
@@ -63,6 +64,7 @@ public function setNewItem(Request $request){
         $item->save();
         #Upload Gallery
         $this->uploadGallery($request, $item);
+        return $item;
     }
 
     public function uploadGallery(Request $request, $item){

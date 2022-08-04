@@ -35,7 +35,7 @@ class JwtMiddleware
                     'data' => '',
                 ]);
             }
-            else if (e instanceof \PHPOpenSourceSaver\JWTAuth\Exceptions\TokenBlacklistedException) {
+            else if ($e instanceof \PHPOpenSourceSaver\JWTAuth\Exceptions\TokenBlacklistedException) {
                 return response()->json([
                     'success' => false,
                     'code' => 400,

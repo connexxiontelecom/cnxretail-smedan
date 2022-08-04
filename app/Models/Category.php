@@ -22,11 +22,13 @@ class Category extends Model
         $cat->category_name = $request->category_name;
         $cat->slug = Str::slug($request->category_name);
         $cat->save();
+        return $cat;
     }
     public function updateCategory(Request $request){
         $cat =  Category::where('id',$request->category)->where('tenant_id', Auth::user()->tenant_id)->first();
         $cat->category_name = $request->category_name;
         $cat->save();
+        return $cat;
     }
 
     public function getCategoryById($id){

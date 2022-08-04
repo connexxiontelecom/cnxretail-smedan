@@ -29,14 +29,13 @@ class DashboardController extends Controller
     {
         try {
 
-            $receipts = $this->receiptmaster->getAllTenantReceiptsThisYear();
+            $receipts = $this->receiptmaster->getAllTenantReceiptThisYearApi();
             $invoices = $this->invoicemaster->getTenantInvoices();
             $bills = $this->billmaster->getTenantBills();
             $payments = $this->paymentmaster->getAllTenantPayments();
             $contacts = $this->contact->getTenantContacts(Auth::user()->tenant_id);
             $thisMonth = $this->receiptmaster->getAllTenantReceiptsThisMonth();
             $reminders = $this->reminder->getAllTenantReminders();
-
             $income = 0;
             $unpaidInvoices = 0;
             $unpaidBills = 0;
