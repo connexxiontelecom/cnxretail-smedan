@@ -62,12 +62,29 @@ class PaymentMaster extends Model
         }
     }
 
-    public function getAllTenantPayments(){
-        return PaymentMaster::where('tenant_id', Auth::user()->tenant_id)->orderBy('id', 'DESC')->get();
+    public function getAllTenantPayments(bool $paginate=false, int $id=0){
+        if (!$paginate) {
+            return PaymentMaster::where('tenant_id', Auth::user()->tenant_id)->orderBy('id', 'DESC')->get();
+        } else {
+            if ($id == 0) {
+                return PaymentMaster::where('tenant_id', Auth::user()->tenant_id)->orderBy('id', 'DESC')->take(10)->get();
+            } else {
+                return PaymentMaster::where('tenant_id', Auth::user()->id)->where('id', '<', $id)->whereYear('payment_date', date('Y'))->orderBy('id', 'DESC')->take(10)->get();
+            }
+        }
+
     }
 
-    public function getAllTenantPaymentsThisYear(){
-        return PaymentMaster::where('tenant_id', Auth::user()->tenant_id)->whereYear('payment_date', date('Y'))->orderBy('id', 'DESC')->get();
+    public function getAllTenantPaymentsThisYear(bool $paginate=false, int $id=0){
+        if (!$paginate) {
+            return PaymentMaster::where('tenant_id', Auth::user()->tenant_id)->whereYear('payment_date', date('Y'))->orderBy('id', 'DESC')->get();
+        } else {
+            if ($id == 0) {
+                return PaymentMaster::where('tenant_id', Auth::user()->id)->whereYear('payment_date', date('Y'))->orderBy('id', 'DESC')->take(10)->get();
+            } else {
+                return PaymentMaster::where('tenant_id', Auth::user()->id)->where('id', '<', $id)->whereYear('payment_date', date('Y'))->orderBy('id', 'DESC')->take(10)->get();
+            }
+        }
     }
 
     public function getAllTenantPaymentsByDateRange(Request $request){
@@ -77,6 +94,10 @@ class PaymentMaster extends Model
 
     public function getPaymentBySlug($slug){
         return PaymentMaster::where('slug', $slug)->first();
+    }
+
+    public function getPaymentById($id){
+        return PaymentMaster::find($id);
     }
 
     public function updatePaymentStatus($payment_id, $status){

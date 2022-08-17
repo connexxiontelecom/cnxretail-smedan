@@ -240,7 +240,6 @@ class SalesAndInvoiceController extends Controller
         }
     }
 
-
     public function sendReceipt($slug){
         $receipt = $this->receipt->getInvoiceBySlug($slug);
         if(!empty($receipt)){
@@ -316,7 +315,6 @@ class SalesAndInvoiceController extends Controller
     public function showNewItemForm(){
         return view('sales-n-invoice.add-new-item',['categories'=>$this->category->getAllCategories()]);
     }
-
     public function addNewItem(Request $request){
      if($request->item_type == 1){
          $this->validate($request,[
@@ -384,7 +382,6 @@ class SalesAndInvoiceController extends Controller
             return back();
         }
     }
-
     public function deleteImage($slug){
         $gallery = $this->itemgallery->getProductImageById($slug);
         if(!empty($gallery)){
@@ -399,7 +396,6 @@ class SalesAndInvoiceController extends Controller
     public function manageServices(){
         return view('sales-n-invoice.manage-services',['services'=>$this->item->getItemByItemType(2)]);
     }
-
     public function manageProducts(){
         return view('sales-n-invoice.manage-products',['products'=>$this->item->getItemByItemType(1)]);
     }

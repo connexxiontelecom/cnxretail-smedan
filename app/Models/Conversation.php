@@ -27,5 +27,17 @@ class Conversation extends Model
         $conversation->subject = $request->subject;
         $conversation->conversation = $request->conversation;
         $conversation->save();
+        $conversation->is_Added_by = Auth::user();
+        return $conversation;
     }
+
+    public function getContactConversations($contact_id){
+        $results = Conversation::where('contact_id', $contact_id)->orderBy('id', 'DESC')->get();
+        foreach ($results as $result)
+        {
+            $result->is_Added_by = User::where('id', $result->added_by)->first();
+        }
+        return $results;
+    }
+
 }

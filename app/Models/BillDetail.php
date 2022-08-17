@@ -24,4 +24,28 @@ class BillDetail extends Model
             $bill_item->save();
         }
     }
+
+    public function setNewBillItemsAPI(Request $request, $bill){
+        //$items = json_decode($request->items);
+        $items= $request->items;
+        foreach ($items as $item)
+        {
+            $bill_item = new BillDetail();
+            $bill_item->bill_id = $bill->id;
+            $bill_item->tenant_id = Auth::user()->tenant_id;
+            $bill_item->description = $item["description"];
+            $bill_item->quantity = $item["qty"];
+            $bill_item->unit_cost = $item["amount"];
+            $bill_item->total = $item["total"];
+            $bill_item->save();
+        }
+
+    }
+
+
+    public function getBillDetails($id){
+        $details =  BillDetail::where('bill_id', $id)->orderBy('id', 'DESC')->get();
+        return $details;
+    }
+
 }
