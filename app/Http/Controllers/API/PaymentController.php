@@ -32,7 +32,7 @@ class PaymentController extends Controller
             return response()->json([
                 'success' => true,
                 'code' => 200,
-                'message' => "Success",
+                'message' => "Success All payments",
                 'data' => [
                     "payments" => $payments
                 ]

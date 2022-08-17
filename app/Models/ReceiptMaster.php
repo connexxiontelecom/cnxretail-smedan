@@ -152,6 +152,37 @@ class ReceiptMaster extends Model
         }
     }
 
+    public function getContactReceipts($contact_id, bool $paginate = false, int $id)
+    {
+        if (!$paginate) {
+            $results =  ReceiptMaster::where('contact_id', $contact_id)->orderBy('id', 'DESC')->get();
+            $count = ReceiptMaster::where('contact_id', $contact_id)->count();
+            foreach ($results as $result){
+                $result->contact =  Contact::where('id', $result->contact_id)->first();
+                $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+            }
+            return ["receipts"=>$results,  "count"=>$count];
+        } else {
+            if ($id == 0) {
+                $results =  ReceiptMaster::where('contact_id', $contact_id)->orderBy('id', 'DESC')->take(10)->get();
+                foreach ($results as $result){
+                    $result->contact =  Contact::where('id', $result->contact_id)->first();
+                    $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+                }
+                $count = ReceiptMaster::where('contact_id', $contact_id)->count();
+                return ["receipts"=>$results,  "count"=>$count];
+            } else {
+               $results = ReceiptMaster::where('contact_id', $contact_id)->where('id', '<', $id)->orderBy('id', 'DESC')->take(10)->get();
+                foreach ($results as $result){
+                    $result->contact =  Contact::where('id', $result->contact_id)->first();
+                    $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+                }
+                $count = ReceiptMaster::where('contact_id', $contact_id)->count();
+                return ["receipts"=>$results,  "count"=>$count];
+            }
+        }
+    }
+
 
     public function getAllTenantReceiptsThisYear()
     {

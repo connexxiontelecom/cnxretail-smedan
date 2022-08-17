@@ -23,6 +23,7 @@ class Bank extends Model
         $bank->account_no = $request->account_no;
         $bank->tenant_id = Auth::user()->tenant_id;
         $bank->save();
+        return $bank;
     }
 
     public function updateBank(Request $request){

@@ -36,7 +36,7 @@ class BillController extends Controller
             return response()->json([
                 'success' => true,
                 'code' => 200,
-                'message' => "Success",
+                'message' => "Success Bills loaded",
                 'data' => [
                     "totalSumBills" => $totalSumBills,
                     "totalPaidAmount" => $totalPaidAmount,
@@ -80,20 +80,20 @@ class BillController extends Controller
         }
 
         try {
-            $bill = $this->billmaster->setNewBill($request);
-            $this->billdetail->setNewBillItems($request, $bill);
+            $bill = $this->billmaster->createBillAPI($request);
+            $this->billdetail->setNewBillItemsAPI($request, $bill);
             $totalSumBills = $this->billmaster->getTotalSumPostedBills();
             $totalPaidAmount = $this->billmaster->getTotalPaidSumPostedBills();
             $totalAllBills = $this->billmaster->getAllBillsTotalSum();
             return response()->json([
                 'success' => true,
                 'code' => 200,
-                'message' => "Success",
+                'message' => "Success Billmaster",
                 'data' => [
                     "totalSumInvoices" => $totalSumBills,
                     "totalPaidAmount" => $totalPaidAmount,
                     "totalAllInvoices" => $totalAllBills,
-                    "bill" => $bill,
+                    "bills" => $bill,
                 ],
             ]);
         } catch (\Exception $e) {
@@ -264,6 +264,28 @@ class BillController extends Controller
                     'data' => ''
                 ]);
             }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'code' => 500,
+                'message' => "Oops something bad happened, Please try again! ",
+                'data' => ''
+            ]);
+        }
+    }
+
+    public function getBillDetails($id)
+    {
+        try {
+            $details = $this->billdetail->getBillDetails($id);
+            return response()->json([
+                'success' => true,
+                'code' => 200,
+                'message' => "Success get bill details",
+                'data' => [
+                    "billDetails" => $details,
+                ],
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

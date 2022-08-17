@@ -89,11 +89,13 @@ class AuthController extends Controller
                 $user->save();
             }
             //Token created, return with success response and jwt token
+            $auth_user = Auth::user();
+            $auth_user->profile_image = url("/assets/drive/" . $auth_user->avatar);
             return response()->json([
                 'success' => true,
                 'code' => 200,
                 'message' => "Login successful",
-                'data' => ["token" => $token, 'user' => Auth::user()]
+                'data' => ["token" => $token, 'user' => $auth_user]
             ]);
         }
 

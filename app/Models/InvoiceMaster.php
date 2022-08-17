@@ -47,7 +47,27 @@ class InvoiceMaster extends Model
         $invoice->slug = substr(sha1(time()), 25, 40);
         $invoice->save();
         return $invoice;
+    }
 
+    public function createInvoiceAPI(Request $request)
+    {
+        $invoice_no = $this->getLatestInvoice();
+        $total = $request->total ?? 0;
+        $invoice = new InvoiceMaster();
+        $invoice->contact_id = $request->contact ?? '';
+        $invoice->tenant_id = Auth::user()->tenant_id ?? '';
+        $invoice->issued_by = Auth::user()->id;
+        $invoice->invoice_no = $invoice_no;
+        $invoice->ref_no = substr(sha1(time()), 29, 40);
+        $invoice->issue_date = $request->issue_date ?? '';
+        $invoice->due_date = $request->due_date ?? '';
+        $invoice->total = $total;
+        $invoice->slug = substr(sha1(time()), 25, 40);
+        $invoice->save();
+        $inv = InvoiceMaster::find($invoice->id);
+        $inv->contact =  Contact::where('id', $invoice->contact_id)->first();
+        $inv->tenant =  Tenant::where('id', $invoice->tenant_id)->first();
+        return $inv;
     }
 
     public function getInvoiceBySlug($slug)
@@ -130,6 +150,37 @@ class InvoiceMaster extends Model
         return InvoiceMaster::where('tenant_id', Auth::user()->id)->sum('total');
     }
 
+    public function getContactInvoices( $contact_id, bool $paginate = false, int $id = 0)
+    {
+        if (!$paginate) {
+            $results = InvoiceMaster::where('contact_id', $contact_id)->orderBy('id', 'DESC')->get();
+            $count = InvoiceMaster::where('contact_id', $contact_id)->count();
+            foreach ($results as $result){
+                $result->contact =  Contact::where('id', $result->contact_id)->first();
+                $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+            }
+            return ["invoices"=>$results,  "count"=>$count];
+        } else {
+            if ($id == 0) {
+                $results  =  InvoiceMaster::where('contact_id', $contact_id)->orderBy('id', 'DESC')->take(10)->get();
+                $count = InvoiceMaster::where('contact_id', $contact_id)->count();
+                foreach ($results as $result){
+                    $result->contact =  Contact::where('id', $result->contact_id)->first();
+                    $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+                }
+                return ["invoices"=>$results,  "count"=>$count];
+            } else {
+                $results =  InvoiceMaster::where('contact_id', $contact_id)->where('id', '<', $id)->orderBy('id', 'DESC')->take(10)->get();
+                $count = InvoiceMaster::where('contact_id', $contact_id)->count();
+                foreach ($results as $result){
+                    $result->contact =  Contact::where('id', $result->contact_id)->first();
+                    $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+                }
+                return ["invoices"=>$results,  "count"=>$count];
+            }
+        }
+    }
+
 
     public function getTenantInvoicesThisYear()
     {
@@ -158,7 +209,7 @@ class InvoiceMaster extends Model
             return $invoice;
         } else {
             $invoice = InvoiceMaster::find($invoice_id);
-            $invoice->trashed = 1;
+            $invoice->trash = 1;
             $invoice->trashed_by = Auth::user()->id;
             $invoice->trash_date = now();
             #Deduct paid amount

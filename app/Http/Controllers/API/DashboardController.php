@@ -84,7 +84,7 @@ class DashboardController extends Controller
             return response()->json([
                 'success' => true,
                 'code' => 200,
-                'message' => "Success",
+                'message' => "Success Dashboard",
                 'data' => [
                     /*"receipts" => $receipts,
                     "invoices" => $invoices,

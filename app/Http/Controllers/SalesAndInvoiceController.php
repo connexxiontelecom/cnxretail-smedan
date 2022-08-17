@@ -382,7 +382,6 @@ class SalesAndInvoiceController extends Controller
             return back();
         }
     }
-
     public function deleteImage($slug){
         $gallery = $this->itemgallery->getProductImageById($slug);
         if(!empty($gallery)){
@@ -397,7 +396,6 @@ class SalesAndInvoiceController extends Controller
     public function manageServices(){
         return view('sales-n-invoice.manage-services',['services'=>$this->item->getItemByItemType(2)]);
     }
-
     public function manageProducts(){
         return view('sales-n-invoice.manage-products',['products'=>$this->item->getItemByItemType(1)]);
     }

@@ -244,7 +244,7 @@ class ReceiptController extends Controller
                     'data' => ""
                 ]);
             }
-        } catch (\ Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'code' => 500,
@@ -255,5 +255,41 @@ class ReceiptController extends Controller
 
     }
 
+    public function getContactReceipts(Request $request){
+        $validator = Validator::make($request->all(), [
+            'contact_id'=>'required'
+        ]);
+
+        //Send failed response if request is not valid
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'code' => 400,
+                'message' => $validator->errors()->first(),
+                'data' => ""
+            ]);
+        }
+        try{
+            $id = $request->id??0;
+            $contact = $request->contact_id;
+            $results = $this->receipt->getContactReceipts($contact,true, (int)$id);
+            return response()->json([
+                'success' => true,
+                'code' => 200,
+                'message' => "Success Receipts",
+                'data' => [
+                    "receipts" => $results['receipts'],
+                    "count"=> $results['count'],
+                ]
+            ]);
+        }catch (\Exception $e){
+            return response()->json([
+                'success' => false,
+                'code' => 500,
+                'message' => "Oops something bad happened, Please try again! ",
+                'data' => ''
+            ]);
+        }
+    }
 
 }

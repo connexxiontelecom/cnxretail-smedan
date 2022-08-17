@@ -14,8 +14,8 @@ use App\Models\MarginReport;
 use App\Models\ReceiptDetail;
 use App\Models\ReceiptMaster;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller
 {
@@ -34,18 +34,19 @@ class ProductsController extends Controller
         $this->marginreport = new MarginReport();
     }
 
-    public function getItems(Request $request){
-        try{
+    public function getItems(Request $request)
+    {
+        try {
             $items = $this->item->getAllTenantItems(Auth::user()->tenant_id);
             return response()->json([
                 'success' => true,
                 'code' => 200,
-                'message' => "Success",
+                'message' => "Success Items",
                 'data' => [
-                    "items"=>$items
+                    "items" => $items
                 ]
             ]);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'code' => 500,
@@ -74,7 +75,6 @@ class ProductsController extends Controller
                 'selling_price.required' => 'How much do you intend selling this product?',
                 'attachments.required' => 'Upload product image'
             ]);
-
             if ($validator->fails()) {
                 return response()->json([
                     'success' => false,
@@ -84,8 +84,25 @@ class ProductsController extends Controller
                 ]);
             }
 
+            try {
+                $item = $this->item->setNewItem($request);
+                return response()->json([
+                    'success' => "Success",
+                    'code' => 200,
+                    'message' => "Item created successfully",
+                    'data' => [
+                        "items" => $item
+                    ]
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'code' => 500,
+                    'message' => "Oops something bad happened, Please try again! ",
+                    'data' => ''
+                ]);
+            }
         } else {
-
             $validator = Validator::make($request->all(), [
                 'item_name' => 'required',
                 'service_fee' => 'required'
@@ -93,7 +110,6 @@ class ProductsController extends Controller
                 'item_name.required' => 'Enter service name',
                 'service_fee.required' => 'How much do you intend to charge for this service?'
             ]);
-
             if ($validator->fails()) {
                 return response()->json([
                     'success' => false,
@@ -102,25 +118,26 @@ class ProductsController extends Controller
                     'data' => ""
                 ]);
             }
+            try {
+                $item = $this->item->setNewItem($request);
+                return response()->json([
+                    'success' => "Success",
+                    'code' => 200,
+                    'message' => "Item Created Successfully",
+                    'data' => [
+                        "items" => $item
+                    ]
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'code' => 500,
+                    'message' => "Oops something bad happened, Please try again! ",
+                    'data' => ''
+                ]);
+            }
         }
-        try {
-            $item = $this->item->setNewItem($request);
-            return response()->json([
-                'success' => "Success",
-                'code' => 400,
-                'message' => "",
-                'data' => [
-                    "item" => $item
-                ]
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'code' => 500,
-                'message' => "Oops something bad happened, Please try again! ",
-                'data' => ''
-            ]);
-        }
+
     }
 
     public function updateItem(Request $request)
@@ -160,11 +177,11 @@ class ProductsController extends Controller
                 'code' => 200,
                 'message' => "Success",
                 'data' => [
-                    "item"=>$item
+                    "item" => $item
                 ]
             ]);
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'code' => 500,
@@ -178,14 +195,13 @@ class ProductsController extends Controller
 
     public function getCategories(Request $request)
     {
-
         try {
-            $id = $request->id ?? 0;
+            //$id = $request->id ?? 0;
             $categories = $this->category->getAllCategories();
             return response()->json([
                 'success' => true,
                 'code' => 200,
-                'message' => "Success",
+                'message' => "Success categories",
                 'data' => [
                     "categories" => $categories,
                 ],
@@ -221,9 +237,9 @@ class ProductsController extends Controller
             return response()->json([
                 'success' => true,
                 'code' => 200,
-                'message' => "Success",
+                'message' => "Success Category Created!",
                 'data' => [
-                    "category" => $cat,
+                    "categories" => $cat,
                 ],
             ]);
         } catch (\Exception $e) {
@@ -270,6 +286,5 @@ class ProductsController extends Controller
             ]);
         }
     }
-
 
 }

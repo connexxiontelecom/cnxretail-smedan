@@ -24,7 +24,7 @@ class ContactsController extends Controller
             return response()->json([
                 'success' => true,
                 'code' => 200,
-                'message' => "Success",
+                'message' => "Success contacts loaded",
                 'data' => [
                     "contact"=>$contacts
                 ]
@@ -42,7 +42,7 @@ class ContactsController extends Controller
 
 
     public function createContact(Request $request){
-        $validator = Validate($request,[
+        $validator = Validator::make($request->all(),[
             'company_name'=>'required',
             'company_phone_no'=>'required',
             'company_email'=>'required',
@@ -52,7 +52,7 @@ class ContactsController extends Controller
             'phone_no'=>'required',
             'last_name'=>'required',
             'email'=>'required',
-            //'position'=>'required',
+            'position'=>'required',
         ],[
             'company_name.required'=>'Enter company name',
             'company_phone_no.required'=>'Enter company phone number',
@@ -73,16 +73,14 @@ class ContactsController extends Controller
         }
         try{
            $contact =  $this->contact->setNewContact($request);
-            if ($validator->fails()) {
                 return response()->json([
-                    'success' => false,
+                    'success' => true,
                     'code' => 200,
-                    'message' => "Success",
+                    'message' => "Success Contact Created",
                     'data' => [
                         'contact'=>$contact
                     ]
                 ]);
-            }
         }catch (\Exception $e){
             return response()->json([
                 'success' => false,
@@ -102,7 +100,7 @@ class ContactsController extends Controller
                return response()->json([
                    'success' => false,
                    'code' => 200,
-                   'message' => "Success",
+                   'message' => "Success view contact",
                    'data' => [
                        'contact'=>$contact
                    ]
@@ -110,11 +108,9 @@ class ContactsController extends Controller
            }else{
                return response()->json([
                    'success' => false,
-                   'code' => 200,
-                   'message' => "Success",
-                   'data' => [
-                       'contact'=>$contact
-                   ]
+                   'code' => 400,
+                   'message' => "No contacts found",
+                   'data' => ""
                ]);
            }
        }catch (\Exception $e){
@@ -148,12 +144,13 @@ class ContactsController extends Controller
         }
 
         try{
-            $this->conversation->setNewConversation($request);
+            $conversations = $this->conversation->setNewConversation($request);
             #Set reminder
             if(!empty($request->remind_at)){
                 $color = $this->reminder->generateRandomColorString();
                 $this->reminder->setNewReminder($request->subject, $request->conversation, $request->remind_at, $color, 2);
             }
+
             #Upgrade contact to lead
             $contact = $this->contact->getContactById($request->contact_id);
             if(!empty($contact)){
@@ -164,10 +161,12 @@ class ContactsController extends Controller
             }
 
             return response()->json([
-                'success' => false,
-                'code' => 500,
-                'message' => "Oops something bad happened, Please try again! ",
-                'data' => ''
+                'success' => true,
+                'code' => 200,
+                'message' => "Success Saved",
+                'data' => [
+                    "conversations" => $conversations,
+                ]
             ]);
 
         }catch (\Exception $e){
@@ -179,5 +178,42 @@ class ContactsController extends Controller
             ]);
         }
 
+    }
+
+
+
+    public function getContactConversations(Request $request){
+        $validator = Validator::make($request->all(), [
+            'contact_id'=>'required'
+        ]);
+
+        //Send failed response if request is not valid
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'code' => 400,
+                'message' => $validator->errors()->first(),
+                'data' => ""
+            ]);
+        }
+        try{
+            $contact = $request->contact_id;
+            $conversations = $this->conversation->getContactConversations($contact);
+            return response()->json([
+                'success' => true,
+                'code' => 200,
+                'message' => "Success Conversations",
+                'data' => [
+                    "conversations" => $conversations,
+                ]
+            ]);
+        }catch (\Exception $e){
+            return response()->json([
+                'success' => false,
+                'code' => 500,
+                'message' => "Oops something bad happened, Please try again! ",
+                'data' => ''
+            ]);
+        }
     }
 }
