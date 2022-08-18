@@ -90,6 +90,8 @@ class BillsAndPaymentController extends Controller
     }
 
 
+
+
     public function showMakePaymentForm($slug){
         $bill = $this->billmaster->getBillBySlug($slug);
         if(!empty($bill)){

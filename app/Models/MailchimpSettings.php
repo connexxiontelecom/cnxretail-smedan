@@ -22,6 +22,7 @@ class MailchimpSettings extends Model
         $settings->mailchimp_list_id = $request->list_id;
         $settings->updated_by = Auth::user()->id;
         $settings->save();
+        return $settings;
     }
 
     public function updateMailchimpSettings(Request $request){
@@ -35,6 +36,10 @@ class MailchimpSettings extends Model
 
     public function getTenantMailChimpFirstApiKey(){
         return MailchimpSettings::where('tenant_id', Auth::user()->tenant_id)->first();
+    }
+
+    public function getTenantMailChimpInfo(){
+        return MailchimpSettings::where('tenant_id', Auth::user()->tenant_id)->get();
     }
 
 
