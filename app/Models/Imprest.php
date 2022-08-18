@@ -48,6 +48,35 @@ class Imprest extends Model
         return Imprest::where('tenant_id', $tenant_id)->orderBy('id', 'DESC')->get();
     }
 
+
+    public function getTenantImprests(bool $paginate = false, int $id = 0)
+    {
+        if (!$paginate) {
+            return Imprest::where('tenant_id', Auth::user()->tenant_id)->orderBy('id', 'DESC')->get();
+        } else {
+            if ($id == 0) {
+                $results  =  Imprest::where('tenant_id', Auth::user()->tenant_id)->orderBy('id', 'DESC')->take(10)->get();
+                $count = Imprest::where('tenant_id', Auth::user()->tenant_id)->count();
+                foreach ($results as $result){
+                    $result->officer =  User::where('id', $result->responsible_officer)->first();
+                    $result->issued_by =  User::where('id', $result->user_id)->first();
+                }
+                return ["imprests"=>$results,  "count"=>$count];
+            } else {
+                $results  =  Imprest::where('tenant_id', Auth::user()->tenant_id)->where('id', '<', $id)->orderBy('id', 'DESC')->take(10)->get();
+                $count = Imprest::where('tenant_id', Auth::user()->tenant_id)->count();
+                foreach ($results as $result){
+                    $result->officer =  User::where('id', $result->contact_id)->first();
+                    $result->issued_by =  User::where('id', $result->user_id)->first();
+                }
+                return ["imprests"=>$results,  "count"=>$count];
+            }
+        }
+    }
+
+
+
+
     public function getImprestById($id){
         return Imprest::find($id);
     }
