@@ -54,4 +54,6 @@ Route::group(['middleware' => ['jwt.verify'], 'prefix'=>'auth' ], function() {
     Route::post('/contact/conversations/create', [App\Http\Controllers\API\ContactsController::class, 'newConversation']);
     Route::post('/contact/create', [App\Http\Controllers\API\ContactsController::class, 'createContact']);
     Route::post('/imprests', [App\Http\Controllers\API\ImprestController::class, 'getImprests']);
+    Route::get('/users', [App\Http\Controllers\API\ImprestController::class, 'getUsers']);
+    Route::post('/imprests/create', [App\Http\Controllers\API\ImprestController::class, 'storeNewImprest']);
 });

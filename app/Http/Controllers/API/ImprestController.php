@@ -40,15 +40,36 @@ class ImprestController extends Controller
             'date.required'=>'Enter transaction date',
             'date.date'=>'Enter a valid date format'
         ]);
-        $amount = str_replace(",", "", $request->amount);
-        if(is_numeric($amount)){
-            $this->imprest->setNewImprest($request);
-            session()->flash("success", "Your imprest was successfully registered.");
-            return back();
-        }else{
-            session()->flash("error", "Enter a valid amount.");
-            return back();
-        }
+       try{
+           $amount = str_replace(",", "", $request->amount);
+           if(is_numeric($amount)){
+               $imprest = $this->imprest->setNewImprest($request);
+               return response()->json([
+                   'success' => true,
+                   'code' => 200,
+                   'message' => "Success Imprest Created",
+                   'data' => [
+                       'imprest'=>$imprest
+                   ]
+               ]);
+
+           }else{
+               return response()->json([
+                   'success' => false,
+                   'code' => 500,
+                   'message' => "Oops something bad happened, Please try again! ",
+                   'data' => ''
+               ]);
+           }
+       }
+       catch (\Exception $e){
+           return response()->json([
+               'success' => false,
+               'code' => 500,
+               'message' => "Oops something bad happened, Please try again! ",
+               'data' => ''
+           ]);
+       }
 
     }
 
@@ -81,9 +102,9 @@ class ImprestController extends Controller
             return response()->json([
                 'success' => true,
                 'code' => 200,
-                'message' => "Success Banks",
+                'message' => "Success users",
                 'data' => [
-                    'users' => $users
+                    'user' => $users
                 ]
             ]);
         }

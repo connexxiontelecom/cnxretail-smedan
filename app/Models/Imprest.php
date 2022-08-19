@@ -34,6 +34,10 @@ class Imprest extends Model
         $imprest->bank_id = $request->bank ?? '';
         $imprest->slug = substr(sha1(time()),27,40);
         $imprest->save();
+        $_imprest = $this->getImprestBySlug($imprest->slug );
+        $_imprest->officer =  User::where('id', $_imprest->responsible_officer)->first();
+        $_imprest->issued_by =  User::where('id', $_imprest->user_id)->first();
+        return $_imprest;
     }
 
     public function getMyImprest($user_id){
@@ -66,7 +70,7 @@ class Imprest extends Model
                 $results  =  Imprest::where('tenant_id', Auth::user()->tenant_id)->where('id', '<', $id)->orderBy('id', 'DESC')->take(10)->get();
                 $count = Imprest::where('tenant_id', Auth::user()->tenant_id)->count();
                 foreach ($results as $result){
-                    $result->officer =  User::where('id', $result->contact_id)->first();
+                    $result->officer =  User::where('id', $result->responsible_officer)->first();
                     $result->issued_by =  User::where('id', $result->user_id)->first();
                 }
                 return ["imprests"=>$results,  "count"=>$count];
