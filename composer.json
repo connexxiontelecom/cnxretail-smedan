@@ -12,9 +12,10 @@
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
+        "lcobucci/jwt": "^4.1",
         "mailchimp/marketing": "^3.0",
-        "php-open-source-saver/jwt-auth": "^1.4",
         "spatie/laravel-newsletter": "^4.10",
+        "tymon/jwt-auth": "dev-develop",
         "yabacon/paystack-php": "^2.2"
     },
     "require-dev": {
