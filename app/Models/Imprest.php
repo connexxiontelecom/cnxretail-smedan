@@ -57,7 +57,7 @@ class Imprest extends Model
 
     ///Posted and Non-Posted Bills
     public function getPostedImprestTotalSum(){
-        return Imprest::where('tenant_id', Auth::user()->tenant_id)->where('posted', 1)->sum('amount');
+        return Imprest::where('tenant_id', Auth::user()->tenant_id)->where('status', 1)->sum('amount');
     }
 
     public function getTenantImprests(bool $paginate = false, int $id = 0)
