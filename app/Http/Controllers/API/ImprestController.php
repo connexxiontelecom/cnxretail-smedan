@@ -120,40 +120,60 @@ class ImprestController extends Controller
 
 
 
-    public function processImprest($action, $slug){
-        $imprest = $this->imprest->getImprestBySlug($slug);
-        if(!empty($imprest)){
-            if($action == 'approve'){
-                /*$pay = new PayMaster;
-                $pay->tenant_id = $imprest->tenant_id;
-                $pay->bank_id = $imprest->bank_id;
-                $pay->vendor_id = 0; //imprest;
-                $pay->exchange_rate = 1;
-                //$pay->currency_id = Auth::user()->tenant->currency->id;
-                $pay->date_inputed = $imprest->transaction_date;
-                $pay->amount = $imprest->amount;
-                $pay->ref_no = strtoupper(substr(sha1(time()),34,40));
-                $pay->payment_type = 1; //cash
-                $pay->user_id = $imprest->user_id;
-                $pay->posted = 1; //yes
-                $pay->posted_date = now();
-                $pay->slug = substr(sha1(time()),34,40);
-                $pay->type = 2; //imprest,1=bill
-                $pay->save();*/
-                #update imprest
-                $imprest->status = 1;
-                $imprest->save();
-                session()->flash("success", "Your imprest was approved.");
-                return back();
-            }else{
-                $imprest->status = 2;//declined
-                $imprest->save();
-                session()->flash("success", "Your imprest was declined.");
-                return back();
-            }
+    public function approveImprest(Request $request){
+        $this->validate($request,[
+            'id'=>'required',
+        ],[
+            'id.required'=>'Imprest ID is required',
+        ]);
+        try{
+            $id = $request->id;
+            $this->imprest->approveDeclineImprest($id, "approve");
+                return response()->json([
+                    'success' => true,
+                    'code' => 200,
+                    'message' => "Approved Successfully",
+                    'data' => []
+                ]);
+        }
+        catch (\Exception $e){
+            return response()->json([
+                'success' => false,
+                'code' => 500,
+                'message' => "Oops something bad happened, Please try again! ",
+                'data' => ''
+            ]);
         }
 
     }
+
+    public function declineImprest(Request $request){
+        $this->validate($request,[
+            'id'=>'required',
+        ],[
+            'id.required'=>'Imprest ID is required',
+        ]);
+        try{
+            $id = $request->id;
+            $this->imprest->approveDeclineImprest($id, "decline");
+            return response()->json([
+                'success' => true,
+                'code' => 200,
+                'message' => "Declined Successfully",
+                'data' => []
+            ]);
+        }
+        catch (\Exception $e){
+            return response()->json([
+                'success' => false,
+                'code' => 500,
+                'message' => "Oops something bad happened, Please try again! ",
+                'data' => ''
+            ]);
+        }
+
+    }
+
 
 
 

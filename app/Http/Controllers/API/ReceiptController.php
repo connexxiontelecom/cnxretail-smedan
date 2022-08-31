@@ -37,16 +37,40 @@ class ReceiptController extends Controller
     public function getReceipts(Request $request){
         try{
             $id = $request->id??0;
-            $receipts = $this->receipt->getAllTenantReceipts(true, (int)$id);
+            $results = $this->receipt->getAllTenantReceipts(true, (int)$id);
             return response()->json([
                 'success' => true,
                 'code' => 200,
                 'message' => "Success",
                 'data' => [
-                    "receipts" => $receipts
+                    "receipts" => $results["receipts"],
+                    "count" => $results["count"]
                 ]
             ]);
         }catch (\Exception $e){
+            return response()->json([
+                'success' => false,
+                'code' => 500,
+                'message' => "Oops something bad happened, Please try again! ",
+                'data' => ''
+            ]);
+        }
+    }
+
+
+    public function getReceiptDetails($id)
+    {
+        try {
+            $details = $this->receiptitem->getReceiptDetails($id);
+            return response()->json([
+                'success' => true,
+                'code' => 200,
+                'message' => "Success get Receipt details",
+                'data' => [
+                    "receiptDetails" => $details,
+                ],
+            ]);
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'code' => 500,
@@ -63,6 +87,7 @@ class ReceiptController extends Controller
             'payment_date' => 'required|date',
             'reference_no' => 'required',
             'bank' => 'required',
+            'total' => 'required',
             'payment_method' => 'required',
             'items.*' => 'required'
         ], [
@@ -71,7 +96,7 @@ class ReceiptController extends Controller
             'payment_date.date' => 'Choose a valid date format',
             'reference_no.required' => 'Enter a reference number for this transaction',
             'bank.required' => 'choose bank from the list provided',
-            'payment_method.required' => 'Select payment method'
+            'payment_method.required' => 'Select payment method',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -82,8 +107,8 @@ class ReceiptController extends Controller
             ]);
         }
         try {
-            $receipt = $this->receipt->createNewDirectReceipt($request);
-            $this->receiptitem->setNewReceiptItems($request, $receipt);
+            $receipt = $this->receipt->createNewReceiptAPI($request);
+            $this->receiptitem->setReceiptItemsAPI($request, $receipt);
             return response()->json([
                 'success' => true,
                 'code' => 200,
@@ -128,7 +153,7 @@ class ReceiptController extends Controller
                     'code' => 200,
                     'message' => "Receipt updated",
                     'data' => [
-                        "receipt" => $_receipt
+                        //"receipt" => $_receipt
                     ]
                 ]);
             } else {
@@ -177,7 +202,7 @@ class ReceiptController extends Controller
                     'code' => 200,
                     'message' => "Receipt updated",
                     'data' => [
-                        "receipt" => $_receipt
+                        //"receipt" => $_receipt
                     ]
                 ]);
             } else {
@@ -197,6 +222,7 @@ class ReceiptController extends Controller
             ]);
         }
     }
+
 
     public function sendReceipt(Request $request)
     {

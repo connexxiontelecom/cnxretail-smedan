@@ -37,8 +37,10 @@ class Imprest extends Model
         $_imprest = $this->getImprestBySlug($imprest->slug );
         $_imprest->officer =  User::where('id', $_imprest->responsible_officer)->first();
         $_imprest->issued_by =  User::where('id', $_imprest->user_id)->first();
+        $_imprest->bank =  Bank::where('id', $imprest->bank_id)->first();
         return $_imprest;
     }
+
 
     public function getMyImprest($user_id){
         return Imprest::where('user_id', $user_id)->orderBy('id', 'DESC')->get();
@@ -53,6 +55,11 @@ class Imprest extends Model
     }
 
 
+    ///Posted and Non-Posted Bills
+    public function getPostedImprestTotalSum(){
+        return Imprest::where('tenant_id', Auth::user()->tenant_id)->where('posted', 1)->sum('amount');
+    }
+
     public function getTenantImprests(bool $paginate = false, int $id = 0)
     {
         if (!$paginate) {
@@ -64,6 +71,7 @@ class Imprest extends Model
                 foreach ($results as $result){
                     $result->officer =  User::where('id', $result->responsible_officer)->first();
                     $result->issued_by =  User::where('id', $result->user_id)->first();
+                    $result->bank =  Bank::where('id', $result->bank_id)->first();
                 }
                 return ["imprests"=>$results,  "count"=>$count];
             } else {
@@ -72,13 +80,26 @@ class Imprest extends Model
                 foreach ($results as $result){
                     $result->officer =  User::where('id', $result->responsible_officer)->first();
                     $result->issued_by =  User::where('id', $result->user_id)->first();
+                    $result->bank =  Bank::where('id', $result->bank_id)->first();
                 }
                 return ["imprests"=>$results,  "count"=>$count];
             }
         }
     }
 
-
+    public function approveDeclineImprest($id, $action){
+        $imprest = $this->getImprestById($id);
+        if(!empty($imprest)){
+            if($action == 'approve'){
+                $imprest->status = 1;
+                $imprest->save();
+            }else{
+                $imprest->status = 2;//declined
+                $imprest->save();
+                return back();
+            }
+        }
+    }
 
 
     public function getImprestById($id){
@@ -86,8 +107,14 @@ class Imprest extends Model
     }
 
     public function getAllTenantImpressesByDateRange(Request $request){
-        return Imprest::where('tenant_id', Auth::user()->tenant_id)
+        $results =  Imprest::where('tenant_id', Auth::user()->tenant_id)
             ->whereBetween('transaction_date', [$request->from, $request->to])->get();
+        foreach ($results as $result){
+            $result->officer =  User::where('id', $result->responsible_officer)->first();
+            $result->issued_by =  User::where('id', $result->user_id)->first();
+            $result->bank =  Bank::where('id', $result->bank_id)->first();
+        }
+        return $results;
     }
 
 }
