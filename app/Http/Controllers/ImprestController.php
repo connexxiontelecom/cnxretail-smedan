@@ -92,6 +92,21 @@ class ImprestController extends Controller
 
     }
 
+    public function approveDeclineImprest($action, $id){
+        $imprest = $this->imprest->getImprestById($id);
+        if(!empty($imprest)){
+            if($action == 'approve'){
+                $imprest->status = 1;
+                $imprest->save();
+            }else{
+                $imprest->status = 2;
+                $imprest->save();
+            }
+        }
+
+    }
+
+
     public function impressReport(){
         return view('imprest.impress-report',[
             'impresses'=>$this->imprest->getAllTenantImprests(Auth::user()->tenant_id),
@@ -99,6 +114,7 @@ class ImprestController extends Controller
             'to'=>now()
         ]);
     }
+
 
     public function filterImpressReport(Request $request){
         $this->validate($request,[
@@ -116,4 +132,6 @@ class ImprestController extends Controller
             'to'=>$request->to
         ]);
     }
+
+
 }

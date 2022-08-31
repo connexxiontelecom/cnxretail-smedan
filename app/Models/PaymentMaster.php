@@ -62,14 +62,33 @@ class PaymentMaster extends Model
         }
     }
 
+    //Only Posted Payments
+    public function getTotalPaidSumPostedPayments(){
+        return PaymentMaster::where('tenant_id', Auth::user()->id)->where('posted', 1)->sum('amount');
+    }
+
     public function getAllTenantPayments(bool $paginate=false, int $id=0){
         if (!$paginate) {
             return PaymentMaster::where('tenant_id', Auth::user()->tenant_id)->orderBy('id', 'DESC')->get();
         } else {
             if ($id == 0) {
-                return PaymentMaster::where('tenant_id', Auth::user()->tenant_id)->orderBy('id', 'DESC')->take(10)->get();
+                $results =  PaymentMaster::where('tenant_id', Auth::user()->tenant_id)->orderBy('id', 'DESC')->take(10)->get();
+                foreach ($results as $result){
+                    $result->vendor =  Contact::where('id', $result->vendor_id)->first();
+                    $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+                    $result->issuer =  User::where('id', $result->issued_by)->first();
+                }
+                $count = PaymentMaster::where('tenant_id', Auth::user()->tenant_id)->count();
+                return ["Payments"=>$results,  "count"=>$count];
             } else {
-                return PaymentMaster::where('tenant_id', Auth::user()->id)->where('id', '<', $id)->whereYear('payment_date', date('Y'))->orderBy('id', 'DESC')->take(10)->get();
+                $results = PaymentMaster::where('tenant_id', Auth::user()->id)->where('id', '<', $id)->whereYear('payment_date', date('Y'))->orderBy('id', 'DESC')->take(10)->get();
+                foreach ($results as $result){
+                    $result->vendor =  Contact::where('id', $result->vendor_id)->first();
+                    $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+                    $result->issuer =  User::where('id', $result->issued_by)->first();
+                }
+                $count = PaymentMaster::where('tenant_id', Auth::user()->tenant_id)->count();
+                return ["Payments"=>$results,  "count"=>$count];
             }
         }
 
@@ -88,8 +107,15 @@ class PaymentMaster extends Model
     }
 
     public function getAllTenantPaymentsByDateRange(Request $request){
-        return PaymentMaster::where('tenant_id', Auth::user()->tenant_id)
+        $results =  PaymentMaster::where('tenant_id', Auth::user()->tenant_id)
             ->whereBetween('payment_date', [$request->from, $request->to])->get();
+
+        foreach ($results as $result){
+            $result->vendor =  Contact::where('id', $result->vendor_id)->first();
+            $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+            $result->issuer =  User::where('id', $result->issued_by)->first();
+        }
+        return $results;
     }
 
     public function getPaymentBySlug($slug){
