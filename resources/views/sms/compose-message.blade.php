@@ -42,7 +42,7 @@
                             </div>
                         @endif
                     <div class="card-body">
-                        <form action="{{route('preview-message')}}" method="get">
+                        <form action="{{route('preview-message', ['account'=>$account])}}" method="get">
                             @csrf
                             <div class="card">
                                 <div class="card-header">

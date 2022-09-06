@@ -51,7 +51,7 @@
                     <div class="card-title"> Other Details</div>
                 </div>
                 <div class="card-body">
-                    <a href="{{route('update-item-details', $product->slug)}}" title="Edit Product" class="btn btn-icon  btn-warning float-right"><i class="ti-pencil"></i></a>
+                    <a href="{{route('update-item-details', ['account'=>$account, 'slug'=>$product->slug] )}}" title="Edit Product" class="btn btn-icon  btn-warning float-right"><i class="ti-pencil"></i></a>
                     <div class="form-group">
                         <label for="">Cost Price: <strong>{{'₦'.number_format($product->cost_price,2)}}</strong></label>
                     </div>

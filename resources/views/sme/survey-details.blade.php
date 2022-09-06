@@ -153,7 +153,7 @@
                             </div>
                             <div class="card-body">
                                 <p>Share this survey with your clients</p>
-                                <form action="{{route('share-survey')}}" method="post">
+                                <form action="{{route('share-survey', ['account'=>$account])}}" method="post">
                                     @csrf
                                     <div class="form-group">
                                         <label for="">Clients</label>

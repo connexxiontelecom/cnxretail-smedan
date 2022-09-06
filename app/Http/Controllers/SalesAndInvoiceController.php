@@ -66,8 +66,8 @@ class SalesAndInvoiceController extends Controller
         return back();
     }
 
-    public function viewInvoice($slug){
-        $invoice = $this->invoice->getInvoiceBySlug($slug);
+    public function viewInvoice(Request  $request){
+        $invoice = $this->invoice->getInvoiceBySlug($request->slug);
         if(!empty($invoice)){
             return view('sales-n-invoice.view-invoice',['invoice'=>$invoice]);
         }else{
@@ -76,8 +76,8 @@ class SalesAndInvoiceController extends Controller
         }
     }
 
-    public function declineInvoice($slug){
-        $invoice = $this->invoice->getInvoiceBySlug($slug);
+    public function declineInvoice(Request $request){
+        $invoice = $this->invoice->getInvoiceBySlug($request->slug);
         if(!empty($invoice)){
             $this->invoice->updateInvoiceStatus($invoice->id, 'decline');
             session()->flash("success", "<strong>Success!</strong> Invoice declined.");
@@ -87,8 +87,8 @@ class SalesAndInvoiceController extends Controller
             return back();
         }
     }
-    public function approveInvoice($slug){
-        $invoice = $this->invoice->getInvoiceBySlug($slug);
+    public function approveInvoice(Request $request){
+        $invoice = $this->invoice->getInvoiceBySlug($request->slug);
         if(!empty($invoice)){
             $this->invoice->updateInvoiceStatus($invoice->id, 'post');
             session()->flash("success", "<strong>Success!</strong> Invoice posted.");
@@ -100,8 +100,8 @@ class SalesAndInvoiceController extends Controller
     }
 
 
-    public function sendInvoice($slug){
-        $invoice = $this->invoice->getInvoiceBySlug($slug);
+    public function sendInvoice(Request $request){
+        $invoice = $this->invoice->getInvoiceBySlug($request->slug);
         if(!empty($invoice)){
             #Contact
             $contact = $this->contact->getContactById($invoice->contact_id);
@@ -120,8 +120,8 @@ class SalesAndInvoiceController extends Controller
         }
     }
 
-    public function receivePayment($slug){
-        $invoice = $this->invoice->getInvoiceBySlug($slug);
+    public function receivePayment(Request $request){
+        $invoice = $this->invoice->getInvoiceBySlug($request->slug);
         if(!empty($invoice)){
             return view('sales-n-invoice.receive-payment',['invoice'=>$invoice, 'banks'=>$this->bank->getAllTenantBanks()]);
         }else{
@@ -204,8 +204,8 @@ class SalesAndInvoiceController extends Controller
         return back();
     }
 
-    public function viewReceipt($slug){
-        $receipt = $this->receipt->getReceiptBySlug($slug);
+    public function viewReceipt(Request $request){
+        $receipt = $this->receipt->getReceiptBySlug($request->slug);
         if(!empty($receipt)){
             return view('sales-n-invoice.view-receipt',['receipt'=>$receipt]);
         }else{
@@ -214,8 +214,8 @@ class SalesAndInvoiceController extends Controller
         }
     }
 
-    public function declineReceipt($slug){
-        $receipt = $this->receipt->getReceiptBySlug($slug);
+    public function declineReceipt(Request $request){
+        $receipt = $this->receipt->getReceiptBySlug($request->slug);
         if(!empty($receipt)){
             $this->receipt->updateReceiptStatus($receipt->id, 'decline');
             session()->flash("success", "Receipt declined.");
@@ -225,8 +225,8 @@ class SalesAndInvoiceController extends Controller
             return back();
         }
     }
-    public function approveReceipt($slug){
-        $receipt = $this->receipt->getReceiptBySlug($slug);
+    public function approveReceipt(Request $request){
+        $receipt = $this->receipt->getReceiptBySlug($request->slug);
         if(!empty($receipt)){
             $record = $this->receipt->updateReceiptStatus($receipt->id, 'post');
             if($record->posted == 1){
@@ -240,8 +240,8 @@ class SalesAndInvoiceController extends Controller
         }
     }
 
-    public function sendReceipt($slug){
-        $receipt = $this->receipt->getInvoiceBySlug($slug);
+    public function sendReceipt(Request $request){
+        $receipt = $this->receipt->getInvoiceBySlug($request->slug);
         if(!empty($receipt)){
             #Contact
             $contact = $this->contact->getContactById($receipt->id);
@@ -370,8 +370,8 @@ class SalesAndInvoiceController extends Controller
         session()->flash("success", "Your new changes were saved successfully.");
         return back();
     }
-    public function showUpdateProductForm($slug){
-        $product = $this->item->getTenantItemBySlug($slug);
+    public function showUpdateProductForm(Request $request){
+        $product = $this->item->getTenantItemBySlug($request->slug);
         if(!empty($product)){
             return view('sales-n-invoice.edit-product',[
                 'categories'=>$this->category->getAllCategories(),
@@ -382,10 +382,10 @@ class SalesAndInvoiceController extends Controller
             return back();
         }
     }
-    public function deleteImage($slug){
-        $gallery = $this->itemgallery->getProductImageById($slug);
+    public function deleteImage(Request $request){
+        $gallery = $this->itemgallery->getProductImageById($request->slug);
         if(!empty($gallery)){
-            $this->itemgallery->deleteImage($slug);
+            $this->itemgallery->deleteImage($request->slug);
             session()->flash("success", "Image deleted.");
             return back();
         }else{
@@ -400,8 +400,8 @@ class SalesAndInvoiceController extends Controller
         return view('sales-n-invoice.manage-products',['products'=>$this->item->getItemByItemType(1)]);
     }
 
-    public function productDetails($slug){
-        $product = $this->item->getTenantItemBySlug($slug);
+    public function productDetails(Request $request){
+        $product = $this->item->getTenantItemBySlug($request->slug);
         if(!empty($product)){
             return view('sales-n-invoice.product-details',['product'=>$product]);
         }else{

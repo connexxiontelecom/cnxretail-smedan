@@ -54,11 +54,11 @@ class MailController extends Controller
 
     }
 
-    public function viewCampaign($web_id){
+    public function viewCampaign(Request $request){
         $mailchimp = $this->mailChimpConfig();
         if((array)$mailchimp){
             try {
-                $response = $mailchimp->campaigns->get($web_id);
+                $response = $mailchimp->campaigns->get($request->web_id);
                 //return $response->settings->subject_line;
                 //return $response;
                 return view('campaign.view-campaign',['campaign'=>$response]);
@@ -93,11 +93,11 @@ class MailController extends Controller
         }
     }
 
-    public function viewAudience($id){
+    public function viewAudience(Request $request){
         $mailchimp = $this->mailChimpConfig();
         if((array)$mailchimp){
             try {
-                $response = $mailchimp->lists->getList($id);
+                $response = $mailchimp->lists->getList($request->id);
                 //return $response;
                 return view('campaign.view-audience',['audience'=>$response]);
             }catch (\Exception $ex){

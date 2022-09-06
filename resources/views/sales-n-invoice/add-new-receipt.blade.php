@@ -26,7 +26,7 @@
                         </div>
                     @endif
                     <div class="card-body">
-                        <form action="{{route('add-new-receipt')}}" method="post">
+                        <form action="{{route('add-new-receipt', ['account'=>$account])}}" method="post">
                             @csrf
                             <div class="card">
                                 <div class="card-header">
@@ -148,7 +148,7 @@
 
                                 </div>
                                 <div class="card-footer text-right">
-                                    <a href="{{url()->previous()}}" class="btn btn-danger">Cancle</a>
+                                    <a href="{{url()->previous()}}" class="btn btn-danger">Cancel</a>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>

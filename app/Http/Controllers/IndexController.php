@@ -36,8 +36,8 @@ class IndexController extends Controller
         ]);
     }
 
-    public function viewItem($slug){
-        $item = $this->item->getItemBySlug($slug);
+    public function viewItem(Request $request){
+        $item = $this->item->getItemBySlug($request->slug);
         if(!empty($item)){
             return view('frontend.view-item',['item'=>$item,
                 'categories'=>$this->category->getAllGeneralCategories(),]);
@@ -46,8 +46,8 @@ class IndexController extends Controller
         }
     }
 
-    public function vendorStore($slug){
-        $vendor = $this->tenant->getTenantBySlug($slug);
+    public function vendorStore(Request $request){
+        $vendor = $this->tenant->getTenantBySlug($request->slug);
 
         if(!empty($vendor)){
             $items = $this->item->getAllTenantItems($vendor->id);
@@ -62,8 +62,8 @@ class IndexController extends Controller
         }
     }
 
-    public function productCategories($slug){
-        $category = $this->category->getCategoryBySlug($slug);
+    public function productCategories(Request $request){
+        $category = $this->category->getCategoryBySlug($request->slug);
         if(!empty($category)){
             $items = $this->item->getItemsByCategoryId($category->id);
             return view('frontend.product-category',['items'=>$items,

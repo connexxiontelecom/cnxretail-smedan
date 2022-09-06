@@ -47,7 +47,7 @@
     @endif
     <div class="row">
         <div class="col-md-12">
-            <form action="{{route('process-make-payment')}}" method="post" autocomplete="off">
+            <form action="{{route('process-make-payment', ['account'=>$account])}}" method="post" autocomplete="off">
                 @csrf
                 <div class="card">
                     <div class="card-body" id="receiptWrapper">
@@ -177,7 +177,7 @@
                         </div>
                     </div>
                     <div class="card-footer text-right">
-                        <a href="{{route('manage-bills')}}" class="btn btn-primary mb-1" ><i class="ti-back-left"></i> Back</a>
+                        <a href="{{route('manage-bills', ['account'=>$account])}}" class="btn btn-primary mb-1" ><i class="ti-back-left"></i> Back</a>
                         @if(($bill->bill_amount) - ($bill->paid_amount) > 0)
                         <button type="submit" class="btn btn-success mb-1" ><i class="ti-check"></i> Make Payment</button>
                         @endif

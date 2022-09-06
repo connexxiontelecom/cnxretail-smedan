@@ -56,8 +56,8 @@ class BillsAndPaymentController extends Controller
         return back();
     }
 
-    public function viewBill($slug){
-        $bill = $this->billmaster->getBillBySlug($slug);
+    public function viewBill(Request $request){
+        $bill = $this->billmaster->getBillBySlug($request->slug);
         if(!empty($bill)){
             return view('bills-n-payment.view-bill',['bill'=>$bill]);
         }else{
@@ -66,8 +66,8 @@ class BillsAndPaymentController extends Controller
         }
     }
 
-    public function declineBill($slug){
-        $bill = $this->billmaster->getBillBySlug($slug);
+    public function declineBill(Request $request){
+        $bill = $this->billmaster->getBillBySlug($request->slug);
         if(!empty($bill)){
             $this->billmaster->updateBillStatus($bill->id, 'decline');
             session()->flash("success", "<strong>Success!</strong> Bill declined.");
@@ -77,8 +77,8 @@ class BillsAndPaymentController extends Controller
             return back();
         }
     }
-    public function approveBill($slug){
-        $bill = $this->billmaster->getBillBySlug($slug);
+    public function approveBill(Request $request){
+        $bill = $this->billmaster->getBillBySlug($request->slug);
         if(!empty($bill)){
             $this->billmaster->updateBillStatus($bill->id, 'post');
             session()->flash("success", "<strong>Success!</strong> Bill posted.");
@@ -92,8 +92,8 @@ class BillsAndPaymentController extends Controller
 
 
 
-    public function showMakePaymentForm($slug){
-        $bill = $this->billmaster->getBillBySlug($slug);
+    public function showMakePaymentForm(Request $request){
+        $bill = $this->billmaster->getBillBySlug($request->slug);
         if(!empty($bill)){
             return view('bills-n-payment.make-payment',['bill'=>$bill, 'banks'=>$this->bank->getAllTenantBanks()]);
         }else{
@@ -146,8 +146,8 @@ class BillsAndPaymentController extends Controller
         return view('bills-n-payment.manage-payments',['payments'=>$this->paymentmaster->getAllTenantPayments()]);
     }
 
-    public function viewPayment($slug){
-        $payment = $this->paymentmaster->getPaymentBySlug($slug);
+    public function viewPayment(Request $request){
+        $payment = $this->paymentmaster->getPaymentBySlug($request->slug);
         if(!empty($payment)){
             return view('bills-n-payment.view-payment',['payment'=>$payment]);
         }else{
@@ -156,8 +156,8 @@ class BillsAndPaymentController extends Controller
         }
     }
 
-    public function declinePayment($slug){
-        $payment = $this->paymentmaster->getPaymentBySlug($slug);
+    public function declinePayment(Request $request){
+        $payment = $this->paymentmaster->getPaymentBySlug($request->slug);
         if(!empty($payment)){
             $this->paymentmaster->updatePaymentStatus($payment->id, 'decline');
             session()->flash("success", "Payment declined.");
@@ -167,8 +167,8 @@ class BillsAndPaymentController extends Controller
             return back();
         }
     }
-    public function approvePayment($slug){
-        $payment = $this->paymentmaster->getPaymentBySlug($slug);
+    public function approvePayment(Request $request){
+        $payment = $this->paymentmaster->getPaymentBySlug($request->slug);
         if(!empty($payment)){
             $record = $this->paymentmaster->updatePaymentStatus($payment->id, 'post');
             if($record->posted == 1){

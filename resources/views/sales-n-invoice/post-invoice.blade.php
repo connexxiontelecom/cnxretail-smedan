@@ -72,9 +72,9 @@
                                             <div class="dropdown-secondary dropdown">
                                                 <button class="btn btn-info btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown14" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdown14" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                    <a class="dropdown-item waves-light waves-effect" href="{{route('view-invoice', $invoice->slug)}}"><i class="ti-printer"></i> View Invoice</a>
+                                                    <a class="dropdown-item waves-light waves-effect" href="{{route('view-invoice', ['account'=>$account, 'slug'=>$invoice->slug] )}}"><i class="ti-printer"></i> View Invoice</a>
                                                     @if($invoice->posted == 1 && $invoice->paid_amount < $invoice->total)
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('receive-payment', $invoice->slug)}}"><i class="ti-receipt"></i> Receive Payment</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('receive-payment', ['account'=>$account, 'slug'=>$invoice->slug] )}}"><i class="ti-receipt"></i> Receive Payment</a>
                                                     @endif
                                                 </div>
                                             </div>

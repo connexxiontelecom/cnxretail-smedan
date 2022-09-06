@@ -27,7 +27,7 @@
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                         <div class="message-menu">
                             @foreach(Auth::user()->getTenantNotifications as $notify)
-                                <a class="dropdown-item d-flex pb-3" href="{{$notify->route_type == 0 ? route($notify->route_name) : route($notify->route_name, $notify->route_param)}}">
+                                <a class="dropdown-item d-flex pb-3" href="{{$notify->route_type == 0 ? route($notify->route_name) : route($notify->route_name, ['slug'=>$notify->route_param, 'account'=>$account])}}">
                                 <div>
                                     {{$notify->subject ?? '' }}
                                     <div class="small text-muted">
@@ -38,7 +38,7 @@
                             @endforeach
                         </div>
                         <div class="dropdown-divider"></div>
-                        <a href="{{route('notifications')}}" class="dropdown-item text-center">See all notifications</a>
+                        <a href="{{route('notifications', ['account'=>$account])}}" class="dropdown-item text-center">See all notifications</a>
                     </div>
                     @endif
                 </div>
@@ -53,13 +53,13 @@
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                        <a class="dropdown-item" href="{{route('view-profile', Auth::user()->slug)}}">
+                        <a class="dropdown-item" href="{{route('view-profile', ['account'=>$account, 'slug'=>Auth::user()->slug] )}}">
                             <i class="dropdown-icon mdi mdi-account-outline"></i> My Profile
                         </a>
-                        <a class="dropdown-item" href="{{route('view-profile', Auth::user()->slug)}}">
+                        <a class="dropdown-item" href="{{route('view-profile', ['account'=>$account, 'slug'=>Auth::user()->slug])}}">
                             <i class="dropdown-icon zmdi zmdi-edit"></i> Edit Profile
                         </a>
-                        <a class="dropdown-item" href="{{route('view-profile', Auth::user()->slug)}}">
+                        <a class="dropdown-item" href="{{route('view-profile', ['account'=>$account, 'slug'=>Auth::user()->slug])}}">
                             <i class="dropdown-icon  mdi mdi-settings"></i> Account Settings
                         </a>
                         <a class="dropdown-item" href="{{route('logout')}}">

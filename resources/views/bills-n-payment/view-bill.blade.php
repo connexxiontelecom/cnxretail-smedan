@@ -93,18 +93,17 @@
                     </div>
                 </div>
                 <div class="card-footer text-right">
-                    <a href="{{route('manage-bills')}}" class="btn btn-primary mb-1" ><i class="ti-back-left"></i> Back</a>
+                    <a href="{{route('manage-bills', ['account'=>$account])}}" class="btn btn-primary mb-1" ><i class="ti-back-left"></i> Back</a>
                     @if($bill->posted == 1)
                         <button type="button" class="btn btn-danger mb-1" onclick="generatePDF()"><i class="si si-printer"></i> Print Bill</button>
-                        <a href="route('send-invoice', $bill->slug)}}"  class="btn btn-success mb-1" ><i class="si si-paper-plane"></i> Send Bill</a>
                     @endif
                     @if((($bill->bill_amount) - ($bill->paid_amount) > 0) && ($bill->posted == 1))
-                        <a href="{{route('make-payment', $bill->slug)}}"  class="btn btn-warning mb-1" ><i class="si si-paper-plane"></i> Make Payment</a>
+                        <a href="{{route('make-payment', ['account'=>$account, 'slug'=>$bill->slug] )}}"  class="btn btn-warning mb-1" ><i class="si si-paper-plane"></i> Make Payment</a>
                     @endif
 
                     @if($bill->posted == 0 && $bill->trash == 0)
-                        <a href="{{route('decline-bill', $bill->slug)}}" class="btn btn-danger btn-mini"><i class="ti-close mr-2"></i> Decline Bill</a>
-                        <a href="{{route('approve-bill', $bill->slug)}}" class="btn btn-success btn-mini"><i class="ti-check mr-2"></i> Approve Bill</a>
+                        <a href="{{route('decline-bill', ['account'=>$account, 'slug'=>$bill->slug] )}}" class="btn btn-danger btn-mini"><i class="ti-close mr-2"></i> Decline Bill</a>
+                        <a href="{{route('approve-bill', ['account'=>$account, 'slug'=>$bill->slug] )}}" class="btn btn-success btn-mini"><i class="ti-check mr-2"></i> Approve Bill</a>
                     @endif
 
                 </div>

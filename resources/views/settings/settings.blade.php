@@ -46,7 +46,7 @@
                         <div class="panel-body tabs-menu-body">
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tab5">
-                                    <form action="{{route('app-settings')}}" method="post">
+                                    <form action="{{route('app-settings', ['account'=>$account])}}" method="post">
                                         @csrf
                                         <div class="card">
                                             <div class="card-header">
@@ -104,7 +104,7 @@
 
                                 </div>
                                 <div class="tab-pane" id="tab6">
-                                    <form action="{{route('app-payment-integration')}}" method="post">
+                                    <form action="{{route('app-payment-integration', ['account'=>$account])}}" method="post">
                                         @csrf
                                         <div class="card">
                                             <div class="card-header">
@@ -144,7 +144,7 @@
                                 <div class="tab-pane" id="tab7">
                                    <div class="row">
                                        <div class="col-md-4">
-                                           <form action="{{route('new-mailchimp-settings')}}" method="post">
+                                           <form action="{{route('new-mailchimp-settings', ['account'=>$account])}}" method="post">
                                                @csrf
                                                <div class="card">
                                                    <div class="card-header">
@@ -211,7 +211,7 @@
                                                                               </button>
                                                                           </div>
                                                                           <div class="modal-body">
-                                                                              <form action="{{route('update-mailchimp-settings')}}" method="post">
+                                                                              <form action="{{route('update-mailchimp-settings', ['account'=>$account])}}" method="post">
                                                                                   @csrf
                                                                                   <div class="card">
                                                                                       <div class="card-header">
@@ -259,7 +259,7 @@
                                 <div class="tab-pane " id="tab8">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <form action="{{route('save-bank')}}" method="post">
+                                            <form action="{{route('save-bank', ['account'=>$account])}}" method="post">
                                                 @csrf
                                                 <div class="card">
                                                     <div class="card-header">
@@ -335,7 +335,7 @@
                                                                                     </button>
                                                                                 </div>
                                                                                 <div class="modal-body">
-                                                                                    <form action="{{route('update-bank')}}" method="post">
+                                                                                    <form action="{{route('update-bank', ['account'=>$account])}}" method="post">
                                                                                         @csrf
                                                                                         <div class="card">
                                                                                             <div class="card-header">
@@ -391,7 +391,7 @@
                                 <div class="tab-pane " id="tab9">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <form action="{{route('update-bulk-settings')}}" method="post" autocomplete="off">
+                                            <form action="{{route('update-bulk-settings', ['account'=>$account])}}" method="post" autocomplete="off">
                                                 @csrf
                                                 <div class="card">
                                                     <div class="card-header">

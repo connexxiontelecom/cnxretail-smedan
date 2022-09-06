@@ -13,6 +13,10 @@ class Tenant extends Model
 {
     use HasFactory;
 
+    public static function subDomain() :Tenant {
+        return Tenant::where('website', strtolower(str_replace('.'. env('APP_URL'), '', request()->getHost())))->firstOrFail();
+    }
+
     public function getTenantPlan(){
         return $this->belongsTo(Pricing::class, 'plan_id');
     }
@@ -42,6 +46,7 @@ class Tenant extends Model
         $tenant->address = $request->office_address ?? '';
         $tenant->rc_no = $request->rc_no ?? '';
         $tenant->phone_no = $request->phone_no ?? '';
+        $tenant->website = substr(strtolower(str_replace(" ","",$request->company_name)),0,15);
         $tenant->save();
         return $tenant;
     }

@@ -103,14 +103,14 @@
                 </div>
                 <div class="card-footer text-right">
                     @if($payment->posted == 1)
-                        <a href="{{route('manage-receipts')}}" class="btn btn-primary mb-1" ><i class="ti-back-left"></i> Back</a>
+                        <a href="{{route('manage-receipts', ['account'=>$account])}}" class="btn btn-primary mb-1" ><i class="ti-back-left"></i> Back</a>
                         <button type="button" class="btn btn-danger mb-1" onclick="generatePDF()"><i class="si si-printer"></i> Print Payment</button>
                         <a href="#"  class="btn btn-success mb-1" ><i class="si si-paper-plane"></i> Send Payment</a>
                     @endif
 
                     @if($payment->posted == 0 && $payment->trashed == 0)
-                        <a href="{{route('decline-payment', $payment->slug)}}" class="btn btn-danger btn-mini"><i class="ti-close mr-2"></i> Decline Payment</a>
-                        <a href="{{route('approve-payment', $payment->slug)}}" class="btn btn-success btn-mini"><i class="ti-check mr-2"></i> Approve Payment</a>
+                        <a href="{{route('decline-payment',['account'=>$account, 'slug'=>$payment->slug] )}}" class="btn btn-danger btn-mini"><i class="ti-close mr-2"></i> Decline Payment</a>
+                        <a href="{{route('approve-payment',['account'=>$account, 'slug'=>$payment->slug] )}}" class="btn btn-success btn-mini"><i class="ti-check mr-2"></i> Approve Payment</a>
                     @endif
 
                 </div>

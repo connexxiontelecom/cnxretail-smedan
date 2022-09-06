@@ -51,7 +51,7 @@
                                     <td>{{$audiences->lists[$i]->campaign_defaults->from_email ?? '' }}</td>
                                     <td>{{number_format($audiences->lists[$i]->stats->member_count) ?? '' }}</td>
                                     <td>
-                                        <a href="{{route('view-audience',$audiences->lists[$i]->id)}}" class="btn btn-sm btn-info"> <i class="ti-eye mr-2"></i> </a>
+                                        <a href="{{route('view-audience',['id'=>$audiences->lists[$i]->id, 'account'=>$account])}}" class="btn btn-sm btn-info"> <i class="ti-eye mr-2"></i> </a>
                                     </td>
                                 </tr>
                             @endfor

@@ -27,7 +27,7 @@
                         </div>
                     @endif
                     <div class="card-body">
-                        <form action="{{route('edit-contact')}}" method="post">
+                        <form action="{{route('edit-contact', ['account'=>$account])}}" method="post">
                             @csrf
                             <div class="card">
                                 <div class="card-header">

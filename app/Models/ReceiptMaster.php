@@ -139,7 +139,7 @@ class ReceiptMaster extends Model
         }
     }
 
-    public function getAllTenantReceipts(bool $paginate = false, int $id)
+    public function getAllTenantReceipts(bool $paginate = false, int $id = 0)
     {
         if (!$paginate) {
             return ReceiptMaster::where('tenant_id', Auth::user()->tenant_id)->orderBy('id', 'DESC')->get();
@@ -151,6 +151,10 @@ class ReceiptMaster extends Model
             }
         }
     }
+    /*public function getAllTenantReceipts()
+    {
+            return ReceiptMaster::where('tenant_id', Auth::user()->tenant_id)->orderBy('id', 'DESC')->get();
+    }*/
 
     public function getContactReceipts($contact_id, bool $paginate = false, int $id)
     {

@@ -44,8 +44,8 @@ class CNXDriveController extends Controller
         return back();
     }
 
-    public function openFolder($slug){
-        $folder = $this->folder->getFolderBySlug($slug);
+    public function openFolder(Request $request){
+        $folder = $this->folder->getFolderBySlug($request->slug);
 
         if(!empty($folder)){
             $files = $this->file->getFilesByFolderId($folder->id);
@@ -58,9 +58,9 @@ class CNXDriveController extends Controller
     }
 
 
-    public function downloadAttachment($file_name){
+    public function downloadAttachment(Request $request){
         try{
-            return $this->file->downloadFile($file_name);
+            return $this->file->downloadFile($request->file_name);
             session()->flash("success", "Processing request...");
             return back();
         }catch (\Exception $ex){

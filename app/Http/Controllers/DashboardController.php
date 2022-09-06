@@ -28,6 +28,7 @@ class DashboardController extends Controller
     }
 
     public function index(){
+        //return dd('Dashboard');
         $theDate = date("H");
         $period = null;
         if($theDate < 12)

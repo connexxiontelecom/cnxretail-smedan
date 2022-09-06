@@ -43,7 +43,7 @@
                                         <td>{!! $user->account_status == 1 ? "<label class='text-success'>Active</label>" : "<label class='text-danger'>Deactivated</label>" !!}</td>
                                         <td>{{$user->mobile_no ?? '' }}</td>
                                         <td>{{$user->email ?? '' }}</td>
-                                        <td><a href="{{route('view-profile', $user->slug)}}" class="btn btn-info btn-sm"><i class="ti-eye mr-2"></i></a></td>
+                                        <td><a href="{{route('view-profile', ['account'=>$account, 'slug'=>$user->slug])}}" class="btn btn-info btn-sm"><i class="ti-eye mr-2"></i></a></td>
                                     </tr>
                                 @endforeach
                                 </tbody>

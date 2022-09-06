@@ -5,8 +5,8 @@
         <span class="sr-only">Toggle Dropdown</span>
     </button>
     <ul class="dropdown-menu" role="menu">
-        <li><a href="{{route('add-new-item')}}">Add New Item</a></li>
-        <li><a href="{{route('manage-products')}}">Products</a></li>
-        <li><a href="{{route('manage-services')}}">Services</a></li>
+        <li><a href="{{route('add-new-item', ['account'=>$account])}}">Add New Item</a></li>
+        <li><a href="{{route('manage-products', ['account'=>$account])}}">Products</a></li>
+        <li><a href="{{route('manage-services', ['account'=>$account])}}">Services</a></li>
     </ul>
 </div>

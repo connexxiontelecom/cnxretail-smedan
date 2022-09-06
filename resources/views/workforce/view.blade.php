@@ -105,7 +105,7 @@
                 <div class="tab-pane" id="tab-61">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{route('change-avatar')}}" method="post" enctype="multipart/form-data">
+                            <form action="{{route('change-avatar', ['account'=>$account])}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     <input type="file" name="avatar">
@@ -119,7 +119,7 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="tab-71">
-                    <form action="{{route('update-profile')}}" method="post">
+                    <form action="{{route('update-profile', ['account'=>$account])}}" method="post">
                         @csrf
                         <div class="card">
                             <div class="card-header">
@@ -179,7 +179,7 @@
                 </div>
                 <div class="tab-pane" id="tab-81">
                     <div class="row">
-                        <form action="{{route('change-password')}}" method="post">
+                        <form action="{{route('change-password', ['account'=>$account])}}" method="post">
                             @csrf
                             <div class="card">
                                 <div class="card-header">

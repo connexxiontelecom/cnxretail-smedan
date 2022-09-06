@@ -18,7 +18,7 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{route('add-new-imprest')}}" method="post">
+                    <form action="{{route('add-new-imprest', ['account'=>$account])}}" method="post">
                         @csrf
                         <div class="form-group">
                             <label for="">Date</label>

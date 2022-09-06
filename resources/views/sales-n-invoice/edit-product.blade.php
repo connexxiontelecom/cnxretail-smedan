@@ -34,7 +34,7 @@
                         </div>
                     @endif
                     <div class="card-body">
-                        <form action="{{route('update-product')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{route('update-product', ['account'=>$account])}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="card">
                                 <div class="card-header">
@@ -124,7 +124,7 @@
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                    <a href="{{route('delete-image', $gallery->id)}}" class="btn btn-primary">Yes, please</a>
+                                                                    <a href="{{route('delete-image', ['account'=>$account, 'slug'=>$gallery->id] )}}" class="btn btn-primary">Yes, please</a>
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -3,7 +3,7 @@
     <div>
         <h1 class="page-title">@yield('active-page')</h1>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{route('dashboard', ['account'=>$account])}}">Dashboard</a></li>
             <li class="breadcrumb-item active" aria-current="page">@yield('active-page')</li>
         </ol>
     </div>

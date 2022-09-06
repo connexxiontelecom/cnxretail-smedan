@@ -30,7 +30,7 @@
                                     <h5 class="font-weight-semibold mb-1 text-white">This Month's Sales</h5>
                                     <h2 class="display-2 mb-3 number-font text-white">{{'₦'.number_format($thisMonth->sum('amount'),2)}}</h2>
                                     <div class="btn-list mb-xl-0">
-                                        <a href="{{route('manage-receipts')}}" class="btn btn-dark mb-xl-0">Check Details</a>
+                                        <a href="{{route('manage-receipts', ['account'=>$account])}}" class="btn btn-dark mb-xl-0">Check Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -150,7 +150,7 @@
                                     <td class="">{{'₦'.number_format($receipt->amount,2)}}</td>
                                     <td>{{date('d M, Y', strtotime($receipt->created_at))}}</td>
                                     <td>
-                                        <a href="{{route('view-receipt', $receipt->slug)}}" class=""><i class="ti-eye"></i></a>
+                                        <a href="{{route('view-receipt', ['account'=>$account, 'slug'=>$receipt->slug])}}" class=""><i class="ti-eye"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

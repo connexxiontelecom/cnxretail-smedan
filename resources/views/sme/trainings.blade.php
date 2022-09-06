@@ -51,7 +51,7 @@
                                         <td>{{$training->title ?? '' }}</td>
                                         <td>{{strlen(strip_tags($training->description)) > 60 ? substr(strip_tags($training->description),0,57).'...' : strip_tags($training->description)}}</td>
                                         <td>
-                                            <a href="{{route('view-training', $training->slug)}}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>
+                                            <a href="{{route('view-training', ['slug'=>$training->slug, 'account'=>$account])}}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
