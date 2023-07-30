@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use League\Flysystem\Adapter\Local;
 
 class Tenant extends Model
 {
@@ -29,6 +30,10 @@ class Tenant extends Model
         return $this->belongsTo(BusinessCategory::class, 'business_category_id');
     }
 
+    public function getLocation(){
+        return $this->belongsTo(Location::class, 'location_id');
+    }
+
     /*
      * Use-case methods
      */
@@ -47,6 +52,29 @@ class Tenant extends Model
         $tenant->rc_no = $request->rc_no ?? '';
         $tenant->phone_no = $request->phone_no ?? '';
         $tenant->website = substr(strtolower(str_replace(" ","",$request->company_name)),0,15);
+        $tenant->save();
+        return $tenant;
+    }
+
+
+
+    public function commandInitiatedNewTenantOnboarding($company, $email, $cat, $rc_no, $phone, $address, $website, $locationId){
+        $startDate = '2022-10-3';
+        $endDate = '2023-10-2';
+        $active_key = "key_".substr(sha1(time()),23,40);
+        $tenant = new Tenant();
+        $tenant->company_name = $company;
+        $tenant->email = $email;
+        $tenant->slug = Str::slug($company).'-'.substr(sha1(time()),33,40);
+        $tenant->start_date = $startDate; //now();
+        $tenant->end_date = $endDate; //Carbon::now()->addDays(30);
+        $tenant->active_sub_key = $active_key;
+        $tenant->business_category_id = $cat ?? 1;
+        $tenant->address = $address ?? '';
+        $tenant->rc_no = $rc_no ?? null;
+        $tenant->phone_no = $phone ?? '';
+        $tenant->website = $website ?? substr(strtolower(str_replace(" ","",$company)),0,15);
+        $tenant->location_id = $locationId;
         $tenant->save();
         return $tenant;
     }
@@ -91,6 +119,10 @@ class Tenant extends Model
 
     public function getTenantById($id){
         return Tenant::find($id);
+    }
+
+    public function getTenantByEmail($email){
+        return Tenant::where('email', $email)->first();
     }
 
     public function updateTenantSubscriptionPeriod($tenant_id, $key, $start, $end,$plan){

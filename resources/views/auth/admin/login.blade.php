@@ -33,6 +33,7 @@
             <div class="col col-login mx-auto">
                 <div class="text-center">
                     <a href="">
+                        <img src="/assets/images/smedan_logo.png" class="header-brand-img" alt="logo">
                         <img src="/assets/images/brand/main.png" class="header-brand-img" alt="logo">
                     </a>
                 </div>
@@ -62,7 +63,7 @@
                     <form class="login100-form validate-form" action="{{route('admin.login')}}" method="post">
                         @csrf
                         <span class="login100-form-title">
-                            Monitoring/Evaluation
+                            Micro Business  <br> Monitoring  & Evaluation
                         </span>
                         <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
                             <input class="input100" type="text" name="email" value="{{old('email')}}" placeholder="Email">

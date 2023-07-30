@@ -2,11 +2,11 @@
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <aside class="app-sidebar">
     <div class="side-header">
-        <a class="header-brand1" href="{{route('dashboard')}}">
-            <img src="/assets/images/brand/main.png" class="header-brand-img desktop-logo" alt="logo">
-            <img src="/assets/images/brand/main.png" class="header-brand-img toggle-logo" alt="logo">
-            <img src="/assets/images/brand/main.png" class="header-brand-img light-logo" alt="logo">
-            <img src="/assets/images/brand/main.png" class="header-brand-img light-logo1" alt="logo">
+        <a class="header-brand1" href="{{route('admin.dashboard')}}">
+            <img src="/assets/images/smedan_logo.png" class="header-brand-img desktop-logo" alt="logo">
+            <img src="/assets/images/smedan_logo.png" class="header-brand-img toggle-logo" alt="logo">
+            <img src="/assets/images/smedan_logo.png" class="header-brand-img light-logo" alt="logo">
+            <img src="/assets/images/smedan_logo.png" class="header-brand-img light-logo1" alt="logo">
         </a><!-- LOGO -->
     </div>
     <ul class="side-menu">

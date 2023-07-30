@@ -239,5 +239,9 @@ class InvoiceMaster extends Model
         $invoice->save();
     }
 
+    public function getAllInvoices(){
+        return InvoiceMaster::all();
+    }
+
 
 }

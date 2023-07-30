@@ -94,6 +94,24 @@ class User extends Authenticatable implements JWTSubject
         $user->save();
     }
 
+    public function commandInitiatedNewUserOnboarding($fullName, $email, $startDate, $endDate, $nin, $address, $tenant){
+        $password = 'password123';//substr(sha1(time()), 32,40);
+        $user = new User();
+        $user->first_name = $fullName ?? '' ;
+        $user->password = bcrypt($password); //bcrypt($password);
+        $user->email = $email;
+        $user->start_date = $startDate;
+        $user->end_date = $endDate;
+        $user->tenant_id = $tenant->id;
+        $user->active_sub_key = $tenant->active_sub_key;
+        $user->nin = $nin ?? 'N/A';
+        $user->address = $address ?? '';
+        $user->mobile_no = $phone ?? '';
+        $user->slug = Str::slug($fullName).'-'.substr(sha1(time()),32,40);
+        $user->save();
+        return $user;
+    }
+
     public function setNewTeamMember(Request $request){
         $user = new User();
         $user->first_name = $request->first_name ;

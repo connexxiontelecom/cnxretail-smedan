@@ -21,7 +21,7 @@
                 <div class="card-body">
                     <div class="card-order">
                         <h6 class="mb-2">Businesses</h6>
-                        <h2 class="text-right "><i class="mdi mdi-account-multiple icon-size float-left text-primary text-primary-shadow"></i><span>6</span></h2>
+                        <h2 class="text-right "><i class="mdi mdi-account-multiple icon-size float-left text-primary text-primary-shadow"></i><span>{{ number_format($tenants->count()) }}</span></h2>
                         <p class="mb-0">All time</p>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                 <div class="card-body">
                     <div class="card-widget">
                         <h6 class="mb-2">Businesses</h6>
-                        <h2 class="text-right"><i class="mdi mdi-account-multiple icon-size float-left text-success text-success-shadow"></i><span>6</span></h2>
+                        <h2 class="text-right"><i class="mdi mdi-account-multiple icon-size float-left text-success text-success-shadow"></i><span>0</span></h2>
                         <p class="mb-0">Last Month</p>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                 <div class="card-body">
                     <div class="card-widget">
                         <h6 class="mb-2">Businesses</h6>
-                        <h2 class="text-right"><i class="icon-size mdi mdi-account-multiple   float-left text-warning text-warning-shadow"></i><span>0</span></h2>
+                        <h2 class="text-right"><i class="icon-size mdi mdi-account-multiple   float-left text-warning text-warning-shadow"></i><span>{{ number_format($tenants->count()) }}</span></h2>
                         <p class="mb-0">This Month</p>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                 <div class="card-body">
                     <div class="card-widget">
                         <h6 class="mb-2">New Businesses</h6>
-                        <h2 class="text-right"><i class="mdi mdi-account-multiple icon-size float-left text-danger text-danger-shadow"></i><span>1</span></h2>
+                        <h2 class="text-right"><i class="mdi mdi-account-multiple icon-size float-left text-danger text-danger-shadow"></i><span>{{ number_format($tenants->count()) }}</span></h2>
                         <p class="mb-0">This Week</p>
                     </div>
                 </div>
@@ -71,10 +71,11 @@
                                 <thead>
                                 <tr>
                                     <th class="">#</th>
-                                    <th class="wd-15p"> Date</th>
+                                    <th class="wd-15p"> Date Enrolled</th>
                                     <th class="wd-15p">Business Name</th>
                                     <th class="wd-20p">Email</th>
                                     <th class="wd-15p">Phone No.</th>
+                                    <th class="wd-15p">Location</th>
                                     <th class="wd-25p">Action</th>
                                 </tr>
                                 </thead>
@@ -83,10 +84,11 @@
                                 @foreach($tenants as $tenant)
                                     <tr>
                                         <th scope="row">{{$serial++}}</th>
-                                        <td class="text-success">{{date('d M, Y', strtotime($tenant->created_at))}}</td>
+                                        <td class="text-success">{{date('d M, Y', strtotime($tenant->start_date))}}</td>
                                         <td>{{$tenant->company_name ?? '' }}</td>
                                         <td>{{$tenant->email ?? ''}}</td>
                                         <td>{{$tenant->phone_no ?? '-'}}</td>
+                                        <td>{{$tenant->getLocation->l_name ?? '-'}}</td>
                                         <td>
                                             <a href="{{route('view-tenant', $tenant->slug)}}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>
                                         </td>
