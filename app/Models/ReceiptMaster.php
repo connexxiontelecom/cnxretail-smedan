@@ -347,7 +347,7 @@ class ReceiptMaster extends Model
     {
         return ReceiptMaster::select(DB::raw("(sum(amount)) as amount"), 'contact_id',
             DB::raw("(count(contact_id)) as counter"), 'contact_id', 'created_at')
-            ->where('contact_id', $tenantId)
+            ->where('tenant_id', $tenantId)
             ->groupBy('contact_id')
             ->get();
     }
