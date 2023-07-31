@@ -80,7 +80,7 @@
                                     <p class="font-w600 mb-1">{{$item->getService->item_name ?? '' }}</p>
                                 </td>
                                 <td class="text-center">{{$item->quantity ?? '' }}</td>
-                                <td class="text-right number-font1">{{$item->unit_cost ?? '' }}</td>
+                                <td class="text-right number-font1">{{  number_format($item->unit_cost ?? 0 ) }}</td>
                                 <td class="text-right number-font1">{{number_format($item->quantity * $item->unit_cost,2)}}</td>
                             </tr>
                             @endforeach

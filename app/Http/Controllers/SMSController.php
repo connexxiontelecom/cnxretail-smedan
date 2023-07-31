@@ -108,10 +108,11 @@ class SMSController extends Controller
         }*/
     }
 
-    public function showComposeMessageForm(){
+    public function showComposeMessageForm(Request  $request){
+
         if(empty(Auth::user()->getTenant->sender_id)){
             session()->flash("error", "You'll need to quickly setup your <strong>sender ID</strong> in order to use this service. Click the <strong>Bulk SMS</strong> tab below.");
-            return redirect()->route('app-settings');
+            return redirect()->route('app-settings', ['account'=>$request->account]);
         }else{
             return view('sms.compose-message',[
                 'contacts'=>$this->contact->getContactsByTenantId(Auth::user()->tenant_id),
@@ -200,7 +201,7 @@ class SMSController extends Controller
             }
         }catch (\Exception $exception){
             session()->flash("error", "Something went wrong. Please try again later or contact admin.");
-            return redirect()->route('compose-message');
+            return redirect()->route('compose-message', ['account'=>$request->account]);
         }
 
     }

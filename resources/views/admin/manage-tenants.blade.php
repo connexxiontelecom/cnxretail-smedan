@@ -43,7 +43,7 @@
                 <div class="card-body">
                     <div class="card-widget">
                         <h6 class="mb-2">Businesses</h6>
-                        <h2 class="text-right"><i class="icon-size mdi mdi-account-multiple   float-left text-warning text-warning-shadow"></i><span>{{ number_format($tenants->count()) }}</span></h2>
+                        <h2 class="text-right"><i class="icon-size mdi mdi-account-multiple   float-left text-warning text-warning-shadow"></i><span>0</span></h2>
                         <p class="mb-0">This Month</p>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                 <div class="card-body">
                     <div class="card-widget">
                         <h6 class="mb-2">New Businesses</h6>
-                        <h2 class="text-right"><i class="mdi mdi-account-multiple icon-size float-left text-danger text-danger-shadow"></i><span>{{ number_format($tenants->count()) }}</span></h2>
+                        <h2 class="text-right"><i class="mdi mdi-account-multiple icon-size float-left text-danger text-danger-shadow"></i><span>0</span></h2>
                         <p class="mb-0">This Week</p>
                     </div>
                 </div>

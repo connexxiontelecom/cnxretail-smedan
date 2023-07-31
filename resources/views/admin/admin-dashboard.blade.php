@@ -25,7 +25,7 @@
                 <div class="card-body">
                     <div class="card-widget">
                         <h6 class="mb-2">Trainings</h6>
-                        <h2 class="text-right"><i class="mdi mdi-account-multiple icon-size float-left text-success text-success-shadow"></i><span>{{number_format($tenants->where('account_status',1)->count())}}</span></h2>
+                        <h2 class="text-right"><i class="mdi mdi-account-multiple icon-size float-left text-success text-success-shadow"></i><span>{{number_format($trainings->count())}}</span></h2>
                         <p class="mb-0">All time</p>
                     </div>
                 </div>

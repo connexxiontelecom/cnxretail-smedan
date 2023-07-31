@@ -66,6 +66,7 @@ class AdminController extends Controller
         $this->surveyresponse = new SurveyResponse();
         $this->paymentmaster = new PaymentMaster();
         $this->consultation = new Consultation();
+        $this->training = new Training();
     }
 
     public function notification(){
@@ -80,6 +81,7 @@ class AdminController extends Controller
             'bills'=>$this->billmaster->getAllBills(),
             'receipts'=>$this->receipt->getAllReceipts(),
             'payments'=>$this->paymentmaster->getAllPayments(),
+            'trainings'=>$this->training->getAllTrainings(),
         ]);
     }
 

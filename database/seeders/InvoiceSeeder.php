@@ -50,6 +50,8 @@ class InvoiceSeeder extends Seeder
                     'posted_by'=>$contact->added_by,
                     'posted'=>($amount - $paidAmount) <= 0 ? 1 : 2,
                     'post_date'=>$randomDate,
+                    'created_at'=>$randomDate,
+                    'updated_at'=>$randomDate,
                 ];
                 $invoice = InvoiceMaster::create($data);
                 $detail = [
