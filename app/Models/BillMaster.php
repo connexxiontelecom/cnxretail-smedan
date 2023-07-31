@@ -101,10 +101,10 @@ class BillMaster extends Model
     /// [$id] the offset to start from
     public function getTenantBills(bool $paginate = false, int $id = 0){
         if (!$paginate) {
-            return BillMaster::where('tenant_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
+            return BillMaster::where('tenant_id', Auth::user()->tenant_id)->orderBy('id', 'DESC')->get();
         } else {
             if ($id == 0) {
-                $results =  BillMaster::where('tenant_id', Auth::user()->id)->orderBy('id', 'DESC')->take(10)->get();
+                $results =  BillMaster::where('tenant_id', Auth::user()->tenant_id)->orderBy('id', 'DESC')->take(10)->get();
                 foreach ($results as $result){
                     $result->contact =  Contact::where('id', $result->vendor_id)->first();
                     $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
@@ -112,7 +112,7 @@ class BillMaster extends Model
                 $count = BillMaster::count();
                 return ["bills"=>$results,  "count"=>$count];
             } else {
-                $results =  BillMaster::where('tenant_id', Auth::user()->id)->where('id', '<', $id)->orderBy('id', 'DESC')->take(10)->get();
+                $results =  BillMaster::where('tenant_id', Auth::user()->tenant_id)->where('id', '<', $id)->orderBy('id', 'DESC')->take(10)->get();
                 $count = BillMaster::count();
                 foreach ($results as $result){
                     $result->contact =  Contact::where('id', $result->vendor_id)->first();
@@ -126,26 +126,31 @@ class BillMaster extends Model
 
     ///only Posted Bills
     public function getTotalSumPostedBills(){
-        return BillMaster::where('tenant_id', Auth::user()->id)->where('posted', 1)->sum('bill_amount');
+        return BillMaster::where('tenant_id', Auth::user()->tenant_id)->where('posted', 1)->sum('bill_amount');
     }
 
     ///Only Posted Bills
     public function getTotalPaidSumPostedBills(){
-        return BillMaster::where('tenant_id', Auth::user()->id)->where('posted', 1)->sum('paid_amount');
+        return BillMaster::where('tenant_id', Auth::user()->tenant_id)->where('posted', 1)->sum('paid_amount');
     }
 
     ///Posted and Non-Posted Bills
     public function getAllBillsTotalSum(){
-        return BillMaster::where('tenant_id', Auth::user()->id)->sum('bill_amount');
+        return BillMaster::where('tenant_id', Auth::user()->tenant_id)->sum('bill_amount');
     }
 
     public function getTenantBillsThisYear(){
-        return BillMaster::where('tenant_id', Auth::user()->id)->whereYear('created_at', date('Y'))->orderBy('id', 'DESC')->get();
+        return BillMaster::where('tenant_id', Auth::user()->tenant_id)->whereYear('created_at', date('Y'))->orderBy('id', 'DESC')->get();
     }
 
     public function getTenantBillsByDateRange(Request $request){
-        return BillMaster::where('trash',0)->where('tenant_id', Auth::user()->tenant_id)
+        $results = BillMaster::where('trash',0)->where('tenant_id', Auth::user()->tenant_id)
             ->whereBetween('issue_date', [$request->from, $request->to])->get();
+        foreach ($results as $result){
+            $result->contact =  Contact::where('id', $result->vendor_id)->first();
+            $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+        }
+        return $results;
     }
 
     public function updateBillPayment(BillMaster $bill, $amount){

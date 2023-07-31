@@ -107,7 +107,7 @@ class InvoiceMaster extends Model
         return $sum;
     }
 
-    ///[$paginate] indicates whether it's a paginated request
+    /// [$paginate] indicates whether it's a paginated request
     /// to fetch invoices by batch
     /// [$id] the offset to start from
     public function getTenantInvoices(bool $paginate = false, int $id = 0)
@@ -137,17 +137,17 @@ class InvoiceMaster extends Model
 
     ///only Posted Invoices
     public function getTotalSumPostedInvoices(){
-        return InvoiceMaster::where('tenant_id', Auth::user()->id)->where('posted', 1)->sum('total');
+        return InvoiceMaster::where('tenant_id', Auth::user()->tenant_id)->where('posted', 1)->sum('total');
     }
 
     ///Only Posted Invoices
     public function getTotalPaidSumPostedInvoices(){
-        return InvoiceMaster::where('tenant_id', Auth::user()->id)->where('posted', 1)->sum('paid_amount');
+        return InvoiceMaster::where('tenant_id', Auth::user()->tenant_id)->where('posted', 1)->sum('paid_amount');
     }
 
     ///Posted and Non-Posted Invoices
     public function getAllInvoicesTotalSum(){
-        return InvoiceMaster::where('tenant_id', Auth::user()->id)->sum('total');
+        return InvoiceMaster::where('tenant_id', Auth::user()->tenant_id)->sum('total');
     }
 
     public function getContactInvoices( $contact_id, bool $paginate = false, int $id = 0)
@@ -184,12 +184,12 @@ class InvoiceMaster extends Model
 
     public function getTenantInvoicesThisYear()
     {
-        return InvoiceMaster::where('tenant_id', Auth::user()->id)->whereYear('created_at', date('Y'))->orderBy('id', 'DESC')->get();
+        return InvoiceMaster::where('tenant_id', Auth::user()->tenant_id)->whereYear('created_at', date('Y'))->orderBy('id', 'DESC')->get();
     }
 
     public function getTenantInvoicesByStatus($status)
     {
-        return InvoiceMaster::where('tenant_id', Auth::user()->id)->where('status', $status)->orderBy('id', 'DESC')->get();
+        return InvoiceMaster::where('tenant_id', Auth::user()->tenant_id)->where('status', $status)->orderBy('id', 'DESC')->get();
     }
 
     public function getTenantInvoicesByDateRange(Request $request)

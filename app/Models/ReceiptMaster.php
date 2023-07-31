@@ -118,7 +118,38 @@ class ReceiptMaster extends Model
         $receipt->issued_by = Auth::user()->id;
         $receipt->contact_id = $request->contact ?? '';
         $receipt->save();
+        $receipt->contact =  Contact::where('id', $receipt->contact_id)->first();
+        $receipt->tenant =  Tenant::where('id', $receipt->tenant_id)->first();
         return $receipt;
+    }
+
+    public function createNewReceiptAPI(Request $request)
+    {
+        $receipt = new ReceiptMaster();
+        $receipt->receipt_no = $this->getLatestReceipt() ?? 10000;
+        $receipt->invoice_id = null;
+        $receipt->tenant_id = Auth::user()->tenant_id;
+        $receipt->payment_type = $request->payment_method;
+        $receipt->payment_date = $request->payment_date;
+        $receipt->issue_date = $request->payment_date;
+        $receipt->ref_no = $request->reference_no;
+        $receipt->amount = $request->total;
+        $receipt->receipt_type = $request->receipt_type ?? 1;
+        $receipt->tenant_id = Auth::user()->tenant_id;
+        $receipt->slug = substr(sha1(time()), 29, 40);
+        $receipt->bank_id = $request->bank ?? '';
+        $receipt->issued_by = Auth::user()->id;
+        $receipt->contact_id = $request->contact ?? '';
+        $receipt->save();
+        $receipt->contact =  Contact::where('id', $receipt->contact_id)->first();
+        $receipt->tenant =  Tenant::where('id', $receipt->tenant_id)->first();
+        $receipt->issuer =  User::where('id', $receipt->issued_by)->first();
+        return $receipt;
+    }
+
+    ///Only Posted Receipts
+    public function getTotalPaidSumPostedReceipts(){
+        return ReceiptMaster::where('tenant_id', Auth::user()->id)->where('posted', 1)->sum('amount');
     }
 
     public function generateTransactionRef()
@@ -139,15 +170,29 @@ class ReceiptMaster extends Model
         }
     }
 
-    public function getAllTenantReceipts(bool $paginate = false, int $id = 0)
+    public function getAllTenantReceipts(bool $paginate = false, int $id=0)
     {
         if (!$paginate) {
             return ReceiptMaster::where('tenant_id', Auth::user()->tenant_id)->orderBy('id', 'DESC')->get();
         } else {
             if ($id == 0) {
-                return ReceiptMaster::where('tenant_id', Auth::user()->id)->orderBy('id', 'DESC')->take(10)->get();
+                $results = ReceiptMaster::where('tenant_id', Auth::user()->tenant_id)->orderBy('id', 'DESC')->take(10)->get();
+                foreach ($results as $result){
+                    $result->contact =  Contact::where('id', $result->contact_id)->first();
+                    $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+                    $result->issuer =  User::where('id', $result->issued_by)->first();
+                }
+                $count = ReceiptMaster::where('tenant_id', Auth::user()->tenant_id)->count();
+                return ["receipts"=>$results,  "count"=>$count];
             } else {
-                return ReceiptMaster::where('tenant_id', Auth::user()->id)->where('id', '<', $id)->orderBy('id', 'DESC')->take(10)->get();
+                $results = ReceiptMaster::where('tenant_id', Auth::user()->tenant_id)->where('id', '<', $id)->orderBy('id', 'DESC')->take(10)->get();
+                foreach ($results as $result){
+                    $result->contact =  Contact::where('id', $result->contact_id)->first();
+                    $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+                    $result->issuer =  User::where('id', $result->issued_by)->first();
+                }
+                $count = ReceiptMaster::where('tenant_id', Auth::user()->tenant_id)->count();
+                return ["receipts"=>$results,  "count"=>$count];
             }
         }
     }
@@ -164,6 +209,7 @@ class ReceiptMaster extends Model
             foreach ($results as $result){
                 $result->contact =  Contact::where('id', $result->contact_id)->first();
                 $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+                $result->issuer =  User::where('id', $result->issued_by)->first();
             }
             return ["receipts"=>$results,  "count"=>$count];
         } else {
@@ -172,6 +218,7 @@ class ReceiptMaster extends Model
                 foreach ($results as $result){
                     $result->contact =  Contact::where('id', $result->contact_id)->first();
                     $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+                    $result->issuer =  User::where('id', $result->issued_by)->first();
                 }
                 $count = ReceiptMaster::where('contact_id', $contact_id)->count();
                 return ["receipts"=>$results,  "count"=>$count];
@@ -180,13 +227,13 @@ class ReceiptMaster extends Model
                 foreach ($results as $result){
                     $result->contact =  Contact::where('id', $result->contact_id)->first();
                     $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+                    $result->issuer =  User::where('id', $result->issued_by)->first();
                 }
                 $count = ReceiptMaster::where('contact_id', $contact_id)->count();
                 return ["receipts"=>$results,  "count"=>$count];
             }
         }
     }
-
 
     public function getAllTenantReceiptsThisYear()
     {
@@ -222,8 +269,16 @@ class ReceiptMaster extends Model
 
     public function getAllTenantReceiptsByDateRange(Request $request)
     {
-        return ReceiptMaster::where('tenant_id', Auth::user()->tenant_id)
+        $results =  ReceiptMaster::where('tenant_id', Auth::user()->tenant_id)
             ->whereBetween('issue_date', [$request->from, $request->to])->get();
+
+        foreach ($results as $result){
+            $result->contact =  Contact::where('id', $result->contact_id)->first();
+            $result->tenant =  Tenant::where('id', $result->tenant_id)->first();
+            $result->issuer =  User::where('id', $result->issued_by)->first();
+        }
+
+        return $results;
     }
 
     public function getReceiptBySlug($slug)

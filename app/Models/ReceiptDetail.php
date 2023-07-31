@@ -32,6 +32,31 @@ class ReceiptDetail extends Model
         }
     }
 
+    public function setReceiptItemsAPI(Request $request, $receipt){
+        $items= $request->items;
+        foreach ($items as $item)
+        {
+            $receipt_item = new ReceiptDetail();
+            $receipt_item->receipt_id = $receipt->id;
+            $receipt_item->tenant_id = Auth::user()->tenant_id;
+            $receipt_item->service_id = $item["id"];;
+            $receipt_item->quantity = $item["qty"];
+            $receipt_item->unit_cost = $item["amount"];
+            $receipt_item->payment = $item["total"];
+            $receipt_item->save();
+        }
+    }
+
+    public function getReceiptDetails($id){
+        $details =  ReceiptDetail::where('receipt_id', $id)->orderBy('id', 'DESC')->get();
+        foreach ($details as $detail)
+        {
+            $detail->item = Item::where("id", $detail->service_id)->first();
+        }
+        return $details;
+    }
+
+
     public function getServiceById($id){
         return Item::find($id);
     }
