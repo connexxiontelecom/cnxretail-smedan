@@ -105,6 +105,9 @@ class Tenant extends Model
     public function getAllRegisteredTenants(){
         return Tenant::orderBy('id', 'DESC')->get();
     }
+    public function getAllBusinessReportWithinDateRange($from, $to){
+        return Tenant::orderBy('id', 'DESC')->get();
+    }
     public function getAllActiveRegisteredTenants(){
         return Tenant::where('account_status',1)->orderBy('company_name', 'ASC')->get();
     }
@@ -148,6 +151,10 @@ class Tenant extends Model
 
     public function getTenantTurnover($tenantId){
         return ReceiptMaster::whereYear('payment_date', date('Y'))->where('tenant_id', $tenantId)->get();
+    }
+    public function getTenantTurnoverDateRange($tenantId, $from, $to){
+        return ReceiptMaster::whereBetween('payment_date', [$from, $to])
+            ->where('tenant_id', $tenantId)->get();
     }
 
 

@@ -6,6 +6,7 @@ use App\Models\Contact;
 use App\Models\InvoiceDetail;
 use App\Models\InvoiceMaster;
 use App\Models\Item;
+use App\Models\ReceiptMaster;
 use Illuminate\Database\Seeder;
 
 class InvoiceSeeder extends Seeder
@@ -65,6 +66,29 @@ class InvoiceSeeder extends Seeder
                   'updated_at'=>$randomDate,
                 ];
                 InvoiceDetail::create($detail);
+                //Generate receipt
+                $latestReceipt = ReceiptMaster::orderBy('id', 'DESC')->first();
+                $receiptNo = 10001;
+                if(!empty($latestReceipt)){
+                   $receiptNo =  $latestReceipt->receipt_no + 1;
+                }
+                $receipt = [
+                    'receipt_no'=>$receiptNo,
+                    'invoice_id'=>$invoice->id,
+                    'tenant_id'=>$invoice->tenant_id,
+                    'payment_type'=>1,
+                    'payment_date'=>$randomDate,
+                    'issue_date'=>$randomDate,
+                    'ref_no'=>substr(sha1(rand()),31,40),
+                    'amount'=>($amount - $paidAmount) <= 0 ? $amount : $paidAmount,
+                    'receipt_type'=>1,
+                    'slug'=>substr(sha1(rand()),29,40),
+                    'bank_id'=> 1,
+                    'issued_by'=>$contact->added_by,
+                    'contact_id'=>$contact->id,
+                ];
+                ReceiptMaster::create($receipt);
+
             }
 
         }

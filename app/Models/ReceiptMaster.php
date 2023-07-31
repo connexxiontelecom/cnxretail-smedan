@@ -13,6 +13,21 @@ class ReceiptMaster extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'receipt_no',
+        'invoice_id',
+        'tenant_id',
+        'payment_type',
+        'payment_date',
+        'issue_date',
+        'ref_no',
+        'amount',
+        'receipt_type',
+        'slug',
+        'bank_id',
+        'issued_by',
+        'contact_id',
+    ];
     public function getContact()
     {
         return $this->belongsTo(Contact::class, 'contact_id');

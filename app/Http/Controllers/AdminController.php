@@ -456,11 +456,34 @@ class AdminController extends Controller
     }
 
     public function showBusinesses(){
-        return view('admin.monitoring.businesses',['tenants'=>$this->tenant->getAllRegisteredTenants()]);
+        return view('admin.monitoring.businesses',
+                [
+                'tenants'=>$this->tenant->getAllRegisteredTenants(),
+                'search'=>0,
+                'from'=>date('Y-m-d', strtotime('- 30 days')),
+                'to'=>date('Y-m-d'),
+                ]);
+    }
+
+    public function showBusinessesDateRange(Request  $request){
+        $this->validate($request,[
+            'from'=>'required',
+            'to'=>'required',
+        ],[
+            'from.required'=>'Choose from when the system should start showing report',
+            'to.required'=>'Specify ending parameter',
+        ]);
+        return view('admin.monitoring.businesses',
+            [
+                'tenants'=>$this->tenant->getAllRegisteredTenants(),
+                'search'=>1,
+                'from'=>$request->from,
+                'to'=>$request->to,
+            ]);
+
     }
     public function showMonitoringPerformance($slug){
         $business = $this->tenant->getTenantBySlug($slug);
-        //return dd($business->id);
         if(!empty($business)){
             return view('admin.monitoring.index',[
                 'receipts'=>$this->receipt->getTenantReceipts($business->id),

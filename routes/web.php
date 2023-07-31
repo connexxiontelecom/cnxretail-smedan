@@ -256,6 +256,7 @@ Route::prefix('/tunnel')->group(function(){
 
     Route::get('/monitoring/performance/{slug}',[App\Http\Controllers\AdminController::class, 'showMonitoringPerformance'])->name('performance-per-client');
     Route::get('/monitoring/businesses',[App\Http\Controllers\AdminController::class, 'showBusinesses'])->name('show-businesses');
+    Route::get('/monitoring/range-businesses',[App\Http\Controllers\AdminController::class, 'showBusinessesDateRange'])->name('show-business-range');
     Route::get('/monitoring/list',[App\Http\Controllers\AdminController::class, 'showMonitoringPerformance'])->name('monitoring-performance');
     Route::get('/ajax-performance/{tenantId}',[App\Http\Controllers\AdminController::class, 'ajaxPerformance'])->name('ajax-performance');
     Route::get('/revenue-per-client/{slug}',[App\Http\Controllers\AdminController::class, 'revenuePerClient'])->name('revenue-per-client');
