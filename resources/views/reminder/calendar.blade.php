@@ -63,7 +63,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route('add-new-reminder')}}" method="post">
+                    <form action="{{route('add-new-reminder', ['account'=>$account])}}" method="post">
                         @csrf
                         <div class="card">
                             <div class="card-body">

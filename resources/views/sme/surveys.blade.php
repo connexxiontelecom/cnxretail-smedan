@@ -51,7 +51,7 @@
                                     <td>{{$survey->title ?? ''}}</td>
                                     <td>{{strlen(strip_tags($survey->question)) > 60 ? substr(strip_tags($survey->question),0,57).'...' : strip_tags($survey->question)}}</td>
                                     <td>
-                                        <a href="{{route('survey-details', $survey->slug)}}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>
+                                        <a href="{{route('survey-details', ['account'=>$account, 'slug'=>$survey->slug])}}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

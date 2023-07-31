@@ -180,4 +180,8 @@ class BillMaster extends Model
 
     }
 
+    public function getAllBills(){
+        return BillMaster::all();
+    }
+
 }

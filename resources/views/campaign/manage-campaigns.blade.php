@@ -55,7 +55,7 @@
                                         <td>{{$request->campaigns[$i]->settings->from_name ?? '' }}</td>
                                         <td>{{$request->campaigns[$i]->settings->reply_to ?? '' }}</td>
                                         <td>
-                                            <a href="{{route('view-campaign', $request->campaigns[$i]->id)}}" class="btn btn-sm btn-info"> <i class="ti-eye mr-2"></i> </a>
+                                            <a href="{{route('view-campaign', ['account'=>$account, 'web_id'=>$request->campaigns[$i]->id])}}" class="btn btn-sm btn-info"> <i class="ti-eye mr-2"></i> </a>
                                         </td>
                                     </tr>
                                 @endfor

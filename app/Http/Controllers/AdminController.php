@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AdminNotification;
 use App\Models\AdminUser;
+use App\Models\BillMaster;
 use App\Models\BusinessCategory;
 use App\Models\Consultation;
 use App\Models\DailyMotivation;
@@ -12,6 +13,7 @@ use App\Models\GrantMaterial;
 use App\Models\InvoiceDetail;
 use App\Models\InvoiceMaster;
 use App\Models\MarginReport;
+use App\Models\PaymentMaster;
 use App\Models\Pricing;
 use App\Models\ReceiptDetail;
 use App\Models\ReceiptMaster;
@@ -29,6 +31,7 @@ use App\Models\TrainingMaterial;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 use Spatie\Newsletter\NewsletterFacade as Newsletter;
 use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
@@ -55,13 +58,15 @@ class AdminController extends Controller
 
         $this->invoice = new InvoiceMaster();
         $this->invoiceitem = new InvoiceDetail();
+        $this->billmaster = new BillMaster();
         $this->receipt = new ReceiptMaster();
         $this->receiptitem = new ReceiptDetail();
         $this->survey = new Survey();
         $this->surveyquestion = new SurveyQuestion();
         $this->surveyresponse = new SurveyResponse();
-
+        $this->paymentmaster = new PaymentMaster();
         $this->consultation = new Consultation();
+        $this->training = new Training();
     }
 
     public function notification(){
@@ -71,7 +76,12 @@ class AdminController extends Controller
     public function adminDashboard(){
         return view('admin.admin-dashboard',[
             'tenants'=>$this->tenant->getAllRegisteredTenants(),
-            'thismonth'=>$this->tenant->getAllRegisteredTenantsThisMonth()
+            'thismonth'=>$this->tenant->getAllRegisteredTenantsThisMonth(),
+            'invoices'=>$this->invoice->getAllInvoices(),
+            'bills'=>$this->billmaster->getAllBills(),
+            'receipts'=>$this->receipt->getAllReceipts(),
+            'payments'=>$this->paymentmaster->getAllPayments(),
+            'trainings'=>$this->training->getAllTrainings(),
         ]);
     }
 
@@ -155,6 +165,11 @@ class AdminController extends Controller
 
     public function manageTenants(){
         return view('admin.manage-tenants',['tenants'=>$this->tenant->getAllRegisteredTenants()]);
+    }
+
+    public function getView(View $view){
+        return $view;
+
     }
 
     public function viewTenant($slug){

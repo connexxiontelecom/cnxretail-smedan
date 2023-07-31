@@ -48,13 +48,14 @@
                 <div class="tab-pane active show" id="tab-51">
                     <div class="card">
                         <div class="card-body">
+                            <h3 class="card-title">{{$training->title ?? '' }}</h3>
                             <div class="mg-t-15 profile-footer">
 
                                 <button class="btn btn-sm btn-default me-2 mb-1"><i class="fe fe-calendar mr-3"></i>{{date('d M, Y', strtotime($training->created_at))}}</button>
                                 <button class="btn btn-sm btn-default me-2 mb-1"><i class="fe fe-user mr-3"></i> {{$training->getTrainingAuthor->full_name ?? '' }}</button>
                             </div>
                             <div id="profile-log-switch">
-                                <h3 class="card-title">{{$training->title ?? '' }}</h3>
+
                                 {!! $training->description ?? '' !!}
                                 <div>
                                     @foreach($training->getTrainingCategories as $bCat)
@@ -103,7 +104,7 @@
                                                     </div>
                                                 @endforeach
                                                 <div class="card-body">
-                                                    <form action="{{route('business-reply-comment-training')}}" method="post">
+                                                    <form action="{{route('business-reply-comment-training',['account'=>$account])}}" method="post">
                                                         @csrf
                                                         <div class="form-group">
                                                             <input type="hidden" name="innerTrainingId" value="{{$training->id}}">
@@ -133,7 +134,7 @@
                             <div class="card-title">Leave a Comment</div>
                         </div>
                         <div class="card-body">
-                            <form class="form-horizontal  m-t-20" method="post" action="{{route('business-comment-training')}}" autocomplete="off">
+                            <form class="form-horizontal  m-t-20" method="post" action="{{route('business-comment-training',[ 'account'=>$account])}}" autocomplete="off">
                                 @csrf
                                 <div class="form-group">
                                     <div class="col-xs-12">
@@ -186,7 +187,7 @@
                                             <div class="dropdown-secondary dropdown float-right">
                                                 <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                    <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                    <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                 </div>
                                             </div>
 
@@ -200,7 +201,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -215,7 +216,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item waves-light waves-effect deleteFile"  data-toggle="modal" data-target="#deleteModal" data-directory="{{$file->attachment}}" data-file="{{$file->name ?? 'File name'}}" data-unique="{{$file->id}}" href="javascript:void(0);"><i class="ti-trash mr-2 text-danger"></i> Delete</a>
                                                     </div>
@@ -231,7 +232,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item waves-light waves-effect deleteFile"  data-toggle="modal" data-target="#deleteModal" data-directory="{{$file->attachment}}" data-file="{{$file->name ?? 'File name'}}" data-unique="{{$file->id}}" href="javascript:void(0);"><i class="ti-trash mr-2 text-danger"></i> Delete</a>
                                                     </div>
@@ -247,7 +248,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item waves-light waves-effect deleteFile"  data-toggle="modal" data-target="#deleteModal" data-directory="{{$file->attachment}}" data-file="{{$file->name ?? 'File name'}}" data-unique="{{$file->id}}" href="javascript:void(0);"><i class="ti-trash mr-2 text-danger"></i> Delete</a>
                                                     </div>
@@ -263,7 +264,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -277,7 +278,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -291,7 +292,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item waves-light waves-effect deleteFile"  data-toggle="modal" data-target="#deleteModal" data-directory="{{$file->attachment}}" data-file="{{$file->name ?? 'File name'}}" data-unique="{{$file->id}}" href="javascript:void(0);"><i class="ti-trash mr-2 text-danger"></i> Delete</a>
                                                     </div>
@@ -307,7 +308,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item waves-light waves-effect deleteFile"  data-toggle="modal" data-target="#deleteModal" data-directory="{{$file->attachment}}" data-file="{{$file->name ?? 'File name'}}" data-unique="{{$file->id}}" href="javascript:void(0);"><i class="ti-trash mr-2 text-danger"></i> Delete</a>
                                                     </div>
@@ -323,7 +324,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item waves-light waves-effect deleteFile"  data-toggle="modal" data-target="#deleteModal" data-directory="{{$file->attachment}}" data-file="{{$file->name ?? 'File name'}}" data-unique="{{$file->id}}" href="javascript:void(0);"><i class="ti-trash mr-2 text-danger"></i> Delete</a>
                                                     </div>
@@ -339,7 +340,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item waves-light waves-effect deleteFile"  data-toggle="modal" data-target="#deleteModal" data-directory="{{$file->attachment}}" data-file="{{$file->name ?? 'File name'}}" data-unique="{{$file->id}}" href="javascript:void(0);"><i class="ti-trash mr-2 text-danger"></i> Delete</a>
                                                     </div>
@@ -355,7 +356,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item waves-light waves-effect deleteFile"  data-toggle="modal" data-target="#deleteModal" data-directory="{{$file->attachment}}" data-file="{{$file->name ?? 'File name'}}" data-unique="{{$file->id}}" href="javascript:void(0);"><i class="ti-trash mr-2 text-danger"></i> Delete</a>
                                                     </div>
@@ -371,7 +372,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item waves-light waves-effect deleteFile"  data-toggle="modal" data-target="#deleteModal" data-directory="{{$file->attachment}}" data-file="{{$file->name ?? 'File name'}}" data-unique="{{$file->id}}" href="javascript:void(0);"><i class="ti-trash mr-2 text-danger"></i> Delete</a>
                                                     </div>
@@ -387,7 +388,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item waves-light waves-effect deleteFile"  data-toggle="modal" data-target="#deleteModal" data-directory="{{$file->attachment}}" data-file="{{$file->name ?? 'File name'}}" data-unique="{{$file->id}}" href="javascript:void(0);"><i class="ti-trash mr-2 text-danger"></i> Delete</a>
                                                     </div>
@@ -403,7 +404,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item waves-light waves-effect deleteFile"  data-toggle="modal" data-target="#deleteModal" data-directory="{{$file->attachment}}" data-file="{{$file->name ?? 'File name'}}" data-unique="{{$file->id}}" href="javascript:void(0);"><i class="ti-trash mr-2 text-danger"></i> Delete</a>
                                                     </div>
@@ -419,7 +420,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item waves-light waves-effect deleteFile"  data-toggle="modal" data-target="#deleteModal" data-directory="{{$file->attachment}}" data-file="{{$file->name ?? 'File name'}}" data-unique="{{$file->id}}" href="javascript:void(0);"><i class="ti-trash mr-2 text-danger"></i> Delete</a>
                                                     </div>
@@ -435,7 +436,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item waves-light waves-effect deleteFile"  data-toggle="modal" data-target="#deleteModal" data-directory="{{$file->attachment}}" data-file="{{$file->name ?? 'File name'}}" data-unique="{{$file->id}}" href="javascript:void(0);"><i class="ti-trash mr-2 text-danger"></i> Delete</a>
                                                     </div>
@@ -451,7 +452,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item waves-light waves-effect deleteFile"  data-toggle="modal" data-target="#deleteModal" data-directory="{{$file->attachment}}" data-file="{{$file->name ?? 'File name'}}" data-unique="{{$file->id}}" href="javascript:void(0);"><i class="ti-trash mr-2 text-danger"></i> Delete</a>
                                                     </div>
@@ -467,7 +468,7 @@
                                                 <div class="dropdown-secondary dropdown float-right">
                                                     <button class="btn btn-default btn-mini dropdown-toggle waves-light b-none txt-muted" type="button" id="dropdown6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icofont icofont-navigation-menu"></i></button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdown6" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 24px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',$file->attachment)}}"><i class="ti-download text-success mr-2"></i> Download</a>
+                                                        <a class="dropdown-item waves-light waves-effect" href="{{route('download-training-material',['attachment'=>$file->attachment, 'account'=>$account])}}"><i class="ti-download text-success mr-2"></i> Download</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item waves-light waves-effect deleteFile"  data-toggle="modal" data-target="#deleteModal" data-directory="{{$file->attachment}}" data-file="{{$file->name ?? 'File name'}}" data-unique="{{$file->id}}" href="javascript:void(0);"><i class="ti-trash mr-2 text-danger"></i> Delete</a>
                                                     </div>

@@ -33,6 +33,7 @@
             <div class="col col-login mx-auto">
                 <div class="text-center">
                     <a href="{{route('homepage')}}">
+                        <img src="/assets/images/smedan_logo.png" class="header-brand-img" alt="logo">
                         <img src="/assets/images/brand/main.png" class="header-brand-img" alt="logo">
                     </a>
                 </div>

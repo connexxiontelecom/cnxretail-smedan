@@ -128,4 +128,8 @@ class Item extends Model
     public function searchForProduct($keyword){
         return Item::where('item_name', 'like', '%' . $keyword . '%')->get();
     }
+
+    public static function getTenantItem($tenantId){
+        return Item::where('tenant_id', $tenantId)->first();
+    }
 }

@@ -142,5 +142,9 @@ class PaymentMaster extends Model
         return $payment;
     }
 
+    public function getAllPayments(){
+        return PaymentMaster::all();
+    }
+
 
 }

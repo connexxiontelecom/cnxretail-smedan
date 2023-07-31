@@ -48,13 +48,14 @@
                 <div class="tab-pane active show" id="tab-51">
                     <div class="card">
                         <div class="card-body">
+                            <h3 class="card-title">{{$training->title ?? '' }}</h3>
                             <div class="mg-t-15 profile-footer">
 
                                 <button class="btn btn-sm btn-default me-2 mb-1"><i class="fe fe-calendar mr-3"></i>{{date('d M, Y', strtotime($training->created_at))}}</button>
                                 <button class="btn btn-sm btn-default me-2 mb-1"><i class="fe fe-user mr-3"></i> {{$training->getTrainingAuthor->full_name ?? '' }}</button>
                             </div>
                             <div id="profile-log-switch">
-                                <h3 class="card-title">{{$training->title ?? '' }}</h3>
+
                                 {!! $training->description ?? '' !!}
                                 <div>
                                     @foreach($training->getTrainingCategories as $bCat)

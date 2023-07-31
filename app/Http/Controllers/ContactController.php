@@ -61,8 +61,8 @@ class ContactController extends Controller
     }
 
 
-    public function viewContact($slug){
-        $contact = $this->contact->getContactBySlug($slug);
+    public function viewContact(Request $request){
+        $contact = $this->contact->getContactBySlug($request->slug);
         if(!empty($contact)){
             return view('contacts.view',['contact'=>$contact]);
         }else{
@@ -72,8 +72,8 @@ class ContactController extends Controller
     }
 
 
-    public function showEditContactForm($slug){
-        $contact = $this->contact->getContactBySlug($slug);
+    public function showEditContactForm(Request $request){
+        $contact = $this->contact->getContactBySlug($request->slug);
         if(!empty($contact)){
             return view('contacts.edit-contact',['contact'=>$contact]);
         }else{

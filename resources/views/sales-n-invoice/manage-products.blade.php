@@ -48,7 +48,7 @@
                                         <td class="text-right">{{number_format($product->selling_price,2)}}</td>
                                         <td>{{number_format($product->sold )}}</td>
                                         <td>
-                                            <a href="{{route('product-details', $product->slug)}}" class="btn btn-sm btn-info"> <i class="ti-eye"></i> </a>
+                                            <a href="{{route('product-details', ['account'=>$account, 'slug'=>$product->slug] )}}" class="btn btn-sm btn-info"> <i class="ti-eye"></i> </a>
                                         </td>
                                     </tr>
                                 @endforeach

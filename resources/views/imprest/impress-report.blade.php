@@ -66,7 +66,7 @@
                 <div class="col-md-12">
                     <div class="col-md-12 col-sm-12">
                         <h4>Filter</h4>
-                        <form action="{{route('filter-impress-report')}}" class="form-inline" method="get">
+                        <form action="{{route('filter-impress-report', ['account'=>$account])}}" class="form-inline" method="get">
                             @csrf
                             <div class="form-group">
                                 <label for="">From</label>

@@ -88,7 +88,7 @@
                         </div>
                         @endif
                     <div class="card-body">
-                        <form action="{{route('send-text-message')}}" method="post">
+                        <form action="{{route('send-text-message', ['account'=>$account])}}" method="post">
                             @csrf
                             <div class="card">
                                 <div class="card-header">

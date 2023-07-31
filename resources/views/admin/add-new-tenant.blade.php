@@ -75,6 +75,27 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Location</label>
+                                                <input type="text" class="form-control" value="{{old('location') }}" name="location" placeholder="Location">
+                                                @error('location') <i class="text-danger">{{$message}}</i>@enderror
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Share Capital</label>
+                                                <input type="number" step="0.01" class="form-control" value="{{old('share_capital') }}" name="share_capital" placeholder="Share Capital">
+                                                @error('share_capital') <i class="text-danger">{{$message}}</i>@enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Number of Employees</label>
+                                                <input type="number" class="form-control" value="{{old('no_of_employees') }}" name="no_of_employees" placeholder="Number of Employees">
+                                                @error('no_of_employees') <i class="text-danger">{{$message}}</i>@enderror
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="card-alert alert alert-success mb-0">
                                         Owner Info
                                     </div>

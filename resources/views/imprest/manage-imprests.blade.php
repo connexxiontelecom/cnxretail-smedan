@@ -102,8 +102,8 @@
                                                             <div class="form-group ">
                                                                 <div class="btn-group d-flex justify-content-center">
                                                                     <button data-dismiss="modal" class="btn-danger btn btn-mini"><i class="ti-close mr-2"></i> Close </button>
-                                                                    <a href="{{route('process-imprest',['action'=>'decline','slug'=>$imprest->slug])}}" class="btn-secondary btn btn-mini"><i class="ti-trash mr-2"></i> Decline Imprest</a>
-                                                                    <a class="btn-primary btn-mini btn "  href="{{route('process-imprest',['action'=>'approve','slug'=>$imprest->slug])}}"><i class="ti-check mr-2"></i> Approve Imprest</a>
+                                                                    <a href="{{route('process-imprest',['action'=>'decline','slug'=>$imprest->slug, 'account'=>$account])}}" class="btn-secondary btn btn-mini"><i class="ti-trash mr-2"></i> Decline Imprest</a>
+                                                                    <a class="btn-primary btn-mini btn "  href="{{route('process-imprest',['action'=>'approve','slug'=>$imprest->slug, 'account'=>$account])}}"><i class="ti-check mr-2"></i> Approve Imprest</a>
                                                                 </div>
                                                             </div>
 

@@ -49,7 +49,7 @@
                                         {!! $notification->is_read == 0 ? "<span class='text-danger'>Unread</span>" : "<span class='text-success'>Read</span>" !!}
                                     </td>
                                     <td>
-                                        <a href="{{$notification->route_type == 0 ? route($notification->route_name) : route($notification->route_name, $notification->route_param)}}"  class="btn btn-sm btn-info">View</a>
+                                        <a href="{{$notification->route_type == 0 ? route($notification->route_name, ['account'=>$account]) : route($notification->route_name,  ['account'=>$account, $notification->route_param])}}"  class="btn btn-sm btn-info">View</a>
                                     </td>
                                 </tr>
                             @endforeach

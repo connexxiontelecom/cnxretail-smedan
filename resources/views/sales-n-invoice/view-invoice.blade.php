@@ -80,7 +80,7 @@
                                     <p class="font-w600 mb-1">{{$item->getService->item_name ?? '' }}</p>
                                 </td>
                                 <td class="text-center">{{$item->quantity ?? '' }}</td>
-                                <td class="text-right number-font1">{{$item->unit_cost ?? '' }}</td>
+                                <td class="text-right number-font1">{{  number_format($item->unit_cost ?? 0 ) }}</td>
                                 <td class="text-right number-font1">{{number_format($item->quantity * $item->unit_cost,2)}}</td>
                             </tr>
                             @endforeach
@@ -94,18 +94,18 @@
                 </div>
                 <div class="card-footer text-right">
                     @if($invoice->posted == 1)
-                        <a href="{{route('manage-invoices')}}" class="btn btn-primary mb-1" ><i class="ti-back-left"></i> Back</a>
+                        <a href="{{route('manage-invoices', ['account'=>$account])}}" class="btn btn-primary mb-1" ><i class="ti-back-left"></i> Back</a>
                         <button type="button" class="btn btn-danger mb-1" onclick="generatePDF()"><i class="si si-printer"></i> Print Invoice</button>
-                        <a href="{{route('send-invoice', $invoice->slug)}}"  class="btn btn-success mb-1" ><i class="si si-paper-plane"></i> Send Invoice</a>
+                        <a href="{{route('send-invoice', ['account'=>$account, 'slug'=>$invoice->slug] )}}"  class="btn btn-success mb-1" ><i class="si si-paper-plane"></i> Send Invoice</a>
                     @endif
                     @if((($invoice->total) - ($invoice->paid_amount) > 0) && ($invoice->posted == 1))
-                        <a href="{{route('receive-payment', $invoice->slug)}}"  class="btn btn-warning mb-1" ><i class="si si-paper-plane"></i> Make Payment</a>
+                        <a href="{{route('receive-payment', ['account'=>$account, 'slug'=>$invoice->slug])}}"  class="btn btn-warning mb-1" ><i class="si si-paper-plane"></i> Make Payment</a>
 
                     @endif
 
                     @if($invoice->posted == 0 && $invoice->trashed == 0)
-                        <a href="{{route('decline-invoice', $invoice->slug)}}" class="btn btn-danger btn-mini"><i class="ti-close mr-2"></i> Decline Invoice</a>
-                        <a href="{{route('approve-invoice', $invoice->slug)}}" class="btn btn-success btn-mini"><i class="ti-check mr-2"></i> Approve Invoice</a>
+                        <a href="{{route('decline-invoice', ['account'=>$account, 'slug'=>$invoice->slug])}}" class="btn btn-danger btn-mini"><i class="ti-close mr-2"></i> Decline Invoice</a>
+                        <a href="{{route('approve-invoice', ['account'=>$account, 'slug'=>$invoice->slug])}}" class="btn btn-success btn-mini"><i class="ti-check mr-2"></i> Approve Invoice</a>
                     @endif
 
                 </div>

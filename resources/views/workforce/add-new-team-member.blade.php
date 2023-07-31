@@ -27,7 +27,7 @@
                         </div>
                     @endif
                     <div class="card-body">
-                        <form action="{{route('add-new-team-member')}}" method="post">
+                        <form action="{{route('add-new-team-member',['account'=>$account])}}" method="post">
                             @csrf
                             <div class="card">
                                 <div class="card-header">

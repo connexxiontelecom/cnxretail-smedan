@@ -45,7 +45,7 @@
                                 </thead>
                                 <tbody>
                                 @php $serial = 1; @endphp
-                                @foreach(Auth::user()->getTenantContacts->where('contact_type', $contact_type) as $contact)
+                                @foreach(Auth::user()->getTenantContacts as $contact)
                                 <tr>
                                     <td>{{$serial++}}</td>
                                     <td>{{date('d M, Y', strtotime($contact->created_at))}}</td>
@@ -55,7 +55,7 @@
                                     <td>{{$contact->company_phone ?? '' }}</td>
                                     <td>{{$contact->company_email ?? '' }}</td>
                                     <td>
-                                        <a href="{{route('view-contact', $contact->slug)}}" class="btn btn-sm btn-info"> <i class="ti-eye"></i> </a>
+                                        <a href="{{route('view-contact', ['account'=>$account, 'slug'=>$contact->slug] )}}" class="btn btn-sm btn-info"> <i class="ti-eye"></i> </a>
                                     </td>
                                 </tr>
                                 @endforeach

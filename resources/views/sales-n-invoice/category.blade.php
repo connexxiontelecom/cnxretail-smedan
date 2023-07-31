@@ -18,7 +18,7 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{route('add-new-category')}}" method="post" autocomplete="off">
+                    <form action="{{route('add-new-category', ['account'=>$account])}}" method="post" autocomplete="off">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
@@ -77,7 +77,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{route('update-category')}}" method="post" autocomplete="off">
+                                                <form action="{{route('update-category', ['account'=>$account])}}" method="post" autocomplete="off">
                                                     @csrf
                                                     <div class="row">
                                                         <div class="col-md-12">

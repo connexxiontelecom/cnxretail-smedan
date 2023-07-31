@@ -15,7 +15,7 @@
             <i class="ti-back-left"></i>
         </span> Go Back
     </a>
-    <a href="{{ route('show-consultation-form') }}" class="btn btn-primary btn-icon text-white mr-2">
+    <a href="{{ route('show-consultation-form', ['account'=>$account]) }}" class="btn btn-primary btn-icon text-white mr-2">
         <span>
             <i class="ti-plus"></i>
         </span> New Request
@@ -74,7 +74,7 @@
                                         {{$consult->getConsultationComments->count()}}
                                     </td>
                                     <td>
-                                        <a href="{{route('view-consultation', $consult->slug)}}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>
+                                        <a href="{{route('view-consultation', ['slug'=>$consult->slug, 'account'=>$account])}}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

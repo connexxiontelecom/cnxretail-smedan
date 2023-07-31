@@ -34,7 +34,7 @@
                         </div>
                     @endif
                     <div class="card-body">
-                        <form action="{{route('add-new-item')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{route('add-new-item', ['account'=>$account])}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="card">
                                 <div class="card-header">

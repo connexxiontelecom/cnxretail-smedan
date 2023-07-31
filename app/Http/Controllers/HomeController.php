@@ -46,8 +46,8 @@ class HomeController extends Controller
         $this->consultationcommentreply = new ConsultationCommentReply();
     }
 
-    public function viewTraining($slug){
-        $training = $this->training->getTrainingBySlug($slug);
+    public function viewTraining(Request $request){
+        $training = $this->training->getTrainingBySlug($request->slug);
         if(!empty($training)){
             return view('sme.training-details',['training'=>$training]);
         }else{
@@ -63,8 +63,8 @@ class HomeController extends Controller
     public function listSurveys(){
         return view('sme.surveys',['surveys'=>$this->survey->getAllActiveSurveys()]);
     }
-    public function surveyDetails($slug){
-        $survey = $this->survey->getSurveyBySlug($slug);
+    public function surveyDetails(Request $request){
+        $survey = $this->survey->getSurveyBySlug($request->slug);
         if(!empty($survey)){
             return view('sme.survey-details',
                 [
@@ -76,8 +76,8 @@ class HomeController extends Controller
             return back();
         }
     }
-    public function viewGrant($slug){
-        $grant = $this->grant->getGrantBySlug($slug);
+    public function viewGrant(Request $request){
+        $grant = $this->grant->getGrantBySlug($request->slug);
         if(!empty($grant)){
             return view('sme.grant-details',['grant'=>$grant]);
         }else{
@@ -177,8 +177,8 @@ class HomeController extends Controller
         return back();
     }
 
-    public function viewConsultation($slug){
-        $consultation = $this->consultation->getConsultationBySlug($slug);
+    public function viewConsultation(Request $request){
+        $consultation = $this->consultation->getConsultationBySlug($request->slug);
         if(!empty($consultation)){
             return view('sme.consultation-details',['consultation'=>$consultation]);
         }else{

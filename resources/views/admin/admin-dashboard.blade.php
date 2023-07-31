@@ -25,7 +25,7 @@
                 <div class="card-body">
                     <div class="card-widget">
                         <h6 class="mb-2">Trainings</h6>
-                        <h2 class="text-right"><i class="mdi mdi-account-multiple icon-size float-left text-success text-success-shadow"></i><span>{{number_format($tenants->where('account_status',1)->count())}}</span></h2>
+                        <h2 class="text-right"><i class="mdi mdi-account-multiple icon-size float-left text-success text-success-shadow"></i><span>{{number_format($trainings->count())}}</span></h2>
                         <p class="mb-0">All time</p>
                     </div>
                 </div>
@@ -35,8 +35,8 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-widget">
-                        <h6 class="mb-2">Opportunities</h6>
-                        <h2 class="text-right"><i class="icon-size mdi mdi-account-multiple   float-left text-warning text-warning-shadow"></i><span>{{number_format($tenants->where('account_status',0)->count())}}</span></h2>
+                        <h6 class="mb-2">Transactions</h6>
+                        <h2 class="text-right"><i class="icon-size mdi mdi-account-multiple   float-left text-warning text-warning-shadow"></i><span>{{number_format( $invoices->count() + $bills->count()) }}</span></h2>
                         <p class="mb-0">All time</p>
                     </div>
                 </div>
@@ -56,9 +56,11 @@
     </div>
     <div class="row">
         <div class="col-md-8 col-lg-8">
+            <a href="{{ route('add-new-tenant') }}" class="btn btn-primary mb-4">Onboard New Business</a>
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Recent Registrations</h3>
+
                 </div>
                 <div class="table-responsive">
                     <table class="table card-table table-vcenter text-nowrap mb-0">
@@ -67,6 +69,7 @@
                             <th>#</th>
                             <th>Company Name</th>
                             <th> Date</th>
+                            <th> Due Date</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -77,6 +80,7 @@
                             <th scope="row">{{$serial++}}</th>
                             <td>{{$tenant->company_name ?? '' }}</td>
                             <td class="text-success">{{date('d M, Y', strtotime($tenant->created_at))}}</td>
+                            <td class="text-warning">{{date('d M, Y', strtotime($tenant->end_date))}}</td>
                             <td>
                                 <a href="{{route('view-tenant', $tenant->slug)}}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>
                             </td>
@@ -86,8 +90,7 @@
                     </table>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4">
+
             <div class="card">
                 <div class="card-header border-bottom-0">
                     <h3 class="card-title">Upcoming Renewals</h3>
@@ -98,15 +101,15 @@
                             <tbody>
                             @foreach($tenants as $tent)
                                 @if(round(abs(strtotime($tent->end_date) - strtotime(now()))/86400) <= 14)
-                                <tr>
-                                    <td>
-                                        <h6 class="mb-0 font-weight-semibold"><a href="{{route('view-tenant', $tent->slug)}}">{{$tent->company_name ?? ''}}</a></h6>
-                                        <small class="fs-11 text-muted">{{$tent->getTenantPlan->price_name ?? ''}}</small>
-                                    </td>
-                                    <td>
-                                        <small class="fs-11 text-muted"><small class="ml-1 fs-11 badge badge-secondary">{{round(abs(strtotime($tenant->end_date) - strtotime(now()))/86400) }} days</small> remaining</small>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            <h6 class="mb-0 font-weight-semibold"><a href="{{route('view-tenant', $tent->slug)}}">{{$tent->company_name ?? ''}}</a></h6>
+                                            <small class="fs-11 text-muted">{{$tent->getTenantPlan->price_name ?? ''}}</small>
+                                        </td>
+                                        <td>
+                                            <small class="fs-11 text-muted"><small class="ml-1 fs-11 badge badge-secondary">{{round(abs(strtotime($tenant->end_date) - strtotime(now()))/86400) }} days</small> remaining</small>
+                                        </td>
+                                    </tr>
                                 @endif
                             @endforeach
                             </tbody>
@@ -114,6 +117,49 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-widget">
+                        <h6 class="mb-2">Invoices</h6>
+                        <h2 class="text-right"><i class="icon-size mdi mdi-wallet   float-left text-warning text-warning-shadow"></i>
+                            <span>{{ env('APP_CURRENCY') ?? ''  }}{{ number_format($invoices->sum('total'),2 ) }}</span></h2>
+                        <p class="mb-0">All time</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-widget">
+                        <h6 class="mb-2">Receipts</h6>
+                        <h2 class="text-right"><i class="icon-size mdi mdi-wallet   float-left text-success text-success-shadow"></i>
+                            <span>{{ env('APP_CURRENCY') ?? ''  }}{{ number_format($receipts->sum('amount'),2 ) }}</span></h2>
+                        <p class="mb-0">All time</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-widget">
+                        <h6 class="mb-2">Bills</h6>
+                        <h2 class="text-right"><i class="icon-size mdi mdi-wallet   float-left text-secondary text-secondary-shadow"></i>
+                            <span>{{ env('APP_CURRENCY') ?? ''  }}{{ number_format($bills->sum('bill_amount'),2 ) }}</span></h2>
+                        <p class="mb-0">All time</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-widget">
+                        <h6 class="mb-2">Payments</h6>
+                        <h2 class="text-right"><i class="icon-size mdi mdi-wallet   float-left text-danger text-danger-shadow"></i>
+                            <span>{{ env('APP_CURRENCY') ?? ''  }}{{ number_format($payments->sum('amount'),2 ) }}</span></h2>
+                        <p class="mb-0">All time</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 @endsection

@@ -23,8 +23,8 @@ class WorkforceController extends Controller
         return view('workforce.index',['users'=>$this->user->getAllTenantUsersByTenantId(Auth::user()->tenant_id)]);
     }
 
-    public function viewProfile($slug){
-        $user = $this->user->getUserBySlug($slug);
+    public function viewProfile(Request $request){
+        $user = $this->user->getUserBySlug($request->slug);
         if(!empty($user)){
             return view('workforce.view',['user'=>$user]);
         }else{

@@ -58,10 +58,13 @@ class LoginController extends Controller
             'email.email'=>'Enter a valid email address',
             'password.required'=>'Enter your password for this account'
         ]);
+
         $user = $this->user->getUserByEmail($request->email);
         if(!empty($user)){
+
             if(Auth::attempt(['email'=>$request->email, 'password'=>$request->password], $request->remember)){
                 $users = $this->user->getAllTenantUsersByTenantId(Auth::user()->tenant_id);
+
                 if(strtotime(now())  > strtotime(Auth::user()->getTenant->end_date)){
                     foreach($users as $use){
                         $use->account_status = 0; //inactive
@@ -76,7 +79,7 @@ class LoginController extends Controller
                         $use->save();
                     }
                 }
-                return redirect()->route('dashboard');
+                return redirect()->route('dashboard', ['account'=>$user->getTenant->website]);
             }else{
                 session()->flash("error", " Wrong or invalid login credentials. Try again.");
                 return back();
