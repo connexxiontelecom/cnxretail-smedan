@@ -2,7 +2,7 @@ $(function(e) {
 
 	//Data-table1
 	$('#data-table1').DataTable({
-        order: [[ 4, 'desc' ]]
+        order: [[ 4, 'desc' ], [0, 'asc']]
     });
 
 	//Data-table2
