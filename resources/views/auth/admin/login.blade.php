@@ -6,11 +6,11 @@
     <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="{{config('app.name')}} –  HTML5 Bootstrap Admin Template">
-    <meta name="author" content="Spruko Technologies Private Limited">
+    <meta name="description" content="{{config('app.name')}} –  CRM of choice for SMEs and more">
+    <meta name="author" content="Connexxion Group">
     <meta name="keywords" content="">
     <link rel="shortcut icon" type="image/x-icon" href="http://akmaltechnology.com/template/yoha/assets/images/brand/favicon.ico" />
-    <title>{{config('app.name')}} –  Monitoring/Evaluation </title>
+    <title>{{config('app.name')}} –  Micro Business Monitoring & Evaluation </title>
     <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/assets/css/style.css" rel="stylesheet"/>
     <link href="/assets/css/skin-modes.css" rel="stylesheet"/>
