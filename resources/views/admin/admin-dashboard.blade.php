@@ -79,7 +79,7 @@
                         <tr>
                             <th scope="row">{{$serial++}}</th>
                             <td>{{$tenant->company_name ?? '' }}</td>
-                            <td class="text-success">{{date('d M, Y', strtotime($tenant->created_at))}}</td>
+                            <td class="text-success">{{date('d M, Y', strtotime($tenant->start_date))}}</td>
                             <td class="text-warning">{{date('d M, Y', strtotime($tenant->end_date))}}</td>
                             <td>
                                 <a href="{{route('view-tenant', $tenant->slug)}}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>

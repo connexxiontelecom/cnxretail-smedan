@@ -1,7 +1,9 @@
 $(function(e) {
 
 	//Data-table1
-	$('#data-table1').DataTable();
+	$('#data-table1').DataTable({
+        order: [[ 4, 'desc' ]]
+    });
 
 	//Data-table2
 	var table = $('#data-table2').DataTable();

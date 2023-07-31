@@ -16,7 +16,13 @@
 
 @section('main-content')
     <div class="row">
-        <div class="col-md-12">
+        @if($search == 0)
+            <div class="col-md-6 col-lg-6 offset-lg-3 offset-md-3">
+            @include('admin.monitoring._search')
+        </div>
+        @else
+            <div class="col-md-12">
+                @include('admin.monitoring._search')
             <div class="card">
                 <div class="card-body">
                     <div class="card-body">
@@ -28,7 +34,7 @@
                                     <th class="wd-15p">Business Name</th>
                                     <th class="wd-20p">Email</th>
                                     <th class="wd-15p">Phone No.</th>
-                                    <th class="wd-15p">Turnover({{date('Y')}})</th>
+                                    <th class="wd-15p">Turnover</th>
                                 <!-- Turnover is total revenue for the year -->
                                     <th class="wd-25p">Action</th>
                                 </tr>
@@ -42,7 +48,7 @@
                                         <td>{{$tenant->email ?? ''}}</td>
                                         <td>{{$tenant->phone_no ?? '-'}}</td>
                                         <td class="text-right">
-                                            {{number_format($tenant->getTenantTurnover($tenant->id)->sum('amount'),2)}}
+                                            {{number_format($tenant->getTenantTurnover($tenant->id, $from, $to)->sum('amount'),2)}}
                                         </td>
                                         <td>
                                             <a href="{{route('performance-per-client', $tenant->slug)}}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>
@@ -56,6 +62,7 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
 @endsection
 

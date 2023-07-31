@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Member Since:</label>
-                                    <p class="text-muted">{{ date('d M, Y', strtotime($tenant->created_at))  }}</p>
+                                    <p class="text-muted">{{ date('d M, Y', strtotime($tenant->start_date))  }}</p>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Account Status:</label>
@@ -116,7 +116,7 @@
 
                                 <div class="form-group">
                                     <label for="">Member Since:</label>
-                                    <p class="text-muted">{{ date('d M, Y', strtotime($owner->created_at))  }}</p>
+                                    <p class="text-muted">{{ date('d M, Y', strtotime($owner->start_date))  }}</p>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Account Status:</label>
@@ -176,7 +176,7 @@
                                                 <td>{{$sub->getSubscriptionPlan->price_name ?? '-'}}</td>
                                                 <td class="text-success">{{date('d M, Y', strtotime($sub->start_date))}}</td>
                                                 <td class="text-danger">{{date('d M, Y', strtotime($sub->end_date))}}</td>
-                                                <td class="text-right">{{ number_format(ceil($sub->amount/100) - $sub->charge,2) ?? ''}}</td>
+                                                <td class="text-right">{{ number_format(ceil($sub->amount ?? 0 /100) - $sub->charge,2) ?? ''}}</td>
                                             </tr>
                                         @endforeach
                                         </tbody>
