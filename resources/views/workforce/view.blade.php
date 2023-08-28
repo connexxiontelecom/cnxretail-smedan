@@ -223,7 +223,8 @@
         </div><!-- COL-END -->
     </div>
 @endsection
-
+//https://play.google.com/store/apps/details?id=com.wrteam.quiz
+//https://play.google.com/store/apps/details?id=com.wrteam.flutterquiz
 @section('extra-scripts')
 
 @endsection
