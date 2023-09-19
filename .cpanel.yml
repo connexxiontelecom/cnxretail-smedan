@@ -2,6 +2,7 @@
 deployment:
   tasks:
     # - export DEPLOYPATH=/home/connexxtel/public_html/
-    - export DEPLOYPATH=/home/cnxretail/public_html/smedan/
+    #- export DEPLOYPATH=/home/cnxretail/public_html/smedan/
     #- export DEPLOYPATH=/home/cnxretail/public_html/fatimabatoolgen/
+    - export DEPLOYPATH=/home/smedancnx/public_html/cnxretail/
     - /bin/cp -R * $DEPLOYPATH
