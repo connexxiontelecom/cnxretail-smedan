@@ -28,7 +28,6 @@ class IndexController extends Controller
     }
 
     public function marketplace(){
-
         return view('frontend.marketplace',[
             'items'=>$this->item->getItemsAtRandom(),
             'categories'=>$this->category->getAllGeneralCategories(),
