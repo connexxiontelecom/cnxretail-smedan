@@ -3,7 +3,7 @@
 <aside class="app-sidebar">
     <div class="side-header">
         <a class="header-brand1" href="{{route('dashboard', ['account'=>$account])}}">
-            <img src="/assets/images/smedan_logo.png" class="header-brand-img" alt="logo">
+<!--            <img src="/assets/images/smedan_logo.png" class="header-brand-img" alt="logo">-->
             <img src="/assets/images/brand/main.png" class="header-brand-img desktop-logo" alt="logo">
             <img src="/assets/images/brand/main.png" class="header-brand-img toggle-logo" alt="logo">
             <img src="/assets/images/brand/main.png" class="header-brand-img light-logo" alt="logo">
