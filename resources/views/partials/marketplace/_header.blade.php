@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>Marketplace - @yield('title')</title>
-    <meta name="keywords" content="Marketplace ecommerce responsive HTML5 Template" />
-    <meta name="description" content="Wolmart is powerful marketplace &amp; ecommerce responsive Html5 Template.">
-    <meta name="author" content="D-THEMES">
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/marketplace/assets/images/icons/favicon.png">
-    <!-- WebFont.js -->
+    <meta name="keywords" content="Smart marketplace platform for businesses" />
+    <meta name="description" content="Smart marketplace platform for businesses">
+    <meta name="author" content="Connexxion Group">
+    <link rel="icon" type="image/png" href="/assets/images/brand/main.png">
     <script>
         WebFontConfig = {
             google: { families: ['Poppins:400,500,600,700'] }
