@@ -81,13 +81,10 @@
                                 Watches</h3>
                         </div>
                     </div>
-                    <!-- End of Shop Banner -->
-
                     <nav class="toolbox sticky-toolbox sticky-content fix-top">
                         <div class="toolbox-left">
                             <h3>Products</h3>
                         </div>
-
                     </nav>
                     <div class="product-wrapper row cols-md-3 cols-sm-2 cols-2">
                         @foreach($items as $item)
